@@ -1,20 +1,12 @@
 import { defineConfig } from 'cypress';
+import './envConfig.ts';
+import { wcUrl, wcCustomerKey, wcCustomerSecret } from './lib/config';
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      const customerKey = config.env['WC_CUSTOMER_KEY'];
-      if (!customerKey) {
-        throw new Error('Missing WooCommerce customer key');
-      }
-
-      const customerSecret = config.env['WC_CUSTOMER_SECRET'];
-      if (!customerSecret) {
-        throw new Error('Missing WooCommerce customer secret');
-      }
-
       const credentials = Buffer.from(
-        `${customerKey}:${customerSecret}`,
+        `${wcCustomerKey}:${wcCustomerSecret}`,
       ).toString('base64');
 
       const headers = {
@@ -25,7 +17,7 @@ export default defineConfig({
       on('task', {
         'reset:products': async () => {
           const productsResponse = await fetch(
-            'https://gipsys-vintage.local/wp-json/wc/v3/products',
+            `${wcUrl}/wp-json/wc/v3/products`,
             {
               headers,
             },
@@ -34,7 +26,7 @@ export default defineConfig({
           const productIds = json.map((product: any) => product.id);
 
           const deleteRequest = await fetch(
-            'https://gipsys-vintage.local/wp-json/wc/v3/products/batch',
+            `${wcUrl}/wp-json/wc/v3/products/batch`,
             {
               method: 'POST',
               headers,
@@ -47,7 +39,7 @@ export default defineConfig({
         },
         'seed:products': async (products) => {
           const createResponse = await fetch(
-            'https://gipsys-vintage.local/wp-json/wc/v3/products/batch',
+            `${wcUrl}/wp-json/wc/v3/products/batch`,
             {
               method: 'POST',
               headers,
