@@ -1,20 +1,14 @@
 import { defineConfig } from 'cypress';
 import '@/envConfig';
-import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/lib/config';
-import { deleteProducts, getProducts } from '@/lib/services/product-service';
+import {
+  createProducts,
+  deleteProducts,
+  getProducts,
+} from '@/lib/services/product-service';
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      const credentials = Buffer.from(
-        `${wcCustomerKey}:${wcCustomerSecret}`,
-      ).toString('base64');
-
-      const headers = {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-      };
-
       on('task', {
         'reset:products': async () => {
           const products = await getProducts();
@@ -23,16 +17,7 @@ export default defineConfig({
           return deleteProducts(productIds);
         },
         'seed:products': async (products) => {
-          const createResponse = await fetch(
-            `${wcUrl}/wp-json/wc/v3/products/batch`,
-            {
-              method: 'POST',
-              headers,
-              body: JSON.stringify({ create: products }),
-            },
-          );
-
-          return null;
+          return createProducts(products);
         },
       });
     },

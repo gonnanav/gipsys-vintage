@@ -10,20 +10,30 @@ const headers = {
 };
 
 export async function getProducts() {
-  const productsResponse = await fetch(`${wcUrl}/wp-json/wc/v3/products`, {
+  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products`, {
     headers,
     cache: 'no-store',
   });
 
-  return productsResponse.json();
+  return response.json();
+}
+
+export async function createProducts(products: { id: number; name: string }[]) {
+  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ create: products }),
+  });
+
+  return response.json();
 }
 
 export async function deleteProducts(ids: number[]) {
-  const deleteRequest = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
+  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ delete: ids }),
   });
 
-  return deleteRequest.json();
+  return response.json();
 }
