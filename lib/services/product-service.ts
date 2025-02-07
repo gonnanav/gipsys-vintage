@@ -17,3 +17,13 @@ export async function getProducts() {
 
   return productsResponse.json();
 }
+
+export async function deleteProducts(ids: number[]) {
+  const deleteRequest = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ delete: ids }),
+  });
+
+  return deleteRequest.json();
+}

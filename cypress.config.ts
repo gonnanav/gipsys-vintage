@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress';
-import '@/envConfig.ts';
+import '@/envConfig';
 import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/lib/config';
-import { getProducts } from '@/lib/services/product-service';
+import { deleteProducts, getProducts } from '@/lib/services/product-service';
 
 export default defineConfig({
   e2e: {
@@ -20,17 +20,7 @@ export default defineConfig({
           const products = await getProducts();
           const productIds = products.map((product: any) => product.id);
 
-          const deleteRequest = await fetch(
-            `${wcUrl}/wp-json/wc/v3/products/batch`,
-            {
-              method: 'POST',
-              headers,
-              body: JSON.stringify({ delete: productIds }),
-            },
-          );
-          const deleteJson = await deleteRequest.json();
-
-          return null;
+          return deleteProducts(productIds);
         },
         'seed:products': async (products) => {
           const createResponse = await fetch(
