@@ -12,7 +12,7 @@ export default defineConfig({
       on('task', {
         'reset:products': async () => {
           const products = await getProducts();
-          const productIds = products.map((product: any) => product.id);
+          const productIds = products.map((product) => product.id);
 
           return deleteProducts(productIds);
         },

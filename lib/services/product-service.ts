@@ -1,3 +1,4 @@
+import { NewProduct, Product } from '@/domain/product';
 import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/lib/config';
 
 const credentials = Buffer.from(
@@ -9,7 +10,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-export async function getProducts() {
+export async function getProducts(): Promise<Product[]> {
   const response = await fetch(`${wcUrl}/wp-json/wc/v3/products`, {
     headers,
     cache: 'no-store',
@@ -18,7 +19,7 @@ export async function getProducts() {
   return response.json();
 }
 
-export async function createProducts(products: { id: number; name: string }[]) {
+export async function createProducts(products: NewProduct[]) {
   const response = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
     method: 'POST',
     headers,
