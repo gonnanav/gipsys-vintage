@@ -2,17 +2,24 @@ import { loadEnvConfig } from '@next/env';
 
 loadEnvConfig(process.cwd());
 
-export const wcUrl = process.env['WC_URL'];
-if (!wcUrl) {
-  throw new Error('Missing WooCommerce API URL');
-}
+const envNames = {
+  wcUrl: 'WC_URL',
+  wcCustomerKey: 'WC_CUSTOMER_KEY',
+  wcCustomerSecret: 'WC_CUSTOMER_SECRET',
+};
 
-export const wcCustomerKey = process.env['WC_CUSTOMER_KEY'];
-if (!wcCustomerKey) {
-  throw new Error('Missing WooCommerce customer key');
-}
+const envValues = Object.fromEntries(
+  Object.entries(envNames).map(([key, val]) => [key, getEnvVar(val)]),
+);
 
-export const wcCustomerSecret = process.env['WC_CUSTOMER_SECRET'];
-if (!wcCustomerSecret) {
-  throw new Error('Missing WooCommerce customer secret');
+export const { wcUrl, wcCustomerKey, wcCustomerSecret } = envValues;
+
+function getEnvVar(name: string) {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`Missing environment variable: ${name}`);
+  }
+
+  return value;
 }
