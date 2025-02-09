@@ -1,5 +1,5 @@
 import { NewProduct, Product } from '@/domain/product';
-import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/lib/config';
+import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
 
 const credentials = Buffer.from(
   `${wcCustomerKey}:${wcCustomerSecret}`,

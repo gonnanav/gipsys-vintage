@@ -1,4 +1,4 @@
-import { getProducts } from '@/lib/services/product-service';
+import { getProducts } from '@/services/product-service';
 
 export default async function Page() {
   const products = await getProducts();

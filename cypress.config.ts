@@ -1,10 +1,10 @@
 import { defineConfig } from 'cypress';
-import '@/envConfig';
+import 'envConfig';
 import {
   createProducts,
   deleteProducts,
   getProducts,
-} from '@/lib/services/product-service';
+} from '@/services/product-service';
 
 export default defineConfig({
   e2e: {
