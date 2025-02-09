@@ -1,3 +1,7 @@
+import { loadEnvConfig } from '@next/env';
+
+loadEnvConfig(process.cwd());
+
 export const wcUrl = process.env['WC_URL'];
 if (!wcUrl) {
   throw new Error('Missing WooCommerce API URL');

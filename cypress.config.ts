@@ -1,5 +1,4 @@
 import { defineConfig } from 'cypress';
-import 'envConfig';
 import {
   createProducts,
   deleteProducts,
