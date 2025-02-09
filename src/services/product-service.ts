@@ -10,8 +10,10 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+const productsUrl = `${wcUrl}/wp-json/wc/v3/products`;
+
 export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products`, {
+  const response = await fetch(productsUrl, {
     headers,
     cache: 'no-store',
   });
@@ -20,7 +22,7 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function createProducts(products: NewProduct[]) {
-  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
+  const response = await fetch(`${productsUrl}/batch`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ create: products }),
@@ -30,7 +32,7 @@ export async function createProducts(products: NewProduct[]) {
 }
 
 export async function deleteProducts(ids: number[]) {
-  const response = await fetch(`${wcUrl}/wp-json/wc/v3/products/batch`, {
+  const response = await fetch(`${productsUrl}/batch`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ delete: ids }),
