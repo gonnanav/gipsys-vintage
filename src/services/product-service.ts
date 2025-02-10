@@ -10,7 +10,9 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const productsUrl = `${wcUrl}/wp-json/wc/v3/products`;
+const apiUrl = new URL('wp-json/wc/v3/', wcUrl);
+const productsUrl = new URL('products/', apiUrl);
+const productsBatchUrl = new URL('batch/', productsUrl);
 
 export async function getProducts(): Promise<Product[]> {
   const response = await fetch(productsUrl, {
@@ -22,7 +24,7 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function createProducts(products: NewProduct[]) {
-  const response = await fetch(`${productsUrl}/batch`, {
+  const response = await fetch(productsBatchUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify({ create: products }),
@@ -32,7 +34,7 @@ export async function createProducts(products: NewProduct[]) {
 }
 
 export async function deleteProducts(ids: number[]) {
-  const response = await fetch(`${productsUrl}/batch`, {
+  const response = await fetch(productsBatchUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify({ delete: ids }),
