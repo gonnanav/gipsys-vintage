@@ -1,4 +1,4 @@
-import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
+import * as wc from '@/woocommerce';
 
 export interface NewProduct {
   name: string;
@@ -9,37 +9,10 @@ export interface Product {
   name: string;
 }
 
-const credentials = Buffer.from(
-  `${wcCustomerKey}:${wcCustomerSecret}`,
-).toString('base64');
-
-const headers = {
-  Authorization: `Basic ${credentials}`,
-  'Content-Type': 'application/json',
-};
-
-const apiUrl = new URL('wp-json/wc/v3/', wcUrl);
-const productsUrl = new URL('products/', apiUrl);
-const productsBatchUrl = new URL('batch/', productsUrl);
-
 export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(productsUrl, {
-    headers,
-    cache: 'no-store',
-  });
-
-  return response.json();
+  return wc.getProducts();
 }
 
 export async function replaceAllProducts(newProducts: NewProduct[]) {
-  const oldProducts = await getProducts();
-  const oldProductIds = oldProducts.map((product) => product.id);
-
-  const response = await fetch(productsBatchUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
-  });
-
-  return response.json();
+  return wc.replaceAllProducts(newProducts);
 }
