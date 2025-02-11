@@ -31,21 +31,14 @@ export async function getProducts(): Promise<Product[]> {
   return response.json();
 }
 
-export async function createProducts(products: NewProduct[]) {
+export async function replaceAllProducts(newProducts: NewProduct[]) {
+  const oldProducts = await getProducts();
+  const oldProductIds = oldProducts.map((product) => product.id);
+
   const response = await fetch(productsBatchUrl, {
     method: 'POST',
     headers,
-    body: JSON.stringify({ create: products }),
-  });
-
-  return response.json();
-}
-
-export async function deleteProducts(ids: number[]) {
-  const response = await fetch(productsBatchUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ delete: ids }),
+    body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
   });
 
   return response.json();

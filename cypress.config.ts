@@ -1,18 +1,12 @@
 import { defineConfig } from 'cypress';
-import { createProducts, deleteProducts, getProducts } from '@/application';
+import { replaceAllProducts } from '@/application';
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       on('task', {
-        'reset:products': async () => {
-          const products = await getProducts();
-          const productIds = products.map((product) => product.id);
-
-          return deleteProducts(productIds);
-        },
-        'seed:products': async (products) => {
-          return createProducts(products);
+        'seed:products': async (newProducts) => {
+          return replaceAllProducts(newProducts);
         },
       });
     },
