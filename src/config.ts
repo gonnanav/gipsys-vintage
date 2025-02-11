@@ -3,9 +3,9 @@ import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd());
 
 const envNames = {
-  wcUrl: 'WC_URL',
-  wcCustomerKey: 'WC_CUSTOMER_KEY',
-  wcCustomerSecret: 'WC_CUSTOMER_SECRET',
+  wcUrl: 'WOOCOMMERCE_URL',
+  wcCustomerKey: 'WOOCOMMERCE_CUSTOMER_KEY',
+  wcCustomerSecret: 'WOOCOMMERCE_CUSTOMER_SECRET',
 };
 
 const envValues = Object.fromEntries(
