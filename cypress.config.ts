@@ -1,9 +1,5 @@
 import { defineConfig } from 'cypress';
-import {
-  createProducts,
-  deleteProducts,
-  getProducts,
-} from '@/services/product-service';
+import { createProducts, deleteProducts, getProducts } from '@/application';
 
 export default defineConfig({
   e2e: {

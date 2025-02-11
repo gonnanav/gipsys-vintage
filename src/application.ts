@@ -1,5 +1,13 @@
-import { NewProduct, Product } from '@/domain/product';
 import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
+
+export interface NewProduct {
+  name: string;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+}
 
 const credentials = Buffer.from(
   `${wcCustomerKey}:${wcCustomerSecret}`,

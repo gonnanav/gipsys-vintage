@@ -1,4 +1,4 @@
-import { getProducts } from '@/services/product-service';
+import { getProducts } from '@/application';
 
 export default async function Page() {
   const products = await getProducts();
