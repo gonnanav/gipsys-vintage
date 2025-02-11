@@ -9,6 +9,11 @@ export interface Product {
   name: string;
 }
 
+export interface ECommercePort {
+  getProducts(): Promise<Product[]>;
+  replaceAllProducts(newProducts: NewProduct[]): Promise<any>;
+}
+
 export async function getProducts(): Promise<Product[]> {
   return wc.getProducts();
 }
