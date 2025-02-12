@@ -23,7 +23,9 @@ export async function getProducts(): Promise<Product[]> {
   return response.json();
 }
 
-export async function replaceAllProducts(newProducts: NewProduct[]) {
+export async function replaceAllProducts(
+  newProducts: NewProduct[],
+): Promise<Product[]> {
   const oldProducts = await getProducts();
   const oldProductIds = oldProducts.map((product) => product.id);
 
@@ -32,6 +34,7 @@ export async function replaceAllProducts(newProducts: NewProduct[]) {
     headers,
     body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
   });
+  const data = await response.json();
 
-  return response.json();
+  return data.create;
 }
