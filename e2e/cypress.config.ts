@@ -20,7 +20,7 @@ const app = new Application(wc);
 
 export default defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('task', {
         'seed:products': async (newProducts) => {
           return app.replaceAllProducts(newProducts);

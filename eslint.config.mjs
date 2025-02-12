@@ -16,7 +16,7 @@ const eslintConfig = [
   pluginCypress.configs.recommended,
   eslintConfigPrettier,
   {
-    ignores: ['*', '!src', '!cypress'],
+    ignores: ['*', '!src', '!e2e'],
   },
 ];
 

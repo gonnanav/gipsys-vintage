@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   eslint: {
-    dirs: ['src', 'cypress'],
+    dirs: ['src', 'e2e'],
   },
 };
 
