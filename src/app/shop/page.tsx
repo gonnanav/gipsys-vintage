@@ -1,7 +1,10 @@
-import { getProducts } from '@/application';
+import { Application } from '@/application';
+import * as wc from '@/woocommerce';
+
+const app = new Application(wc);
 
 export default async function Page() {
-  const products = await getProducts();
+  const products = await app.getProducts();
 
   return (
     <>

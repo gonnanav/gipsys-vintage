@@ -1,5 +1,3 @@
-import * as wc from '@/woocommerce';
-
 export interface NewProduct {
   name: string;
 }
@@ -14,10 +12,14 @@ export interface ECommercePort {
   replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]>;
 }
 
-export async function getProducts(): Promise<Product[]> {
-  return wc.getProducts();
-}
+export class Application {
+  constructor(private eCommercePort: ECommercePort) {}
 
-export async function replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
-  return wc.replaceAllProducts(newProducts);
+  async getProducts(): Promise<Product[]> {
+    return this.eCommercePort.getProducts();
+  }
+
+  async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
+    return this.eCommercePort.replaceAllProducts(newProducts);
+  }
 }

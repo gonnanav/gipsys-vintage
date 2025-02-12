@@ -1,12 +1,15 @@
 import { defineConfig } from 'cypress';
-import { replaceAllProducts } from '@/application';
+import { Application } from '@/application';
+import * as wc from '@/woocommerce';
+
+const app = new Application(wc);
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       on('task', {
         'seed:products': async (newProducts) => {
-          return replaceAllProducts(newProducts);
+          return app.replaceAllProducts(newProducts);
         },
       });
     },
