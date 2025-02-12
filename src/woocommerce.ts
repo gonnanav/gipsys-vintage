@@ -1,36 +1,47 @@
-import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
-import { Product, NewProduct } from '@/application';
+import { Product, NewProduct, ECommercePort } from '@/application';
 
-const credentials = Buffer.from(`${wcCustomerKey}:${wcCustomerSecret}`).toString('base64');
+export class WooCommerceAdapter implements ECommercePort {
+  private headers;
+  private productsUrl;
+  private productsBatchUrl;
 
-const headers = {
-  Authorization: `Basic ${credentials}`,
-  'Content-Type': 'application/json',
-};
+  constructor(url: string, customerKey: string, customerSecret: string) {
+    const credentials = Buffer.from(`${customerKey}:${customerSecret}`).toString('base64');
 
-const apiUrl = new URL('wp-json/wc/v3/', wcUrl);
-const productsUrl = new URL('products/', apiUrl);
-const productsBatchUrl = new URL('batch/', productsUrl);
+    const headers = {
+      Authorization: `Basic ${credentials}`,
+      'Content-Type': 'application/json',
+    };
 
-export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(productsUrl, {
-    headers,
-    cache: 'no-store',
-  });
+    const apiUrl = new URL('wp-json/wc/v3/', url);
+    const productsUrl = new URL('products/', apiUrl);
+    const productsBatchUrl = new URL('batch/', productsUrl);
 
-  return response.json();
-}
+    this.headers = headers;
+    this.productsUrl = productsUrl;
+    this.productsBatchUrl = productsBatchUrl;
+  }
 
-export async function replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
-  const oldProducts = await getProducts();
-  const oldProductIds = oldProducts.map((product) => product.id);
+  async getProducts(): Promise<Product[]> {
+    const response = await fetch(this.productsUrl, {
+      headers: this.headers,
+      cache: 'no-store',
+    });
 
-  const response = await fetch(productsBatchUrl, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
-  });
-  const data = await response.json();
+    return response.json();
+  }
 
-  return data.create;
+  async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
+    const oldProducts = await this.getProducts();
+    const oldProductIds = oldProducts.map((product) => product.id);
+
+    const response = await fetch(this.productsBatchUrl, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
+    });
+    const data = await response.json();
+
+    return data.create;
+  }
 }

@@ -1,7 +1,9 @@
 import { defineConfig } from 'cypress';
 import { Application } from '@/application';
-import * as wc from '@/woocommerce';
+import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
+import { WooCommerceAdapter } from '@/woocommerce';
 
+const wc = new WooCommerceAdapter(wcUrl, wcCustomerKey, wcCustomerSecret);
 const app = new Application(wc);
 
 export default defineConfig({
