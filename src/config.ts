@@ -1,7 +1,3 @@
-import { loadEnvConfig } from '@next/env';
-
-loadEnvConfig(process.cwd());
-
 const envNames = {
   wcUrl: 'WOOCOMMERCE_URL',
   wcCustomerKey: 'WOOCOMMERCE_CUSTOMER_KEY',
