@@ -10,7 +10,7 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "test": "jest",
-    "ts:check": "tsc --noEmit",
+    "ts:check": "tsc --noEmit && tsc --noEmit --project e2e",
     "check": "npm run format:check && npm run lint && npm run ts:check && npm run test",
     "cy:open": "cypress open --project e2e",
     "e2e": "cypress run --project e2e"
