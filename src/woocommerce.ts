@@ -1,9 +1,7 @@
 import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
 import { Product, NewProduct } from '@/application';
 
-const credentials = Buffer.from(
-  `${wcCustomerKey}:${wcCustomerSecret}`,
-).toString('base64');
+const credentials = Buffer.from(`${wcCustomerKey}:${wcCustomerSecret}`).toString('base64');
 
 const headers = {
   Authorization: `Basic ${credentials}`,
@@ -23,9 +21,7 @@ export async function getProducts(): Promise<Product[]> {
   return response.json();
 }
 
-export async function replaceAllProducts(
-  newProducts: NewProduct[],
-): Promise<Product[]> {
+export async function replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
   const oldProducts = await getProducts();
   const oldProductIds = oldProducts.map((product) => product.id);
 

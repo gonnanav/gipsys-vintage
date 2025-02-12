@@ -18,8 +18,6 @@ export async function getProducts(): Promise<Product[]> {
   return wc.getProducts();
 }
 
-export async function replaceAllProducts(
-  newProducts: NewProduct[],
-): Promise<Product[]> {
+export async function replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
   return wc.replaceAllProducts(newProducts);
 }
