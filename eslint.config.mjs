@@ -14,7 +14,7 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   eslintConfigPrettier,
   {
-    ignores: ['*', '!app', '!lib'],
+    ignores: ['*', '!src', '!cypress'],
   },
 ];
 
