@@ -1,9 +1,6 @@
-import { Application } from '@/application';
-import { wcUrl, wcCustomerKey, wcCustomerSecret } from '@/config';
-import { WooCommerceAdapter } from '@/woocommerce';
+import { createApplication } from '@/composition-root';
 
-const wc = new WooCommerceAdapter(wcUrl, wcCustomerKey, wcCustomerSecret);
-const app = new Application(wc);
+const app = createApplication();
 
 export default async function Page() {
   const products = await app.getProducts();
