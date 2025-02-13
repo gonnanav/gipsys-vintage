@@ -4,6 +4,7 @@ import { WooCommerceAdapter } from '@/woocommerce';
 import { loadEnvConfig } from '@next/env';
 import * as path from 'path';
 
+// Load environment variables from .env files located in the root project directory
 const rootProjectDir = path.dirname(process.cwd());
 loadEnvConfig(rootProjectDir);
 
