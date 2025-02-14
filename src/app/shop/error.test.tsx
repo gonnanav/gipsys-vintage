@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import Error from './error';
+import PageError from './error';
 
 it('renders the error heading', () => {
   renderError();
@@ -25,8 +25,9 @@ it('calls reset callback when try-again button is clicked', async () => {
 
 function renderError() {
   const user = userEvent.setup();
+  const error = new Error('error');
   const reset = jest.fn();
-  const renderResult = render(<Error reset={reset} />);
+  const renderResult = render(<PageError error={error} reset={reset} />);
 
   return { renderResult, user, reset };
 }

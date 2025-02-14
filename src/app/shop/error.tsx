@@ -1,10 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
+
 type ErrorProps = {
+  error: Error & { digest?: string };
   reset: () => void;
 };
 
-export default function Error({ reset }: ErrorProps) {
+export default function PageError({ error, reset }: ErrorProps) {
+  useEffect(() => {
+    if (!error.digest) return;
+
+    console.error('Error Digest:', error.digest);
+  }, [error.digest]);
+
   return (
     <>
       <h1>שגיאה בטעינת העמוד</h1>
