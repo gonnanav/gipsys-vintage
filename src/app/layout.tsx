@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Roboto } from 'next/font/google';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
 import './globals.css';
+import { MuiProviders } from './mui-providers';
 
 export const metadata: Metadata = {
   title: "Gipsy's Vintage",
@@ -24,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <body className={roboto.variable}>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </AppRouterCacheProvider>
+        <MuiProviders>{children}</MuiProviders>
       </body>
     </html>
   );
