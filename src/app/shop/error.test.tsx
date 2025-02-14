@@ -11,7 +11,7 @@ it('renders the error heading', () => {
 it('renders the error message', () => {
   renderError();
 
-  screen.getByText('סליחה, יקירה, אבל יש שגיאה בטעינת העמוד. בואי ננסה שוב ביחד.');
+  screen.getByText('סליחה, אבל קרתה שגיאה בטעינת העמוד. בואי ננסה שוב ביחד.');
 });
 
 it('calls reset callback when try-again button is clicked', async () => {
