@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import theme from './theme';
+import { CssBaseline } from '@mui/material';
 
 type MuiProvidersProp = {
   children: ReactNode;
@@ -14,6 +15,7 @@ type MuiProvidersProp = {
 export function MuiProviders({ children }: MuiProvidersProp) {
   return (
     <AppRouterCacheProvider options={{ key: 'muirtl', stylisPlugins: [prefixer, rtlPlugin] }}>
+      <CssBaseline />
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </AppRouterCacheProvider>
   );

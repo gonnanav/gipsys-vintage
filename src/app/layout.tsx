@@ -1,18 +1,10 @@
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
-import './globals.css';
 import { MuiProviders } from './mui-providers';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "Gipsy's Vintage",
 };
-
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
 
 export default function RootLayout({
   children,
@@ -21,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="he" dir="rtl">
-      <body className={roboto.variable}>
+      <body>
         <MuiProviders>{children}</MuiProviders>
       </body>
     </html>
