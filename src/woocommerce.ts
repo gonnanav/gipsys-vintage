@@ -1,4 +1,4 @@
-import { Product, NewProduct, ECommercePort } from '@/application';
+import { Product, NewProduct, ECommercePort, ProductImage } from '@/application';
 
 export class WooCommerceAdapter implements ECommercePort {
   private headers;
@@ -34,14 +34,31 @@ export class WooCommerceAdapter implements ECommercePort {
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
     const oldProducts = await this.getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
+    const wcNewProducts = WooCommerceNewProduct.fromNewProducts(newProducts);
 
     const response = await fetch(this.productsBatchUrl, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ delete: oldProductIds, create: newProducts }),
+      body: JSON.stringify({ delete: oldProductIds, create: wcNewProducts }),
     });
     const data = await response.json();
 
     return data.create;
+  }
+}
+
+class WooCommerceNewProduct {
+  name: string;
+  regular_price: string;
+  images?: ProductImage[];
+
+  constructor(newProduct: NewProduct) {
+    this.name = newProduct.name;
+    this.regular_price = newProduct.price;
+    this.images = newProduct.images;
+  }
+
+  static fromNewProducts(newProducts: NewProduct[]): WooCommerceNewProduct[] {
+    return newProducts.map((newProduct) => new WooCommerceNewProduct(newProduct));
   }
 }

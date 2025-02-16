@@ -41,7 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 # cypress
-cypress.env.json
-cypress/screenshots
+e2e/cypress.env.json
+e2e/cypress/screenshots
 
 *storybook.log

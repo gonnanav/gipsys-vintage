@@ -1,10 +1,18 @@
 export interface NewProduct {
   name: string;
+  price: string;
+  images?: ProductImage[];
 }
 
 export interface Product {
   id: number;
   name: string;
+  price: string;
+  images?: ProductImage[];
+}
+
+export interface ProductImage {
+  src: string;
 }
 
 export interface ECommercePort {

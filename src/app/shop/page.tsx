@@ -8,7 +8,10 @@ export default async function Page() {
   return (
     <>
       {products.map((product) => (
-        <div key={product.id}>{product.name}</div>
+        <div key={product.id}>
+          <div>{product.name}</div>
+          <div>{product.price}</div>
+        </div>
       ))}
     </>
   );
