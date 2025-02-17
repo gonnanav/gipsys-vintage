@@ -10,6 +10,8 @@ describe('Shop Page', () => {
     cy.task('seed:products', newProducts).as('products');
     cy.visit('/shop');
 
+    cy.get('h1').contains('חנות').should('be.visible');
+
     cy.get<Product[]>('@products').then((products) => {
       products.forEach((product) => {
         cy.contains(product.name).should('be.visible');
