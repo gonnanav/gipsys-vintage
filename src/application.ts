@@ -7,6 +7,7 @@ export interface NewProduct {
 export interface Product {
   id: number;
   name: string;
+  slug: string;
   price: string;
   images?: ProductImage[];
 }

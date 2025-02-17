@@ -1,4 +1,5 @@
 import { createApplication } from '@/composition-root';
+import { ProductCard } from './components/product-card';
 
 const app = createApplication();
 
@@ -8,10 +9,7 @@ export default async function Page() {
   return (
     <>
       {products.map((product) => (
-        <div key={product.id}>
-          <div>{product.name}</div>
-          <div>{product.price}</div>
-        </div>
+        <ProductCard key={product.id} product={product} />
       ))}
     </>
   );
