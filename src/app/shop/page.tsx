@@ -1,5 +1,5 @@
 import { createApplication } from '@/composition-root';
-import { ProductCard } from './components/product-card';
+import { ProductCard } from './components/product-card/product-card';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
