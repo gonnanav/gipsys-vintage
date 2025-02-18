@@ -5,6 +5,9 @@ import Box from '@mui/material/Box';
 const meta = {
   title: 'Shop/ProductLayout',
   component: ProductLayout,
+  parameters: {
+    layout: 'fullscreen',
+  },
 } satisfies Meta<typeof ProductLayout>;
 
 export default meta;
