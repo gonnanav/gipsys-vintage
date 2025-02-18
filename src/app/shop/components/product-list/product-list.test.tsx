@@ -15,8 +15,10 @@ it('renders list of products with the given component function', () => {
   screen.getByText('product2');
 });
 
-it('renders nothing when there are no products', () => {
+it('renders no-products message when there are no products', () => {
   renderProductList({ products: [] });
+
+  screen.getByText('אין מוצרים זמינים');
 });
 
 function renderProductList({ products }: { products: Product[] }) {
