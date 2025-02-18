@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ProductLayout } from './product-layout';
+import { ProductsLayout } from './products-layout';
 import Box from '@mui/material/Box';
 
 const meta = {
   title: 'Shop/ProductLayout',
-  component: ProductLayout,
+  component: ProductsLayout,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof ProductLayout>;
+} satisfies Meta<typeof ProductsLayout>;
 
 export default meta;
 
@@ -33,7 +33,6 @@ const children = Array.from({ length: 10 }).map((_, i) => {
 
 export const Default: Story = {
   args: {
-    title: 'חנות',
     children,
   },
 };
