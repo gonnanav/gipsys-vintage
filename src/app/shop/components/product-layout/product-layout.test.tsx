@@ -1,9 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import { ProductLayout } from './product-layout';
 
-it('renders its children', () => {
-  const children = <div data-testid="children" />;
-  render(<ProductLayout>{children}</ProductLayout>);
+const title = 'Test Shop';
+const childrenTestId = 'children';
+const children = <div data-testid={childrenTestId} />;
 
-  screen.getByTestId('children');
+it('renders title heading', () => {
+  renderProductLayout();
+
+  screen.getByRole('heading', { level: 1, name: title });
 });
+
+it('renders its children', () => {
+  renderProductLayout();
+
+  screen.getByTestId(childrenTestId);
+});
+
+function renderProductLayout() {
+  render(<ProductLayout title={title}>{children}</ProductLayout>);
+}

@@ -30,6 +30,7 @@ const children = Array.from({ length: 10 }).map((_, i) => {
 
 export const Default: Story = {
   args: {
+    title: 'חנות',
     children,
   },
 };
