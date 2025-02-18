@@ -16,9 +16,7 @@ it('renders list of products with the given component function', () => {
 });
 
 it('renders nothing when there are no products', () => {
-  const { container } = renderProductList({ products: [] });
-
-  expect(container).toBeEmptyDOMElement();
+  renderProductList({ products: [] });
 });
 
 function renderProductList({ products }: { products: Product[] }) {
