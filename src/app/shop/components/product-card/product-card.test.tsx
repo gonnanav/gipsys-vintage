@@ -38,7 +38,7 @@ it('renders a link to the product page', () => {
   const cardContainer = renderProductCard({ product });
 
   const link = cardContainer.getByRole('link');
-  expect(link).toHaveAttribute('href', 'product/product1');
+  expect(link).toHaveAttribute('href', '/shop/product1');
 });
 
 function renderProductCard({ product }: ProductCardProps) {

@@ -12,14 +12,13 @@ export interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { name, slug, price, images } = product;
-  const productHref = `product/${slug}`;
   const image = images && images[0];
   const src = image?.src || 'placeholder.webp';
   const priceShekels = `₪${price}`;
 
   return (
     <Card component="article" variant="outlined">
-      <CardActionArea component={Link} href={productHref}>
+      <CardActionArea component={Link} href={`/shop/${slug}`}>
         <CardMedia
           title={name}
           image={src}
