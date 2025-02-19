@@ -4,6 +4,9 @@ import Loading from './loading';
 const meta = {
   title: 'Shop/Loading',
   component: Loading,
+  parameters: {
+    layout: 'fullscreen',
+  },
 } satisfies Meta<typeof Loading>;
 
 export default meta;
