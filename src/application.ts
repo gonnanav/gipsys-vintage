@@ -17,12 +17,17 @@ export interface ProductImage {
 }
 
 export interface ECommercePort {
+  getProduct(slug: string): Promise<Product | null>;
   getProducts(): Promise<Product[]>;
   replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]>;
 }
 
 export class Application {
   constructor(private eCommercePort: ECommercePort) {}
+
+  async getProduct(slug: string): Promise<Product | null> {
+    return this.eCommercePort.getProduct(slug);
+  }
 
   async getProducts(): Promise<Product[]> {
     return this.eCommercePort.getProducts();

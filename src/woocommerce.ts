@@ -2,6 +2,7 @@ import { Product, NewProduct, ECommercePort, ProductImage } from '@/application'
 
 export class WooCommerceAdapter implements ECommercePort {
   private headers;
+  private apiUrl;
   private productsUrl;
   private productsBatchUrl;
 
@@ -18,8 +19,21 @@ export class WooCommerceAdapter implements ECommercePort {
     const productsBatchUrl = new URL('batch/', productsUrl);
 
     this.headers = headers;
+    this.apiUrl = apiUrl;
     this.productsUrl = productsUrl;
     this.productsBatchUrl = productsBatchUrl;
+  }
+
+  async getProduct(slug: string): Promise<Product | null> {
+    const searchParams = new URLSearchParams({ slug });
+    const productUrl = new URL(`products?${searchParams.toString()}`, this.apiUrl);
+
+    const response = await fetch(productUrl, {
+      headers: this.headers,
+      cache: 'no-store',
+    });
+
+    return response.json().then(([product]) => product ?? null);
   }
 
   async getProducts(): Promise<Product[]> {

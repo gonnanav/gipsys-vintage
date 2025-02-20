@@ -4,6 +4,17 @@ const portProducts = [
   { id: 1, name: 'product1' },
   { id: 2, name: 'product2' },
 ];
+const portProduct = portProducts[0];
+
+it('calls getProduct on e-commerce port and returns its result', async () => {
+  const slug = 'product-slug';
+  const { app, port } = setupApplication();
+
+  const appProduct = await app.getProduct(slug);
+
+  expect(port.getProduct).toHaveBeenCalledWith(slug);
+  expect(appProduct).toEqual(portProduct);
+});
 
 it('calls getProducts on e-commerce port and returns its result', async () => {
   const { app, port } = setupApplication();
@@ -50,6 +61,7 @@ type ApplicationSetup = {
 
 function setupApplication(partialPort?: Partial<ECommercePort>): ApplicationSetup {
   const defaultPort = {
+    getProduct: jest.fn().mockResolvedValue(portProduct),
     getProducts: jest.fn().mockResolvedValue(portProducts),
     replaceAllProducts: jest.fn().mockResolvedValue(portProducts),
   };
