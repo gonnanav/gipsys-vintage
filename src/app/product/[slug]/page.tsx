@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
+import { ProductDetails } from './components/product-details';
 
 const app = createApplication();
 
@@ -12,10 +13,5 @@ export default async function Page({ params }: PageProps) {
   const product = await app.getProduct(slug);
   if (!product) notFound();
 
-  return (
-    <>
-      <div>{product.name}</div>
-      <div>{product.price}</div>
-    </>
-  );
+  return <ProductDetails product={product} />;
 }
