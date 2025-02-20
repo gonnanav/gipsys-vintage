@@ -18,7 +18,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card component="article" variant="outlined" data-testid="product-card">
-      <CardActionArea component={Link} href={`/shop/${slug}`}>
+      <CardActionArea component={Link} href={`/product/${slug}`}>
         <CardMedia
           title={name}
           image={src}

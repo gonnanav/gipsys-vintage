@@ -26,7 +26,7 @@ describe('Shop Page', () => {
 
       const arbitraryProduct = products[0];
       cy.contains(arbitraryProduct.name).click();
-      cy.location('pathname').should('eq', `/shop/${arbitraryProduct.slug}`);
+      cy.location('pathname').should('eq', `/product/${arbitraryProduct.slug}`);
     });
   });
 });
