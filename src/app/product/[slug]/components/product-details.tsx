@@ -5,12 +5,13 @@ type ProductDetailsProps = {
 };
 
 export function ProductDetails({ product }: ProductDetailsProps) {
-  const { name, price } = product;
+  const { name, price, description } = product;
 
   return (
     <>
       <h1>{name}</h1>
       <div>{`₪${price}`}</div>
+      {description && <div>{description}</div>}
     </>
   );
 }

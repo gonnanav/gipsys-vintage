@@ -21,6 +21,13 @@ it('renders the product price', () => {
   screen.getByText(`₪${product.price}`);
 });
 
-function renderProductDetails() {
-  render(<ProductDetails product={product} />);
+it('renders the product description', () => {
+  const description = 'A beautiful vintage piece';
+  renderProductDetails({ ...product, description });
+
+  screen.getByText(description);
+});
+
+function renderProductDetails(props: Partial<Product> = {}) {
+  render(<ProductDetails product={{ ...product, ...props }} />);
 }
