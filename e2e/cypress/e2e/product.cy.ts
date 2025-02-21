@@ -2,13 +2,18 @@ import { Product, NewProduct } from '@/application';
 
 describe('Product Page', () => {
   it('displays the product details', () => {
-    const productToSeed: NewProduct = { name: 'product1', price: '100' };
+    const productToSeed: NewProduct = {
+      name: 'product1',
+      price: '100',
+      description: 'A vintage dress from the 80s',
+    };
 
     cy.task<Product[]>('seed:products', [productToSeed]).then(([product]) => {
       cy.visit(`product/${product.slug}`);
 
       cy.contains(product.name).should('be.visible');
       cy.contains(product.price).should('be.visible');
+      cy.contains(product.description).should('be.visible');
     });
   });
 

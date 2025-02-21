@@ -1,6 +1,7 @@
 export interface NewProduct {
   name: string;
   price: string;
+  description?: string;
   images?: ProductImage[];
 }
 
@@ -9,6 +10,7 @@ export interface Product {
   name: string;
   slug: string;
   price: string;
+  description?: string;
   images?: ProductImage[];
 }
 

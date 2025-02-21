@@ -48,7 +48,7 @@ export class WooCommerceAdapter implements ECommercePort {
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
     const oldProducts = await this.getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
-    const wcNewProducts = WooCommerceNewProduct.fromNewProducts(newProducts);
+    const wcNewProducts = WooCommerceNewProduct.fromDomain(newProducts);
 
     const response = await fetch(this.productsBatchUrl, {
       method: 'POST',
@@ -64,15 +64,17 @@ export class WooCommerceAdapter implements ECommercePort {
 class WooCommerceNewProduct {
   name: string;
   regular_price: string;
+  description?: string;
   images?: ProductImage[];
 
   constructor(newProduct: NewProduct) {
     this.name = newProduct.name;
     this.regular_price = newProduct.price;
+    this.description = newProduct.description;
     this.images = newProduct.images;
   }
 
-  static fromNewProducts(newProducts: NewProduct[]): WooCommerceNewProduct[] {
-    return newProducts.map((newProduct) => new WooCommerceNewProduct(newProduct));
+  static fromDomain(products: NewProduct[]): WooCommerceNewProduct[] {
+    return products.map((product) => new WooCommerceNewProduct(product));
   }
 }
