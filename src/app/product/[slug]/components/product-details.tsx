@@ -18,9 +18,12 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         </Typography>
       </Stack>
       {description && (
-        <Typography variant="body1" color="text.secondary">
-          {description}
-        </Typography>
+        <Typography
+          component="div"
+          variant="body1"
+          color="text.secondary"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
       )}
     </Stack>
   );
