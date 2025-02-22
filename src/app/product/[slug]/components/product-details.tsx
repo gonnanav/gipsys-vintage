@@ -13,18 +13,12 @@ export function ProductDetails({ product }: ProductDetailsProps) {
     <Stack spacing={2}>
       <Stack spacing={1}>
         <Typography variant="h1">{name}</Typography>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+        <Typography component="p" variant="h5" sx={{ fontWeight: 'bold' }}>
           ₪{price}
         </Typography>
       </Stack>
       {description && (
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          sx={{
-            lineHeight: 1.8,
-          }}
-        >
+        <Typography variant="body1" color="text.secondary">
           {description}
         </Typography>
       )}
