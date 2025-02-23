@@ -1,7 +1,21 @@
 import Image from 'next/image';
 import Box from '@mui/material/Box';
+import { ProductImage } from '@/application';
 
-export function ProductGallery() {
+const placeholderImage: ProductImage = {
+  src: '/placeholder.webp',
+  alt: 'אין תמונת מוצר',
+};
+
+interface ProductGalleryProps {
+  productImages?: ProductImage[];
+}
+
+export function ProductGallery({ productImages }: ProductGalleryProps) {
+  const hasImages = productImages && productImages.length > 0;
+  const mainImage = hasImages ? productImages[0] : placeholderImage;
+  const { src, alt = '' } = mainImage;
+
   return (
     <Box
       data-testid="product-gallery"
@@ -11,7 +25,7 @@ export function ProductGallery() {
         aspectRatio: '3 / 4',
       }}
     >
-      <Image alt="אין תמונת מוצר" src="/placeholder.webp" fill style={{ objectFit: 'contain' }} />
+      <Image alt={alt} src={src} fill style={{ objectFit: 'contain' }} />
     </Box>
   );
 }

@@ -13,3 +13,14 @@ type Story = StoryObj<typeof meta>;
 export const NoImages: Story = {
   args: {},
 };
+
+export const WithImage: Story = {
+  args: {
+    productImages: [
+      {
+        src: '/product/סריג-לבן.webp',
+        alt: 'סריג לבן',
+      },
+    ],
+  },
+};

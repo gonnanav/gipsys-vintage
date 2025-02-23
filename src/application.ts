@@ -16,6 +16,7 @@ export interface Product {
 
 export interface ProductImage {
   src: string;
+  alt?: string;
 }
 
 export interface ECommercePort {

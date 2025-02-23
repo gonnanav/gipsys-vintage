@@ -16,7 +16,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <ProductGallery />
+      <ProductGallery productImages={product.images} />
       <ProductDetails product={product} />
     </>
   );
