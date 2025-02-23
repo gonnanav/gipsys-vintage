@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
-import { ProductDetails } from './components/product-details';
+import { ProductDetails } from './components/product-details/product-details';
 import { ProductGallery } from './components/product-gallery/product-gallery';
 
 const app = createApplication();
