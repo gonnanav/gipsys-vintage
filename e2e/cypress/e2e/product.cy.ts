@@ -1,7 +1,7 @@
 import { Product, NewProduct } from '@/application';
 
 describe('Product Page', () => {
-  it('displays the product details', () => {
+  it('displays the product details and image gallery', () => {
     const productToSeed: NewProduct = {
       name: 'product1',
       price: '100',
@@ -14,6 +14,7 @@ describe('Product Page', () => {
       cy.contains(product.name).should('be.visible');
       cy.contains(product.price).should('be.visible');
       cy.contains(product.description).should('be.visible');
+      cy.get('[data-testid="product-gallery"]').should('be.visible');
     });
   });
 
