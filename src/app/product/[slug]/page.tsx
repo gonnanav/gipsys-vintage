@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
-import { ProductDetails } from './components/product-details/product-details';
+import { ProductLayout } from './components/product-layout/product-layout';
 import { ProductGallery } from './components/product-gallery/product-gallery';
+import { ProductDetails } from './components/product-details/product-details';
 
 const app = createApplication();
 
@@ -15,9 +16,9 @@ export default async function Page({ params }: PageProps) {
   if (!product) notFound();
 
   return (
-    <>
-      <ProductGallery productImages={product.images} />
-      <ProductDetails product={product} />
-    </>
+    <ProductLayout
+      productGallery={<ProductGallery productImages={product.images} />}
+      productDetails={<ProductDetails product={product} />}
+    />
   );
 }
