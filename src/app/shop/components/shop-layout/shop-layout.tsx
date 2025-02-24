@@ -9,10 +9,8 @@ type ShopLayoutProps = {
 };
 
 export function ShopLayout({ title, children }: ShopLayoutProps) {
-  const spacing = { xs: 2, sm: 3 };
-
   return (
-    <Stack spacing={spacing} sx={{ padding: spacing }}>
+    <Stack spacing={{ xs: 2, sm: 3 }}>
       <Typography variant="h1" sx={{ textAlign: 'center' }}>
         {title}
       </Typography>
