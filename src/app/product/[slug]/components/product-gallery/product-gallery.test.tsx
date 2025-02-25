@@ -1,13 +1,14 @@
 import { render, screen, within } from '@testing-library/react';
 import { ProductImage } from '@/application';
 import { ProductGallery } from './product-gallery';
+import userEvent from '@testing-library/user-event';
 
 const productImages: ProductImage[] = [
   { src: '/images/product-1.jpg', alt: 'Product 1' },
   { src: '/images/product-2.jpg', alt: 'Product 2' },
   { src: '/images/product-3.jpg', alt: 'Product 3' },
 ];
-const productImage = productImages[0];
+const [firstImage, secondImage, thirdImage] = productImages;
 
 it('renders the product gallery with the correct test id', () => {
   renderProductGallery();
@@ -24,7 +25,7 @@ it('renders the placeholder image as the main image when there are no images', (
 it('renders the first image as the main image by default', () => {
   renderProductGallery(productImages);
 
-  expect(getMainImage({ name: 'Product 1' })).toBeInTheDocument();
+  expect(getMainImage({ name: firstImage.alt })).toBeInTheDocument();
 });
 
 it('does not render thumbnails when there are no images', () => {
@@ -34,7 +35,7 @@ it('does not render thumbnails when there are no images', () => {
 });
 
 it('does not render thumbnails when there is a single image', () => {
-  renderProductGallery([productImage]);
+  renderProductGallery([firstImage]);
 
   expect(queryThumbnails()).not.toBeInTheDocument();
 });
@@ -50,7 +51,27 @@ it('renders all images as thumbnails when there are multiple images', () => {
   });
 });
 
-function getMainImage({ name }: { name: string }) {
+it('switches the main image when the thumbnail is clicked', async () => {
+  const user = userEvent.setup();
+  renderProductGallery(productImages);
+
+  const secondThumbnail = getThumbnail({ name: secondImage.alt });
+  await user.click(secondThumbnail);
+
+  expect(getMainImage({ name: secondImage.alt })).toBeInTheDocument();
+
+  const thirdThumbnail = getThumbnail({ name: thirdImage.alt });
+  await user.click(thirdThumbnail);
+
+  expect(getMainImage({ name: thirdImage.alt })).toBeInTheDocument();
+
+  const firstThumbnail = getThumbnail({ name: firstImage.alt });
+  await user.click(firstThumbnail);
+
+  expect(getMainImage({ name: firstImage.alt })).toBeInTheDocument();
+});
+
+function getMainImage({ name }: { name?: string }) {
   const mainImage = screen.getByTestId('product-main-image');
   return within(mainImage).getByRole('img', { name });
 }
@@ -61,6 +82,11 @@ function queryThumbnails() {
 
 function getThumbnails() {
   return screen.getByTestId('product-thumbnails');
+}
+
+function getThumbnail({ name }: { name?: string }) {
+  const thumbnails = getThumbnails();
+  return within(thumbnails).getByRole('img', { name });
 }
 
 function renderProductGallery(productImages?: ProductImage[]) {
