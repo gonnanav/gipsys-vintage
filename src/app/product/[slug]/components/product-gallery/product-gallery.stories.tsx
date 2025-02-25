@@ -1,19 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProductGallery } from './product-gallery';
 import { productWithOneImage, productWithManyImages } from '@/fixtures/products';
+import Box from '@mui/material/Box';
 
 const meta = {
   title: 'Product/ProductGallery',
   component: ProductGallery,
   tags: ['autodocs'],
-  parameters: {
-    layout: 'centered',
-  },
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: '600px', width: '100%' }}>
+      <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
         <Story />
-      </div>
+      </Box>
     ),
   ],
 } satisfies Meta<typeof ProductGallery>;
@@ -34,31 +32,5 @@ export const SingleImage: Story = {
 export const MultipleImages: Story = {
   args: {
     productImages: productWithManyImages.images,
-  },
-};
-
-export const ManyImages: Story = {
-  args: {
-    productImages: productWithManyImages.images,
-  },
-};
-
-// This story helps test how the gallery handles different aspect ratios
-export const DifferentAspectRatios: Story = {
-  args: {
-    productImages: [
-      {
-        src: '/product/wide.webp',
-        alt: 'Wide product image',
-      },
-      {
-        src: '/product/tall.webp',
-        alt: 'Tall product image',
-      },
-      {
-        src: '/product/square.webp',
-        alt: 'Square product image',
-      },
-    ],
   },
 };

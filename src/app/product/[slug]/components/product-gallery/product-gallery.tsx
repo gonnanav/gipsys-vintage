@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import { ProductImage } from '@/application';
 
 const placeholderImage: ProductImage = {
-  src: '/placeholder.webp',
+  src: '/images/product-placeholder.webp',
   alt: 'אין תמונת מוצר',
 };
 
@@ -18,10 +19,10 @@ export function ProductGallery({ productImages }: ProductGalleryProps) {
   const hasThumbnails = hasImages && productImages.length > 1;
 
   return (
-    <div data-testid="product-gallery">
+    <Box data-testid="product-gallery" sx={{ width: '100%' }}>
       <MainImage productImage={mainImage} />
       {hasThumbnails && <Thumbnails productImages={productImages} />}
-    </div>
+    </Box>
   );
 }
 
@@ -33,7 +34,7 @@ function MainImage({ productImage }: { productImage: ProductImage }) {
       data-testid="product-main-image"
       sx={{ position: 'relative', width: '100%', aspectRatio: '3 / 4' }}
     >
-      <Image alt={alt} src={src} fill style={{ objectFit: 'contain' }} />
+      <Image alt={alt} src={src} fill style={{ objectFit: 'cover' }} />
     </Box>
   );
 }
@@ -44,11 +45,13 @@ interface ThumbnailsProps {
 
 function Thumbnails({ productImages }: ThumbnailsProps) {
   return (
-    <Stack direction="row" spacing={{ xs: 2, sm: 3 }} data-testid="product-thumbnails">
+    <ImageList data-testid="product-thumbnails" cols={3} gap={8}>
       {productImages.map((productImage) => (
-        <Thumbnail key={productImage.src} productImage={productImage} />
+        <ImageListItem key={productImage.src}>
+          <Thumbnail productImage={productImage} />
+        </ImageListItem>
       ))}
-    </Stack>
+    </ImageList>
   );
 }
 
@@ -60,11 +63,8 @@ function Thumbnail({ productImage }: ThumbnailProps) {
   const { src, alt } = productImage;
 
   return (
-    <Box
-      data-testid="product-thumbnail"
-      sx={{ position: 'relative', width: '100px', aspectRatio: '1 / 1' }}
-    >
-      <Image alt={alt || ''} src={src} fill style={{ objectFit: 'contain' }} />
+    <Box data-testid="product-thumbnail" sx={{ position: 'relative', aspectRatio: '1 / 1' }}>
+      <Image alt={alt || ''} src={src} fill style={{ objectFit: 'cover' }} />
     </Box>
   );
 }
