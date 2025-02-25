@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
-import { ProductLayout } from './components/product-layout/product-layout';
-import { ProductGallery } from './components/product-gallery/product-gallery';
-import { ProductDetails } from './components/product-details/product-details';
+import { ProductPageView } from './components/product-page-view/product-page-view';
 
 const app = createApplication();
 
@@ -15,10 +13,5 @@ export default async function Page({ params }: PageProps) {
   const product = await app.getProduct(slug);
   if (!product) notFound();
 
-  return (
-    <ProductLayout
-      productGallery={<ProductGallery productImages={product.images} />}
-      productDetails={<ProductDetails product={product} />}
-    />
-  );
+  return <ProductPageView product={product} />;
 }
