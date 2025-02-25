@@ -8,6 +8,9 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['../public', './images'],
+  core: {
+    disableTelemetry: true,
+  },
 };
 
 export default config;
