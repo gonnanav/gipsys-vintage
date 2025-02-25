@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProductGallery } from './product-gallery';
+import { productWithOneImage, productWithManyImages } from '@/fixtures/products';
 
 const meta = {
   title: 'Product/ProductGallery',
@@ -26,40 +27,19 @@ export const NoImages: Story = {
 
 export const SingleImage: Story = {
   args: {
-    productImages: [
-      {
-        src: '/product/סריג-לבן.webp',
-        alt: 'סריג לבן',
-      },
-    ],
+    productImages: productWithOneImage.images,
   },
 };
 
 export const MultipleImages: Story = {
   args: {
-    productImages: [
-      {
-        src: '/product/סריג-לבן.webp',
-        alt: 'סריג לבן',
-      },
-      {
-        src: '/product/סריג-שחור.webp',
-        alt: 'סריג שחור',
-      },
-      {
-        src: '/product/סריג-אדום.webp',
-        alt: 'סריג אדום',
-      },
-    ],
+    productImages: productWithManyImages.images,
   },
 };
 
 export const ManyImages: Story = {
   args: {
-    productImages: Array.from({ length: 6 }, (_, i) => ({
-      src: `/product/product-${i + 1}.webp`,
-      alt: `Product ${i + 1}`,
-    })),
+    productImages: productWithManyImages.images,
   },
 };
 
