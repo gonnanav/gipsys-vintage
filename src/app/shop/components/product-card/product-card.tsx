@@ -13,7 +13,7 @@ export interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { name, slug, price, images } = product;
   const image = images && images[0];
-  const src = image?.src || 'placeholder.webp';
+  const src = image?.src || '/images/product-placeholder.webp';
   const priceShekels = `₪${price}`;
 
   return (
