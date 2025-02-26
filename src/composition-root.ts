@@ -1,4 +1,4 @@
-import { WooCommerceAdapter } from './woocommerce';
+import { WooCommerceAdapter } from './woocommerce/woocommerce';
 import { Application } from './application';
 
 export function createApplication(): Application {
