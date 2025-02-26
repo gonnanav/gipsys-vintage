@@ -2,6 +2,18 @@
 
 This project contains the full-stack development for Gipsy's Vintage, an e-commerce web app selling vintage clothing items for women for a local Israeli audience.
 
+## 🚫 License & Usage
+
+This project is **public for educational purposes** but **not open-source**.
+
+You **may not**:
+
+- Use this code for commercial or personal projects.
+- Copy, modify, or distribute it without explicit permission.
+- Use the "Gipsy's Vintage" name, branding, logo, or product images.
+
+This project is provided as **a reference for learning purposes only**.
+
 ## Getting Started
 
 ### Prerequisites
