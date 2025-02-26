@@ -1,4 +1,4 @@
-import { Application } from './application';
+import { Application } from './core/application';
 import { WooCommerceAdapter } from './woocommerce/woocommerce-adapter';
 import { WooCommerceClient } from './woocommerce/woocommerce-client';
 

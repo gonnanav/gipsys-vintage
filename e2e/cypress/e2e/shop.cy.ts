@@ -1,4 +1,4 @@
-import { NewProduct, Product } from '@/application';
+import { NewProduct, Product } from '@/core/product';
 
 const productCard = '[data-testid="product-card"]';
 const productCardImage = '[data-testid="product-card-image"]';

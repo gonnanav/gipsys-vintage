@@ -1,4 +1,4 @@
-import { Product, NewProduct } from '@/application';
+import { Product, NewProduct } from '@/core/product';
 
 describe('Product Page', () => {
   it('displays the product details and image gallery', () => {

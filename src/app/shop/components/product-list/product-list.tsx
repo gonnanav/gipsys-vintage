@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 import { ProductsLayout } from '../products-layout/products-layout';
 
 export type ProductListProps = {

@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { ProductImage } from '@/application';
+import { ProductImage } from '@/core/product';
 import { ProductGallery } from './product-gallery';
 import userEvent from '@testing-library/user-event';
 

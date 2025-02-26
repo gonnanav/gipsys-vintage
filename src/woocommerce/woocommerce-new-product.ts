@@ -1,4 +1,4 @@
-import { NewProduct, ProductImage } from '@/application'; // Adjust the import path as necessary
+import { NewProduct, ProductImage } from '@/core/product';
 
 export class WooCommerceNewProduct {
   name: string;

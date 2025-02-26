@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 
 export interface ProductCardProps {
   product: Product;

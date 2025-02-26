@@ -1,4 +1,4 @@
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 
 export const productWithoutImages: Product = {
   id: 1,

@@ -1,4 +1,4 @@
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 import { render, screen, within } from '@testing-library/react';
 import { ProductCard, ProductCardProps } from './product-card';
 

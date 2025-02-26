@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 import { ProductDetails } from './product-details';
 
 const product: Product = {

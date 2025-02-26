@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { ProductList } from './product-list';
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 
 const ProductComponent = ({ product }: { product: Product }) => <div>{product.name}</div>;
 

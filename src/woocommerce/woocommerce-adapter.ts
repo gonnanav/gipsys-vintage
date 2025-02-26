@@ -1,4 +1,5 @@
-import { Application, Product, NewProduct } from '@/application';
+import { Product, NewProduct } from '@/core/product';
+import { Application } from '@/core/application';
 import { WooCommerceNewProduct } from './woocommerce-new-product';
 import { WooCommerceApi } from './woocommerce-api';
 

@@ -1,4 +1,4 @@
-import { Product } from '@/application';
+import { Product } from '@/core/product';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 

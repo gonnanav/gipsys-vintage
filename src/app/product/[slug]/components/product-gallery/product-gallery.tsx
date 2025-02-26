@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { ProductImage } from '@/application';
+import { ProductImage } from '@/core/product';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
