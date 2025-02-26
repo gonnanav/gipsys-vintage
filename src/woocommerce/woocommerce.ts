@@ -1,7 +1,7 @@
-import { Product, NewProduct, ECommercePort } from '@/application';
+import { Application, Product, NewProduct } from '@/application';
 import { WooCommerceNewProduct } from './woocommerce-new-product';
 
-export class WooCommerceAdapter implements ECommercePort {
+export class WooCommerceAdapter implements Application {
   private headers;
   private apiUrl;
   private productsUrl;
