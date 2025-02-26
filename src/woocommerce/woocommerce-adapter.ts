@@ -1,21 +1,22 @@
 import { Application, Product, NewProduct } from '@/application';
 import { WooCommerceNewProduct } from './woocommerce-new-product';
-import { WooCommerceClient } from './woocommerce-client';
+import { WooCommerceApi } from './woocommerce-api';
 
 export class WooCommerceAdapter implements Application {
-  private readonly client: WooCommerceClient;
+  private readonly client: WooCommerceApi;
 
-  constructor(url: string, customerKey: string, customerSecret: string) {
-    this.client = new WooCommerceClient(url, customerKey, customerSecret);
+  constructor(client: WooCommerceApi) {
+    this.client = client;
   }
 
   async getProduct(slug: string): Promise<Product | null> {
     const searchParams = new URLSearchParams({ slug });
-    const response = await this.client.fetch<Product[]>({
+    const products = await this.client.fetch<Product[]>({
       endpoint: 'products',
       searchParams,
     });
-    return response[0] ?? null;
+
+    return products[0] ?? null;
   }
 
   async getProducts(): Promise<Product[]> {

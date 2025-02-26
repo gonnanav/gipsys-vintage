@@ -1,10 +1,4 @@
-export interface WooCommerceRequestConfig {
-  method?: string;
-  endpoint: string;
-  searchParams?: URLSearchParams;
-  body?: unknown;
-  cache?: RequestCache;
-}
+import { WooCommerceRequestConfig } from './woocommerce-api';
 
 export class WooCommerceClient {
   private readonly headers: Record<string, string>;
@@ -23,7 +17,7 @@ export class WooCommerceClient {
 
   async fetch<T>(config: WooCommerceRequestConfig): Promise<T> {
     const { method = 'GET', endpoint, searchParams, body, cache = 'no-store' } = config;
-    
+
     let url = new URL(endpoint, this.apiUrl);
     if (searchParams) {
       url = new URL(`${endpoint}?${searchParams.toString()}`, this.apiUrl);
