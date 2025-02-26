@@ -1,49 +1,27 @@
 import { Application, Product, NewProduct } from '@/application';
 import { WooCommerceNewProduct } from './woocommerce-new-product';
+import { WooCommerceClient } from './woocommerce-client';
 
 export class WooCommerceAdapter implements Application {
-  private headers;
-  private apiUrl;
-  private productsUrl;
-  private productsBatchUrl;
+  private readonly client: WooCommerceClient;
 
   constructor(url: string, customerKey: string, customerSecret: string) {
-    const credentials = Buffer.from(`${customerKey}:${customerSecret}`).toString('base64');
-
-    const headers = {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/json',
-    };
-
-    const apiUrl = new URL('wp-json/wc/v3/', url);
-    const productsUrl = new URL('products/', apiUrl);
-    const productsBatchUrl = new URL('batch/', productsUrl);
-
-    this.headers = headers;
-    this.apiUrl = apiUrl;
-    this.productsUrl = productsUrl;
-    this.productsBatchUrl = productsBatchUrl;
+    this.client = new WooCommerceClient(url, customerKey, customerSecret);
   }
 
   async getProduct(slug: string): Promise<Product | null> {
     const searchParams = new URLSearchParams({ slug });
-    const productUrl = new URL(`products?${searchParams.toString()}`, this.apiUrl);
-
-    const response = await fetch(productUrl, {
-      headers: this.headers,
-      cache: 'no-store',
+    const response = await this.client.fetch<Product[]>({
+      endpoint: 'products',
+      searchParams,
     });
-
-    return response.json().then(([product]) => product ?? null);
+    return response[0] ?? null;
   }
 
   async getProducts(): Promise<Product[]> {
-    const response = await fetch(this.productsUrl, {
-      headers: this.headers,
-      cache: 'no-store',
+    return this.client.fetch<Product[]>({
+      endpoint: 'products',
     });
-
-    return response.json();
   }
 
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
@@ -51,13 +29,12 @@ export class WooCommerceAdapter implements Application {
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcNewProducts = WooCommerceNewProduct.fromDomain(newProducts);
 
-    const response = await fetch(this.productsBatchUrl, {
+    const response = await this.client.fetch<{ create: Product[] }>({
       method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify({ delete: oldProductIds, create: wcNewProducts }),
+      endpoint: 'products/batch',
+      body: { delete: oldProductIds, create: wcNewProducts },
     });
-    const data = await response.json();
 
-    return data.create;
+    return response.create;
   }
 }
