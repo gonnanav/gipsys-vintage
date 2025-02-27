@@ -1,6 +1,6 @@
 import { Product, NewProduct } from '@/core/product';
 import { Application } from '@/core/application';
-import { toWooCommerceProductInput } from './product';
+import { WooCommerceProduct, WooCommerceProductInput } from './product';
 import { WooCommerceApi } from './api';
 
 export class WooCommerceAdapter implements Application {
@@ -11,15 +11,19 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProduct(slug: string): Promise<Product | null> {
-    const products = await this.api.fetch<Product[]>('products', {
+    const wcProducts = await this.api.fetch<WooCommerceProduct[]>('products', {
       searchParams: { slug },
     });
 
-    return products[0] ?? null;
+    if (!wcProducts || wcProducts.length === 0) return null;
+
+    return fromWooCommerceProduct(wcProducts[0]);
   }
 
   async getProducts(): Promise<Product[]> {
-    return this.api.fetch<Product[]>('products');
+    const wcProducts = await this.api.fetch<WooCommerceProduct[]>('products');
+
+    return wcProducts.map(fromWooCommerceProduct);
   }
 
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
@@ -34,4 +38,22 @@ export class WooCommerceAdapter implements Application {
 
     return response.create;
   }
+}
+
+function fromWooCommerceProduct(product: WooCommerceProduct): Product {
+  const { regular_price, ...rest } = product;
+
+  return {
+    ...rest,
+    price: regular_price,
+  };
+}
+
+function toWooCommerceProductInput(product: NewProduct): WooCommerceProductInput {
+  const { price, ...rest } = product;
+
+  return {
+    ...rest,
+    regular_price: price,
+  };
 }
