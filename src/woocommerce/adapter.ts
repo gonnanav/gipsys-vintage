@@ -1,6 +1,6 @@
 import { Product, NewProduct } from '@/core/product';
 import { Application } from '@/core/application';
-import { WooCommerceNewProduct } from './product';
+import { toWooCommerceProductInput } from './product';
 import { WooCommerceApi } from './api';
 
 export class WooCommerceAdapter implements Application {
@@ -26,11 +26,11 @@ export class WooCommerceAdapter implements Application {
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
     const oldProducts = await this.getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
-    const wcNewProducts = WooCommerceNewProduct.fromDomain(newProducts);
+    const wcProducts = newProducts.map(toWooCommerceProductInput);
 
     const response = await this.api.fetch<{ create: Product[] }>('products/batch', {
       method: 'POST',
-      body: { delete: oldProductIds, create: wcNewProducts },
+      body: { delete: oldProductIds, create: wcProducts },
     });
 
     return response.create;
