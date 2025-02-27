@@ -1,7 +1,7 @@
 import { Product, NewProduct } from '@/core/product';
 import { Application } from '@/core/application';
-import { WooCommerceNewProduct } from './woocommerce-new-product';
-import { WooCommerceApi } from './woocommerce-api';
+import { WooCommerceNewProduct } from './product';
+import { WooCommerceApi } from './api';
 
 export class WooCommerceAdapter implements Application {
   private readonly api: WooCommerceApi;

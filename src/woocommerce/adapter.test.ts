@@ -1,6 +1,6 @@
 import { Product, NewProduct } from '@/core/product';
-import { WooCommerceApi } from './woocommerce-api';
-import { WooCommerceAdapter } from './woocommerce-adapter';
+import { WooCommerceApi } from './api';
+import { WooCommerceAdapter } from './adapter';
 
 let mockApi: jest.Mocked<WooCommerceApi>;
 let adapter: WooCommerceAdapter;

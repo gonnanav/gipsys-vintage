@@ -1,4 +1,4 @@
-import { WooCommerceNewProduct } from './woocommerce-new-product';
+import { WooCommerceNewProduct } from './product';
 import { NewProduct } from '@/core/product';
 
 it('creates a WooCommerce product corresponding to the domain product', () => {

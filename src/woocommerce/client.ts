@@ -1,4 +1,4 @@
-import { WooCommerceApi, WooCommerceRequestConfig } from './woocommerce-api';
+import { WooCommerceApi, WooCommerceRequestConfig } from './api';
 
 export class WooCommerceClient implements WooCommerceApi {
   private readonly headers: Record<string, string>;

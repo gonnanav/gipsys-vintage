@@ -1,6 +1,6 @@
 import { Application } from './core/application';
-import { WooCommerceAdapter } from './woocommerce/woocommerce-adapter';
-import { WooCommerceClient } from './woocommerce/woocommerce-client';
+import { WooCommerceAdapter } from './woocommerce/adapter';
+import { WooCommerceClient } from './woocommerce/client';
 
 export function createApplication(): Application {
   const wcUrl = getRequiredEnv('WOOCOMMERCE_URL');
