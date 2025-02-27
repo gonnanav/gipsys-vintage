@@ -4,7 +4,7 @@ export interface WooCommerceApi {
 
 export interface WooCommerceRequestConfig {
   method?: string;
-  searchParams?: URLSearchParams;
+  searchParams?: Record<string, string>;
   body?: unknown;
   cache?: RequestCache;
 }

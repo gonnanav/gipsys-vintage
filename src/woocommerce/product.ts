@@ -8,10 +8,10 @@ export interface WooCommerceProductInput {
 }
 
 export function toWooCommerceProductInput(product: NewProduct): WooCommerceProductInput {
+  const { price, ...rest } = product;
+
   return {
-    name: product.name,
-    regular_price: product.price,
-    description: product.description,
-    images: product.images,
+    ...rest,
+    regular_price: price,
   };
 }

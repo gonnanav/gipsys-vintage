@@ -20,7 +20,7 @@ export class WooCommerceClient implements WooCommerceApi {
 
     let url = new URL(endpoint, this.apiUrl);
     if (searchParams) {
-      url = new URL(`${endpoint}?${searchParams.toString()}`, this.apiUrl);
+      url = new URL(`${endpoint}?${new URLSearchParams(searchParams).toString()}`, this.apiUrl);
     }
 
     const response = await fetch(url, {

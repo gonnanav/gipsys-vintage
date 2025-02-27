@@ -11,9 +11,8 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProduct(slug: string): Promise<Product | null> {
-    const searchParams = new URLSearchParams({ slug });
     const products = await this.api.fetch<Product[]>('products', {
-      searchParams,
+      searchParams: { slug },
     });
 
     return products[0] ?? null;
