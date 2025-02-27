@@ -1,6 +1,6 @@
-import { WooCommerceRequestConfig } from './woocommerce-api';
+import { WooCommerceApi, WooCommerceRequestConfig } from './woocommerce-api';
 
-export class WooCommerceClient {
+export class WooCommerceClient implements WooCommerceApi {
   private readonly headers: Record<string, string>;
   private readonly apiUrl: URL;
 
@@ -15,8 +15,8 @@ export class WooCommerceClient {
     this.apiUrl = new URL('wp-json/wc/v3/', url);
   }
 
-  async fetch<T>(config: WooCommerceRequestConfig): Promise<T> {
-    const { method = 'GET', endpoint, searchParams, body, cache = 'no-store' } = config;
+  async fetch<T>(endpoint: string, config?: WooCommerceRequestConfig): Promise<T> {
+    const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
 
     let url = new URL(endpoint, this.apiUrl);
     if (searchParams) {

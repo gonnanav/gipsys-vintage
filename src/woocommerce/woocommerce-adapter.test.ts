@@ -17,8 +17,7 @@ describe('getProduct', () => {
     const result = await adapter.getProduct('non-existent');
 
     expect(result).toBeNull();
-    expect(mockClient.fetch).toHaveBeenCalledWith({
-      endpoint: 'products',
+    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'non-existent' }),
     });
   });
@@ -36,8 +35,7 @@ describe('getProduct', () => {
     const result = await adapter.getProduct('test-product');
 
     expect(result).toEqual(mockProduct);
-    expect(mockClient.fetch).toHaveBeenCalledWith({
-      endpoint: 'products',
+    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'test-product' }),
     });
   });
@@ -64,8 +62,7 @@ describe('getProduct', () => {
     const result = await adapter.getProduct('test-product');
 
     expect(result).toEqual(mockProducts[0]);
-    expect(mockClient.fetch).toHaveBeenCalledWith({
-      endpoint: 'products',
+    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'test-product' }),
     });
   });
@@ -78,9 +75,7 @@ describe('getProducts', () => {
     const result = await adapter.getProducts();
 
     expect(result).toEqual([]);
-    expect(mockClient.fetch).toHaveBeenCalledWith({
-      endpoint: 'products',
-    });
+    expect(mockClient.fetch).toHaveBeenCalledWith('products');
   });
 
   it('should return all products', async () => {
@@ -105,9 +100,7 @@ describe('getProducts', () => {
     const result = await adapter.getProducts();
 
     expect(result).toEqual(mockProducts);
-    expect(mockClient.fetch).toHaveBeenCalledWith({
-      endpoint: 'products',
-    });
+    expect(mockClient.fetch).toHaveBeenCalledWith('products');
   });
 });
 
@@ -149,12 +142,9 @@ describe('replaceAllProducts', () => {
 
     expect(result).toEqual(createdProducts);
     expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, {
-      endpoint: 'products',
-    });
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, {
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
-      endpoint: 'products/batch',
       body: {
         delete: [1],
         create: expect.any(Array),
@@ -189,12 +179,9 @@ describe('replaceAllProducts', () => {
 
     expect(result).toEqual(createdProducts);
     expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, {
-      endpoint: 'products',
-    });
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, {
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
-      endpoint: 'products/batch',
       body: {
         delete: [],
         create: expect.any(Array),
@@ -221,12 +208,9 @@ describe('replaceAllProducts', () => {
 
     expect(result).toEqual([]);
     expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, {
-      endpoint: 'products',
-    });
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, {
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
-      endpoint: 'products/batch',
       body: {
         delete: [1],
         create: [],

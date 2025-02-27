@@ -12,8 +12,7 @@ export class WooCommerceAdapter implements Application {
 
   async getProduct(slug: string): Promise<Product | null> {
     const searchParams = new URLSearchParams({ slug });
-    const products = await this.client.fetch<Product[]>({
-      endpoint: 'products',
+    const products = await this.client.fetch<Product[]>('products', {
       searchParams,
     });
 
@@ -21,9 +20,7 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProducts(): Promise<Product[]> {
-    return this.client.fetch<Product[]>({
-      endpoint: 'products',
-    });
+    return this.client.fetch<Product[]>('products');
   }
 
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
@@ -31,9 +28,8 @@ export class WooCommerceAdapter implements Application {
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcNewProducts = WooCommerceNewProduct.fromDomain(newProducts);
 
-    const response = await this.client.fetch<{ create: Product[] }>({
+    const response = await this.client.fetch<{ create: Product[] }>('products/batch', {
       method: 'POST',
-      endpoint: 'products/batch',
       body: { delete: oldProductIds, create: wcNewProducts },
     });
 
