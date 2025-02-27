@@ -4,15 +4,15 @@ import { WooCommerceNewProduct } from './woocommerce-new-product';
 import { WooCommerceApi } from './woocommerce-api';
 
 export class WooCommerceAdapter implements Application {
-  private readonly client: WooCommerceApi;
+  private readonly api: WooCommerceApi;
 
-  constructor(client: WooCommerceApi) {
-    this.client = client;
+  constructor(api: WooCommerceApi) {
+    this.api = api;
   }
 
   async getProduct(slug: string): Promise<Product | null> {
     const searchParams = new URLSearchParams({ slug });
-    const products = await this.client.fetch<Product[]>('products', {
+    const products = await this.api.fetch<Product[]>('products', {
       searchParams,
     });
 
@@ -20,7 +20,7 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProducts(): Promise<Product[]> {
-    return this.client.fetch<Product[]>('products');
+    return this.api.fetch<Product[]>('products');
   }
 
   async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
@@ -28,7 +28,7 @@ export class WooCommerceAdapter implements Application {
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcNewProducts = WooCommerceNewProduct.fromDomain(newProducts);
 
-    const response = await this.client.fetch<{ create: Product[] }>('products/batch', {
+    const response = await this.api.fetch<{ create: Product[] }>('products/batch', {
       method: 'POST',
       body: { delete: oldProductIds, create: wcNewProducts },
     });

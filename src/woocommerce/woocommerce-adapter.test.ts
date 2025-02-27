@@ -2,22 +2,22 @@ import { Product, NewProduct } from '@/core/product';
 import { WooCommerceApi } from './woocommerce-api';
 import { WooCommerceAdapter } from './woocommerce-adapter';
 
-let mockClient: jest.Mocked<WooCommerceApi>;
+let mockApi: jest.Mocked<WooCommerceApi>;
 let adapter: WooCommerceAdapter;
 
 beforeEach(() => {
-  mockClient = { fetch: jest.fn() } as jest.Mocked<WooCommerceApi>;
-  adapter = new WooCommerceAdapter(mockClient);
+  mockApi = { fetch: jest.fn() } as jest.Mocked<WooCommerceApi>;
+  adapter = new WooCommerceAdapter(mockApi);
 });
 
 describe('getProduct', () => {
   it('should return null when product is not found', async () => {
-    mockClient.fetch.mockResolvedValue([]);
+    mockApi.fetch.mockResolvedValue([]);
 
     const result = await adapter.getProduct('non-existent');
 
     expect(result).toBeNull();
-    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
+    expect(mockApi.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'non-existent' }),
     });
   });
@@ -30,12 +30,12 @@ describe('getProduct', () => {
       price: '100',
       description: 'Test description',
     };
-    mockClient.fetch.mockResolvedValue([mockProduct]);
+    mockApi.fetch.mockResolvedValue([mockProduct]);
 
     const result = await adapter.getProduct('test-product');
 
     expect(result).toEqual(mockProduct);
-    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
+    expect(mockApi.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'test-product' }),
     });
   });
@@ -57,12 +57,12 @@ describe('getProduct', () => {
         description: 'Test description 2',
       },
     ];
-    mockClient.fetch.mockResolvedValue(mockProducts);
+    mockApi.fetch.mockResolvedValue(mockProducts);
 
     const result = await adapter.getProduct('test-product');
 
     expect(result).toEqual(mockProducts[0]);
-    expect(mockClient.fetch).toHaveBeenCalledWith('products', {
+    expect(mockApi.fetch).toHaveBeenCalledWith('products', {
       searchParams: new URLSearchParams({ slug: 'test-product' }),
     });
   });
@@ -70,12 +70,12 @@ describe('getProduct', () => {
 
 describe('getProducts', () => {
   it('should return empty array when no products exist', async () => {
-    mockClient.fetch.mockResolvedValue([]);
+    mockApi.fetch.mockResolvedValue([]);
 
     const result = await adapter.getProducts();
 
     expect(result).toEqual([]);
-    expect(mockClient.fetch).toHaveBeenCalledWith('products');
+    expect(mockApi.fetch).toHaveBeenCalledWith('products');
   });
 
   it('should return all products', async () => {
@@ -95,12 +95,12 @@ describe('getProducts', () => {
         description: 'Description 2',
       },
     ];
-    mockClient.fetch.mockResolvedValue(mockProducts);
+    mockApi.fetch.mockResolvedValue(mockProducts);
 
     const result = await adapter.getProducts();
 
     expect(result).toEqual(mockProducts);
-    expect(mockClient.fetch).toHaveBeenCalledWith('products');
+    expect(mockApi.fetch).toHaveBeenCalledWith('products');
   });
 });
 
@@ -134,16 +134,16 @@ describe('replaceAllProducts', () => {
       },
     ];
 
-    mockClient.fetch
+    mockApi.fetch
       .mockResolvedValueOnce(oldProducts) // First call for getProducts
       .mockResolvedValueOnce({ create: createdProducts }); // Second call for batch update
 
     const result = await adapter.replaceAllProducts(newProducts);
 
     expect(result).toEqual(createdProducts);
-    expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
+    expect(mockApi.fetch).toHaveBeenCalledTimes(2);
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
       body: {
         delete: [1],
@@ -171,16 +171,16 @@ describe('replaceAllProducts', () => {
       },
     ];
 
-    mockClient.fetch
+    mockApi.fetch
       .mockResolvedValueOnce(oldProducts)
       .mockResolvedValueOnce({ create: createdProducts });
 
     const result = await adapter.replaceAllProducts(newProducts);
 
     expect(result).toEqual(createdProducts);
-    expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
+    expect(mockApi.fetch).toHaveBeenCalledTimes(2);
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
       body: {
         delete: [],
@@ -202,14 +202,14 @@ describe('replaceAllProducts', () => {
     const newProducts: NewProduct[] = [];
     const emptyResponse = { create: [] };
 
-    mockClient.fetch.mockResolvedValueOnce(oldProducts).mockResolvedValueOnce(emptyResponse);
+    mockApi.fetch.mockResolvedValueOnce(oldProducts).mockResolvedValueOnce(emptyResponse);
 
     const result = await adapter.replaceAllProducts(newProducts);
 
     expect(result).toEqual([]);
-    expect(mockClient.fetch).toHaveBeenCalledTimes(2);
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(1, 'products');
-    expect(mockClient.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
+    expect(mockApi.fetch).toHaveBeenCalledTimes(2);
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(1, 'products');
+    expect(mockApi.fetch).toHaveBeenNthCalledWith(2, 'products/batch', {
       method: 'POST',
       body: {
         delete: [1],
