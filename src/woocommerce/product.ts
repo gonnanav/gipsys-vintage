@@ -1,3 +1,6 @@
+import { Product, ProductCreate } from '@/core/product';
+import { WooCommerceCategory } from './category';
+
 export interface WooCommerceProduct {
   id: number;
   name: string;
@@ -5,6 +8,7 @@ export interface WooCommerceProduct {
   regular_price: string;
   description: string;
   images: WooCommerceProductImage[];
+  categories: WooCommerceCategory[];
 }
 
 export interface WooCommerceProductInput {
@@ -12,6 +16,7 @@ export interface WooCommerceProductInput {
   regular_price?: string;
   description?: string;
   images?: WooCommerceProductImage[];
+  categories?: { id: number }[];
 }
 
 export interface WooCommerceProductBatchUpdate {
@@ -27,4 +32,26 @@ export interface WooCommerceProductBatchUpdateResponse {
 export interface WooCommerceProductImage {
   src: string;
   alt?: string;
+}
+
+export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
+  const { regular_price, categories, ...rest } = product;
+  const categoryId = categories?.[0]?.id;
+
+  return {
+    ...rest,
+    price: regular_price,
+    ...(categoryId && { categoryId }),
+  };
+}
+
+export function toWooCommerceProductInput(product: ProductCreate): WooCommerceProductInput {
+  const { price, categoryId, ...rest } = product;
+  const categories = categoryId && [{ id: categoryId }];
+
+  return {
+    ...rest,
+    regular_price: price,
+    ...(categories && { categories }),
+  };
 }

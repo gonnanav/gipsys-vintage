@@ -16,6 +16,9 @@ export default defineConfig({
         'seed:products': async (newProducts) => {
           return app.replaceAllProducts(newProducts);
         },
+        'seed:categories': async (newCategories) => {
+          return app.replaceAllCategories(newCategories);
+        },
       });
     },
     baseUrl: process.env.E2E_BASE_URL || 'http://localhost:3000',

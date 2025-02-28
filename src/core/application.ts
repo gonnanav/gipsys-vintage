@@ -1,4 +1,5 @@
 import { ProductCreate, Product } from './product';
+import { Category, CategoryCreate } from './category';
 
 /**
  * Primary port for the application, following the Ports and Adapters (Hexagonal Architecture) pattern.
@@ -44,4 +45,14 @@ export interface Application {
    * @throws May throw if there's a validation, network, or system error
    */
   replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]>;
+
+  /**
+   * Replaces all product categories with a new set of categories.
+   * This is a destructive operation that should be used with caution.
+   *
+   * @param newCategories - Array of new categories to replace the existing ones
+   * @returns Promise resolving to the array of created categories with their assigned IDs
+   * @throws May throw if there's a validation, network, or system error
+   */
+  replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]>;
 }

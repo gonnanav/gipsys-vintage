@@ -17,6 +17,9 @@ export interface ProductCreate {
 
   /** Optional array of product images */
   images?: ProductImage[];
+
+  /** Optional reference to the category this product belongs to */
+  categoryId?: number;
 }
 
 /**
@@ -45,6 +48,9 @@ export interface Product {
 
   /** Optional array of product images */
   images?: ProductImage[];
+
+  /** Optional reference to the category this product belongs to */
+  categoryId?: number;
 }
 
 /**

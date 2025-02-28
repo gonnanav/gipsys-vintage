@@ -4,6 +4,11 @@ import {
   WooCommerceProductBatchUpdate,
   WooCommerceProductBatchUpdateResponse,
 } from './product';
+import {
+  WooCommerceCategory,
+  WooCommerceCategoryBatchUpdate,
+  WooCommerceCategoryBatchUpdateResponse,
+} from './category';
 
 interface WooCommerceRequestConfig {
   method?: string;
@@ -53,6 +58,19 @@ export class WooCommerceClient implements WooCommerceApi {
     batchUpdate: WooCommerceProductBatchUpdate,
   ): Promise<WooCommerceProductBatchUpdateResponse> {
     return this.fetch<WooCommerceProductBatchUpdateResponse>('products/batch', {
+      method: 'POST',
+      body: batchUpdate,
+    });
+  }
+
+  async getCategories(searchParams?: Record<string, string>): Promise<WooCommerceCategory[]> {
+    return this.fetch<WooCommerceCategory[]>('products/categories', { searchParams });
+  }
+
+  async batchUpdateCategories(
+    batchUpdate: WooCommerceCategoryBatchUpdate,
+  ): Promise<WooCommerceCategoryBatchUpdateResponse> {
+    return this.fetch<WooCommerceCategoryBatchUpdateResponse>('products/categories/batch', {
       method: 'POST',
       body: batchUpdate,
     });

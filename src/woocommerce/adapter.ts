@@ -1,7 +1,9 @@
 import { Product, ProductCreate } from '@/core/product';
+import { Category, CategoryCreate } from '@/core/category';
 import { Application } from '@/core/application';
-import { WooCommerceProduct, WooCommerceProductInput } from './product';
 import { WooCommerceApi } from './api';
+import { fromWooCommerceProduct, toWooCommerceProductInput } from './product';
+import { fromWooCommerceCategory, toWooCommerceCategoryInput } from './category';
 
 export class WooCommerceAdapter implements Application {
   private readonly api: WooCommerceApi;
@@ -36,22 +38,20 @@ export class WooCommerceAdapter implements Application {
 
     return createdProducts.map(fromWooCommerceProduct);
   }
-}
 
-function fromWooCommerceProduct(product: WooCommerceProduct): Product {
-  const { regular_price, ...rest } = product;
+  async replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {
+    const oldCategories = await this.api.getCategories();
+    const oldCategoryIds = oldCategories.map((category) => category.id);
+    const wcCategories = newCategories.map(toWooCommerceCategoryInput);
 
-  return {
-    ...rest,
-    price: regular_price,
-  };
-}
+    await this.api.batchUpdateCategories({
+      delete: oldCategoryIds,
+    });
 
-function toWooCommerceProductInput(product: ProductCreate): WooCommerceProductInput {
-  const { price, ...rest } = product;
+    const { create: createdCategories = [] } = await this.api.batchUpdateCategories({
+      create: wcCategories,
+    });
 
-  return {
-    ...rest,
-    regular_price: price,
-  };
+    return createdCategories.map(fromWooCommerceCategory);
+  }
 }
