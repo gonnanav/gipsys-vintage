@@ -1,10 +1,12 @@
-export interface WooCommerceApi {
-  fetch<T>(endpoint: string, config?: WooCommerceRequestConfig): Promise<T>;
-}
+import {
+  WooCommerceProduct,
+  WooCommerceProductBatchUpdate,
+  WooCommerceProductBatchUpdateResponse,
+} from './product';
 
-export interface WooCommerceRequestConfig {
-  method?: string;
-  searchParams?: Record<string, string>;
-  body?: unknown;
-  cache?: RequestCache;
+export interface WooCommerceApi {
+  getProducts(searchParams?: Record<string, string>): Promise<WooCommerceProduct[]>;
+  batchUpdateProducts(
+    batchUpdate: WooCommerceProductBatchUpdate,
+  ): Promise<WooCommerceProductBatchUpdateResponse>;
 }

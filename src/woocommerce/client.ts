@@ -1,4 +1,16 @@
-import { WooCommerceApi, WooCommerceRequestConfig } from './api';
+import { WooCommerceApi } from './api';
+import {
+  WooCommerceProduct,
+  WooCommerceProductBatchUpdate,
+  WooCommerceProductBatchUpdateResponse,
+} from './product';
+
+interface WooCommerceRequestConfig {
+  method?: string;
+  searchParams?: Record<string, string>;
+  body?: unknown;
+  cache?: RequestCache;
+}
 
 export class WooCommerceClient implements WooCommerceApi {
   private readonly headers: Record<string, string>;
@@ -15,7 +27,7 @@ export class WooCommerceClient implements WooCommerceApi {
     this.apiUrl = new URL('wp-json/wc/v3/', url);
   }
 
-  async fetch<T>(endpoint: string, config?: WooCommerceRequestConfig): Promise<T> {
+  private async fetch<T>(endpoint: string, config?: WooCommerceRequestConfig): Promise<T> {
     const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
 
     let url = new URL(endpoint, this.apiUrl);
@@ -31,5 +43,18 @@ export class WooCommerceClient implements WooCommerceApi {
     });
 
     return response.json();
+  }
+
+  async getProducts(searchParams?: Record<string, string>): Promise<WooCommerceProduct[]> {
+    return this.fetch<WooCommerceProduct[]>('products', { searchParams });
+  }
+
+  async batchUpdateProducts(
+    batchUpdate: WooCommerceProductBatchUpdate,
+  ): Promise<WooCommerceProductBatchUpdateResponse> {
+    return this.fetch<WooCommerceProductBatchUpdateResponse>('products/batch', {
+      method: 'POST',
+      body: batchUpdate,
+    });
   }
 }

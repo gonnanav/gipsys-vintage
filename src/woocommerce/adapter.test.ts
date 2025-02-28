@@ -7,24 +7,24 @@ let api: jest.Mocked<WooCommerceApi>;
 let adapter: WooCommerceAdapter;
 
 beforeEach(() => {
-  api = { fetch: jest.fn().mockResolvedValue([]) };
+  api = {
+    getProducts: jest.fn().mockResolvedValue([]),
+    batchUpdateProducts: jest.fn().mockResolvedValue({}),
+  };
   adapter = new WooCommerceAdapter(api);
 });
 
 describe('getProduct', () => {
-  it('calls api.fetch with products endpoint and product slug', async () => {
+  it('calls api getProducts with product slug', async () => {
     const slug = 'test-product';
-
     await adapter.getProduct(slug);
 
-    expect(api.fetch).toHaveBeenCalledWith('products', {
-      searchParams: { slug },
-    });
+    expect(api.getProducts).toHaveBeenCalledWith({ slug });
   });
 
   it('returns null when the api returns empty array', async () => {
     const slug = 'non-existent-product';
-    api.fetch.mockResolvedValue([]);
+    api.getProducts.mockResolvedValue([]);
 
     const product = await adapter.getProduct(slug);
 
@@ -59,7 +59,7 @@ describe('getProduct', () => {
       description: '',
       images: [],
     };
-    api.fetch.mockResolvedValue(wcProducts);
+    api.getProducts.mockResolvedValue(wcProducts);
 
     const product = await adapter.getProduct(slug);
 
@@ -68,13 +68,13 @@ describe('getProduct', () => {
 });
 
 describe('getProducts', () => {
-  it('calls api.fetch with products endpoint', async () => {
+  it('calls api getProducts with no arguments', async () => {
     await adapter.getProducts();
 
-    expect(api.fetch).toHaveBeenCalledWith('products');
+    expect(api.getProducts).toHaveBeenCalledWith();
   });
 
-  it('returns products matching all products returned from the api', async () => {
+  it('returns matching products to all products returned from the api', async () => {
     const wcProducts: WooCommerceProduct[] = [
       {
         id: 1,
@@ -111,7 +111,7 @@ describe('getProducts', () => {
         images: [],
       },
     ];
-    api.fetch.mockResolvedValue(wcProducts);
+    api.getProducts.mockResolvedValue(wcProducts);
 
     const products = await adapter.getProducts();
 
@@ -120,7 +120,7 @@ describe('getProducts', () => {
 });
 
 describe('replaceAllProducts', () => {
-  it('calls api.fetch with products/batch endpoint', async () => {
+  it('calls api batchUpdateProducts to delete existing products and create new ones', async () => {
     const existingWcProducts: WooCommerceProduct[] = [
       {
         id: 1,
@@ -148,15 +148,12 @@ describe('replaceAllProducts', () => {
       { name: 'New Product 2', regular_price: '400' },
     ];
 
-    api.fetch.mockResolvedValue(existingWcProducts);
+    api.getProducts.mockResolvedValue(existingWcProducts);
     await adapter.replaceAllProducts(newProducts);
 
-    expect(api.fetch).toHaveBeenCalledWith('products/batch', {
-      method: 'POST',
-      body: {
-        delete: [1, 2],
-        create: newWcProducts,
-      },
+    expect(api.batchUpdateProducts).toHaveBeenCalledWith({
+      delete: [1, 2],
+      create: newWcProducts,
     });
   });
 });

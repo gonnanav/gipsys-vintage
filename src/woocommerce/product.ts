@@ -15,3 +15,13 @@ export interface WooCommerceProductInput {
   description?: string;
   images?: ProductImage[];
 }
+
+export interface WooCommerceProductBatchUpdate {
+  delete?: number[];
+  create?: WooCommerceProductInput[];
+}
+
+export interface WooCommerceProductBatchUpdateResponse {
+  delete?: WooCommerceProduct[];
+  create?: WooCommerceProduct[];
+}

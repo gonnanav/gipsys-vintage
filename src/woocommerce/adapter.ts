@@ -11,9 +11,7 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProduct(slug: string): Promise<Product | null> {
-    const wcProducts = await this.api.fetch<WooCommerceProduct[]>('products', {
-      searchParams: { slug },
-    });
+    const wcProducts = await this.api.getProducts({ slug });
 
     if (!wcProducts || wcProducts.length === 0) return null;
 
@@ -21,7 +19,7 @@ export class WooCommerceAdapter implements Application {
   }
 
   async getProducts(): Promise<Product[]> {
-    const wcProducts = await this.api.fetch<WooCommerceProduct[]>('products');
+    const wcProducts = await this.api.getProducts();
 
     return wcProducts.map(fromWooCommerceProduct);
   }
@@ -31,12 +29,12 @@ export class WooCommerceAdapter implements Application {
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcProducts = newProducts.map(toWooCommerceProductInput);
 
-    const response = await this.api.fetch<{ create: Product[] }>('products/batch', {
-      method: 'POST',
-      body: { delete: oldProductIds, create: wcProducts },
+    const { create: createdProducts = [] } = await this.api.batchUpdateProducts({
+      delete: oldProductIds,
+      create: wcProducts,
     });
 
-    return response.create;
+    return createdProducts.map(fromWooCommerceProduct);
   }
 }
 
