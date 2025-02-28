@@ -2,7 +2,7 @@
  * Represents a new product to be created in the system.
  * This type is used when creating products, before they have been assigned an ID and slug.
  */
-export interface NewProduct {
+export interface ProductCreate {
   /** The product's display name */
   name: string;
 

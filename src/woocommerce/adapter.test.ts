@@ -1,4 +1,4 @@
-import { Product, NewProduct } from '@/core/product';
+import { Product, ProductCreate } from '@/core/product';
 import { WooCommerceApi } from './api';
 import { WooCommerceAdapter } from './adapter';
 import { WooCommerceProduct, WooCommerceProductInput } from './product';
@@ -139,7 +139,7 @@ describe('replaceAllProducts', () => {
         images: [],
       },
     ];
-    const newProducts: NewProduct[] = [
+    const newProducts: ProductCreate[] = [
       { name: 'New Product 1', price: '300' },
       { name: 'New Product 2', price: '400' },
     ];

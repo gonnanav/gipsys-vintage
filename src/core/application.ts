@@ -1,4 +1,4 @@
-import { NewProduct, Product } from './product';
+import { ProductCreate, Product } from './product';
 
 /**
  * Primary port for the application, following the Ports and Adapters (Hexagonal Architecture) pattern.
@@ -43,5 +43,5 @@ export interface Application {
    * @returns Promise resolving to the array of created products with their assigned IDs
    * @throws May throw if there's a validation, network, or system error
    */
-  replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]>;
+  replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]>;
 }

@@ -1,4 +1,4 @@
-import { Product, NewProduct } from '@/core/product';
+import { Product, ProductCreate } from '@/core/product';
 import { Application } from '@/core/application';
 import { WooCommerceProduct, WooCommerceProductInput } from './product';
 import { WooCommerceApi } from './api';
@@ -24,7 +24,7 @@ export class WooCommerceAdapter implements Application {
     return wcProducts.map(fromWooCommerceProduct);
   }
 
-  async replaceAllProducts(newProducts: NewProduct[]): Promise<Product[]> {
+  async replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]> {
     const oldProducts = await this.getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcProducts = newProducts.map(toWooCommerceProductInput);
@@ -47,7 +47,7 @@ function fromWooCommerceProduct(product: WooCommerceProduct): Product {
   };
 }
 
-function toWooCommerceProductInput(product: NewProduct): WooCommerceProductInput {
+function toWooCommerceProductInput(product: ProductCreate): WooCommerceProductInput {
   const { price, ...rest } = product;
 
   return {
