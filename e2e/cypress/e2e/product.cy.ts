@@ -1,8 +1,8 @@
-import { Product, NewProduct } from '@/core/product';
+import { Product, ProductCreate } from '@/core/product';
 
 describe('Product Page', () => {
   it('displays the product details and image gallery', () => {
-    const productToSeed: NewProduct = {
+    const productToSeed: ProductCreate = {
       name: 'product1',
       price: '100',
       description: 'A vintage dress from the 80s',

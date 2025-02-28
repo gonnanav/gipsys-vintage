@@ -1,11 +1,11 @@
-import { NewProduct, Product } from '@/core/product';
+import { Product, ProductCreate } from '@/core/product';
 
 const productCard = '[data-testid="product-card"]';
 const productCardImage = '[data-testid="product-card-image"]';
 
 describe('Shop Page', () => {
   it('displays all products and navigates to product page when clicking product', () => {
-    const productsToSeed: NewProduct[] = [
+    const productsToSeed: ProductCreate[] = [
       { name: 'product1', price: '100' },
       { name: 'product2', price: '50' },
     ];
