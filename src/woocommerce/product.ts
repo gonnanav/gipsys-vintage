@@ -1,19 +1,17 @@
-import { ProductImage } from '@/core/product';
-
 export interface WooCommerceProduct {
   id: number;
   name: string;
   slug: string;
   regular_price: string;
   description: string;
-  images: ProductImage[];
+  images: WooCommerceProductImage[];
 }
 
 export interface WooCommerceProductInput {
   name?: string;
   regular_price?: string;
   description?: string;
-  images?: ProductImage[];
+  images?: WooCommerceProductImage[];
 }
 
 export interface WooCommerceProductBatchUpdate {
@@ -24,4 +22,9 @@ export interface WooCommerceProductBatchUpdate {
 export interface WooCommerceProductBatchUpdateResponse {
   delete?: WooCommerceProduct[];
   create?: WooCommerceProduct[];
+}
+
+export interface WooCommerceProductImage {
+  src: string;
+  alt?: string;
 }
