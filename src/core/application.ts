@@ -1,5 +1,5 @@
 import { ProductCreate, Product } from './product';
-import { Category, CategoryCreate } from './category';
+import { Category, CategoryCreate, CategoryWithProducts } from './category';
 
 /**
  * Primary port for the application, following the Ports and Adapters (Hexagonal Architecture) pattern.
@@ -55,4 +55,13 @@ export interface Application {
    * @throws May throw if there's a validation, network, or system error
    */
   replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]>;
+
+  /**
+   * Retrieves a category and all its products by the category's URL slug.
+   *
+   * @param slug - The URL-friendly identifier for the category
+   * @returns Promise resolving to the category and its products if found, null otherwise
+   * @throws May throw if there's a network or system error
+   */
+  getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null>;
 }

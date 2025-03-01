@@ -1,5 +1,5 @@
 import { Product, ProductCreate } from '@/core/product';
-import { Category, CategoryCreate } from '@/core/category';
+import { Category, CategoryCreate, CategoryWithProducts } from '@/core/category';
 import { Application } from '@/core/application';
 import { WooCommerceApi } from './api';
 import { fromWooCommerceProduct, toWooCommerceProductInput } from './product';
@@ -53,5 +53,18 @@ export class WooCommerceAdapter implements Application {
     });
 
     return createdCategories.map(fromWooCommerceCategory);
+  }
+
+  async getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
+    const categories = await this.api.getCategories({ slug });
+    if (!categories.length) return null;
+    const category = categories[0];
+
+    const products = await this.api.getProducts({ category: category.id.toString() });
+
+    return {
+      ...fromWooCommerceCategory(category),
+      products: products.map(fromWooCommerceProduct),
+    };
   }
 }
