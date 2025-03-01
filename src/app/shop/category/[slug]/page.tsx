@@ -1,7 +1,5 @@
 import { createApplication } from '@/composition-root';
-import { ProductList } from '../../components/product-list/product-list';
-import { ProductCard } from '../../components/product-card/product-card';
-import { ShopLayout } from '../../components/shop-layout/shop-layout';
+import { ShopPageView } from '../../components/shop-page-view/shop-page-view';
 import { notFound } from 'next/navigation';
 
 const app = createApplication();
@@ -15,9 +13,5 @@ export default async function Page({ params }: PageProps) {
   const category = await app.getCategoryWithProducts(slug);
   if (!category) notFound();
 
-  return (
-    <ShopLayout title={category.name}>
-      <ProductList products={category.products} ProductComponent={ProductCard} />
-    </ShopLayout>
-  );
+  return <ShopPageView title={category.name} products={category.products} />;
 }

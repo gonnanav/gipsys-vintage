@@ -1,16 +1,10 @@
 import { createApplication } from '@/composition-root';
-import { ProductList } from './components/product-list/product-list';
-import { ProductCard } from './components/product-card/product-card';
-import { ShopLayout } from './components/shop-layout/shop-layout';
+import { ShopPageView } from './components/shop-page-view/shop-page-view';
 
 const app = createApplication();
 
 export default async function Page() {
   const products = await app.getProducts();
 
-  return (
-    <ShopLayout title="חנות">
-      <ProductList products={products} ProductComponent={ProductCard} />
-    </ShopLayout>
-  );
+  return <ShopPageView title="חנות" products={products} />;
 }
