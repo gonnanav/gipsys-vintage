@@ -11,12 +11,18 @@ describe('Shop Page', () => {
     cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
       cy.visit('shop');
 
-      cy.verifyAppHeaderVisible();
+      cy.getAppHeader().should('be.visible');
 
-      cy.verifyPageHeading('חנות');
-      cy.verifyProductCardsCount(products.length);
+      cy.getPageHeading('חנות');
+      cy.getProductCards().should('have.length', products.length);
 
-      products.forEach((product) => cy.verifyProductCard(product));
+      products.forEach((product) => {
+        cy.getProductCard(product.name).within(() => {
+          cy.contains(product.name).should('be.visible');
+          cy.contains(product.price).should('be.visible');
+          cy.getByTestId('product-card-image').should('be.visible');
+        });
+      });
 
       const arbitraryProduct = products[0];
       cy.getProductCard(arbitraryProduct.name).click();
@@ -43,14 +49,20 @@ describe('Shop Page', () => {
       cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
         cy.visit(`shop/category/${pantsCategory.slug}`);
 
-        cy.verifyAppHeaderVisible();
+        cy.getAppHeader().should('be.visible');
 
-        cy.verifyPageHeading(pantsCategory.name);
+        cy.getPageHeading(pantsCategory.name);
 
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
-        cy.verifyProductCardsCount(pantsProducts.length);
+        cy.getProductCards().should('have.length', pantsProducts.length);
 
-        pantsProducts.forEach((product) => cy.verifyProductCard(product));
+        pantsProducts.forEach((product) => {
+          cy.getProductCard(product.name).within(() => {
+            cy.contains(product.name).should('be.visible');
+            cy.contains(product.price).should('be.visible');
+            cy.getByTestId('product-card-image').should('be.visible');
+          });
+        });
 
         const shirtProduct = products.find((p) => p.categoryId === shirtsCategory.id);
         cy.getProductCard(shirtProduct.name).should('not.exist');

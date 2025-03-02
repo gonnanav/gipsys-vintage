@@ -13,9 +13,9 @@ describe('Product Page', () => {
 
       cy.visit(`product/${slug}`);
 
-      cy.verifyAppHeaderVisible();
+      cy.getAppHeader().should('be.visible');
 
-      cy.verifyPageHeading(name);
+      cy.getPageHeading(name).should('be.visible');
       cy.contains(price).should('be.visible');
       cy.contains(description).should('be.visible');
       cy.getByTestId('product-gallery').should('be.visible');
@@ -28,6 +28,6 @@ describe('Product Page', () => {
     cy.request({ url, failOnStatusCode: false }).its('status').should('equal', 404);
     cy.visit(url, { failOnStatusCode: false });
 
-    cy.verifyAppHeaderVisible();
+    cy.getAppHeader().should('be.visible');
   });
 });
