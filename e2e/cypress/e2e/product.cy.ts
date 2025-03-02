@@ -11,7 +11,7 @@ describe('Product Page', () => {
     cy.task<Product[]>('seed:products', [productToSeed]).then(([product]) => {
       cy.visit(`product/${product.slug}`);
 
-      cy.get('[data-testid="app-header"]').should('be.visible');
+      cy.assertHeaderVisible();
 
       cy.contains(product.name).should('be.visible');
       cy.contains(product.price).should('be.visible');
@@ -26,6 +26,6 @@ describe('Product Page', () => {
     cy.request({ url, failOnStatusCode: false }).its('status').should('equal', 404);
     cy.visit(url, { failOnStatusCode: false });
 
-    cy.get('[data-testid="app-header"]').should('be.visible');
+    cy.assertHeaderVisible();
   });
 });

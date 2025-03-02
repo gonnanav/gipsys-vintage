@@ -14,7 +14,7 @@ describe('Shop Page', () => {
     cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
       cy.visit('shop');
 
-      cy.get('[data-testid="app-header"]').should('be.visible');
+      cy.assertHeaderVisible();
 
       cy.contains('h1', 'חנות').should('be.visible');
       cy.get(productCard).should('have.length', products.length);
@@ -55,7 +55,7 @@ describe('Shop Page', () => {
         // Visit the pants category page
         cy.visit(`shop/category/${pantsCategory.slug}`);
 
-        cy.get('[data-testid="app-header"]').should('be.visible');
+        cy.assertHeaderVisible();
 
         // Verify we're on the correct category page
         cy.contains('h1', pantsCategory.name).should('be.visible');
