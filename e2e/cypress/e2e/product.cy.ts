@@ -8,7 +8,7 @@ describe('Product Page', () => {
       description: 'A vintage dress from the 80s',
     };
 
-    cy.task<Product[]>('seed:products', [productToSeed]).then(([product]) => {
+    cy.task<Product>('seed:product', productToSeed).then((product) => {
       const { name, slug, price, description } = product;
 
       cy.visit(`product/${slug}`);
