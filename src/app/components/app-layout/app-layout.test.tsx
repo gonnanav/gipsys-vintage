@@ -15,6 +15,12 @@ it('renders the main content', () => {
   expect(screen.getByRole('main')).toBeInTheDocument();
 });
 
+it('renders the app header', () => {
+  renderAppLayout();
+
+  expect(screen.getByTestId('app-header')).toBeInTheDocument();
+});
+
 function renderAppLayout() {
   return render(
     <AppLayout>

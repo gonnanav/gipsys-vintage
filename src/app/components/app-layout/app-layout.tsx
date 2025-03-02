@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Box from '@mui/material/Box';
+import { AppHeader } from './app-header/app-header';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -7,8 +8,11 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <Box component="main" sx={{ padding: { xs: 2, sm: 3 } }}>
-      {children}
-    </Box>
+    <>
+      <AppHeader />
+      <Box component="main" sx={{ padding: { xs: 2, sm: 3 } }}>
+        {children}
+      </Box>
+    </>
   );
 }
