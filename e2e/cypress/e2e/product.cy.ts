@@ -14,8 +14,8 @@ describe('Product Page', () => {
       cy.visit(`product/${slug}`);
 
       cy.verifyAppHeaderVisible();
-      cy.verifyPageHeading(name);
 
+      cy.verifyPageHeading(name);
       cy.contains(price).should('be.visible');
       cy.contains(description).should('be.visible');
       cy.getByTestId('product-gallery').should('be.visible');
