@@ -6,9 +6,9 @@ declare global {
     interface Chainable {
       /**
        * Custom command to verify that the app header is visible
-       * @example cy.assertHeaderVisible()
+       * @example cy.verifyAppHeaderVisible()
        */
-      assertHeaderVisible(): Chainable<JQuery<HTMLElement>>;
+      verifyAppHeaderVisible(): Chainable<JQuery<HTMLElement>>;
 
       /**
        * Custom command to verify the main heading of a page
@@ -39,8 +39,7 @@ declare global {
   }
 }
 
-// Custom command to verify the app header is visible
-Cypress.Commands.add('assertHeaderVisible', () => {
+Cypress.Commands.add('verifyAppHeaderVisible', () => {
   return cy.getByTestId('app-header').should('be.visible');
 });
 

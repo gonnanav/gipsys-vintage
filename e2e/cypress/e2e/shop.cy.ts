@@ -11,7 +11,7 @@ describe('Shop Page', () => {
     cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
       cy.visit('shop');
 
-      cy.assertHeaderVisible();
+      cy.verifyAppHeaderVisible();
 
       cy.verifyPageHeading('חנות');
       cy.getByTestId('product-card').should('have.length', products.length);
@@ -46,7 +46,7 @@ describe('Shop Page', () => {
         // Visit the pants category page
         cy.visit(`shop/category/${pantsCategory.slug}`);
 
-        cy.assertHeaderVisible();
+        cy.verifyAppHeaderVisible();
 
         // Verify we're on the correct category page
         cy.verifyPageHeading(pantsCategory.name);
