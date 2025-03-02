@@ -9,13 +9,15 @@ describe('Product Page', () => {
     };
 
     cy.task<Product[]>('seed:products', [productToSeed]).then(([product]) => {
-      cy.visit(`product/${product.slug}`);
+      const { name, slug, price, description } = product;
+
+      cy.visit(`product/${slug}`);
 
       cy.verifyAppHeaderVisible();
+      cy.verifyPageHeading(name);
 
-      cy.verifyPageHeading(product.name);
-      cy.contains(product.price).should('be.visible');
-      cy.contains(product.description).should('be.visible');
+      cy.contains(price).should('be.visible');
+      cy.contains(description).should('be.visible');
       cy.getByTestId('product-gallery').should('be.visible');
     });
   });
