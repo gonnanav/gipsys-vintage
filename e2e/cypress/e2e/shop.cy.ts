@@ -13,19 +13,13 @@ describe('Shop Page', () => {
 
       cy.assertHeaderVisible();
 
-      cy.contains('h1', 'חנות').should('be.visible');
+      cy.verifyPageHeading('חנות');
       cy.getByTestId('product-card').should('have.length', products.length);
 
-      products.forEach((product) => {
-        cy.getProductCard(product.name).within(() => {
-          cy.contains(product.name).should('be.visible');
-          cy.contains(product.price).should('be.visible');
-          cy.getByTestId('product-card-image').should('be.visible');
-        });
-      });
+      products.forEach((product) => cy.verifyProductCard(product));
 
       const arbitraryProduct = products[0];
-      cy.contains(arbitraryProduct.name).click();
+      cy.getProductCard(arbitraryProduct.name).click();
       cy.location('pathname').should('eq', `/product/${arbitraryProduct.slug}`);
     });
   });
@@ -55,24 +49,18 @@ describe('Shop Page', () => {
         cy.assertHeaderVisible();
 
         // Verify we're on the correct category page
-        cy.contains('h1', pantsCategory.name).should('be.visible');
+        cy.verifyPageHeading(pantsCategory.name);
 
         // Should only show products from the pants category
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
         cy.getByTestId('product-card').should('have.length', pantsProducts.length);
 
         // Verify each pants product is displayed
-        pantsProducts.forEach((product) => {
-          cy.getProductCard(product.name).within(() => {
-            cy.contains(product.name).should('be.visible');
-            cy.contains(product.price).should('be.visible');
-            cy.getByTestId('product-card-image').should('be.visible');
-          });
-        });
+        pantsProducts.forEach((product) => cy.verifyProductCard(product));
 
         // Verify shirts are not shown
         const shirtProduct = products.find((p) => p.categoryId === shirtsCategory.id);
-        cy.contains(shirtProduct.name).should('not.exist');
+        cy.getProductCard(shirtProduct.name).should('not.exist');
       });
     });
   });

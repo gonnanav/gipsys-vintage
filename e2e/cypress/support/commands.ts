@@ -1,14 +1,5 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
+import { Product } from '@/core/product';
 
-// eslint-disable-next-line @typescript-eslint/prefer-namespace-keyword
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -18,6 +9,13 @@ declare global {
        * @example cy.assertHeaderVisible()
        */
       assertHeaderVisible(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to verify the main heading of a page
+       * @param text The expected text of the heading
+       * @example cy.verifyPageHeading('Shop')
+       */
+      verifyPageHeading(text: string): Chainable<JQuery<HTMLElement>>;
 
       /**
        * Custom command to select DOM element by data-testid attribute
@@ -30,6 +28,13 @@ declare global {
        * @example cy.getProductCard('Blue Jeans')
        */
       getProductCard(productName: string): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to verify a product card based on a product's properties
+       * @param product The product that the product card should match
+       * @example cy.verifyProductCard(someProduct)
+       */
+      verifyProductCard(product: Product): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -37,6 +42,10 @@ declare global {
 // Custom command to verify the app header is visible
 Cypress.Commands.add('assertHeaderVisible', () => {
   return cy.getByTestId('app-header').should('be.visible');
+});
+
+Cypress.Commands.add('verifyPageHeading', (text) => {
+  return cy.contains('h1', text).should('be.visible');
 });
 
 // Custom command to select elements by data-testid attribute
@@ -47,6 +56,14 @@ Cypress.Commands.add('getByTestId', (testId) => {
 // Custom command to select product card by name
 Cypress.Commands.add('getProductCard', (productName) => {
   return cy.contains('[data-testid="product-card"]', productName);
+});
+
+Cypress.Commands.add('verifyProductCard', (product) => {
+  return cy.getProductCard(product.name).within(() => {
+    cy.contains(product.name).should('be.visible');
+    cy.contains(product.price).should('be.visible');
+    cy.getByTestId('product-card-image').should('be.visible');
+  });
 });
 
 export {};

@@ -13,7 +13,7 @@ describe('Product Page', () => {
 
       cy.assertHeaderVisible();
 
-      cy.contains(product.name).should('be.visible');
+      cy.verifyPageHeading(product.name);
       cy.contains(product.price).should('be.visible');
       cy.contains(product.description).should('be.visible');
       cy.getByTestId('product-gallery').should('be.visible');
