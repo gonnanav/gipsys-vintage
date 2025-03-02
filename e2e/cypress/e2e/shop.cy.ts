@@ -14,7 +14,7 @@ describe('Shop Page', () => {
       cy.verifyAppHeaderVisible();
 
       cy.verifyPageHeading('חנות');
-      cy.getByTestId('product-card').should('have.length', products.length);
+      cy.verifyProductCardsCount(products.length);
 
       products.forEach((product) => cy.verifyProductCard(product));
 
@@ -30,7 +30,6 @@ describe('Shop Page', () => {
       { name: 'Shirts', slug: 'shirts' },
     ];
 
-    // First seed categories to get their IDs
     cy.task<Category[]>('seed:categories', categoriesToSeed).then((categories) => {
       const pantsCategory = categories.find((c) => c.slug === 'pants')!;
       const shirtsCategory = categories.find((c) => c.slug === 'shirts')!;
@@ -41,24 +40,18 @@ describe('Shop Page', () => {
         { name: 'White T-Shirt', price: '80', categoryId: shirtsCategory.id },
       ];
 
-      // Then seed products with the correct category IDs
       cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
-        // Visit the pants category page
         cy.visit(`shop/category/${pantsCategory.slug}`);
 
         cy.verifyAppHeaderVisible();
 
-        // Verify we're on the correct category page
         cy.verifyPageHeading(pantsCategory.name);
 
-        // Should only show products from the pants category
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
-        cy.getByTestId('product-card').should('have.length', pantsProducts.length);
+        cy.verifyProductCardsCount(pantsProducts.length);
 
-        // Verify each pants product is displayed
         pantsProducts.forEach((product) => cy.verifyProductCard(product));
 
-        // Verify shirts are not shown
         const shirtProduct = products.find((p) => p.categoryId === shirtsCategory.id);
         cy.getProductCard(shirtProduct.name).should('not.exist');
       });

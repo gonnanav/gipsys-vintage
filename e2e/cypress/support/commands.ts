@@ -24,6 +24,13 @@ declare global {
       getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
 
       /**
+       * Custom command to verify the number of product cards on a page
+       * @param count The expected number of product cards
+       * @example cy.verifyProductCardsCount(10)
+       */
+      verifyProductCardsCount(count: number): Chainable<JQuery<HTMLElement>>;
+
+      /**
        * Custom command to select product card by name
        * @example cy.getProductCard('Blue Jeans')
        */
@@ -50,6 +57,10 @@ Cypress.Commands.add('verifyPageHeading', (text) => {
 // Custom command to select elements by data-testid attribute
 Cypress.Commands.add('getByTestId', (testId) => {
   return cy.get(`[data-testid="${testId}"]`);
+});
+
+Cypress.Commands.add('verifyProductCardsCount', (count) => {
+  return cy.getByTestId('product-card').should('have.length', count);
 });
 
 // Custom command to select product card by name
