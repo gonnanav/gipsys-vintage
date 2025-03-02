@@ -3,9 +3,8 @@ describe('Header', () => {
     cy.visit('/');
 
     cy.assertHeaderVisible();
-
-    cy.get('[data-testid="app-header"]').within(() => {
-      cy.get('[data-testid="app-header-logo"]').should('be.visible');
+    cy.getByTestId('app-header').within(() => {
+      cy.getByTestId('app-header-logo').should('be.visible');
     });
   });
 });

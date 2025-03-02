@@ -16,7 +16,7 @@ describe('Product Page', () => {
       cy.contains(product.name).should('be.visible');
       cy.contains(product.price).should('be.visible');
       cy.contains(product.description).should('be.visible');
-      cy.get('[data-testid="product-gallery"]').should('be.visible');
+      cy.getByTestId('product-gallery').should('be.visible');
     });
   });
 

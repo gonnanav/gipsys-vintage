@@ -18,13 +18,35 @@ declare global {
        * @example cy.assertHeaderVisible()
        */
       assertHeaderVisible(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to select DOM element by data-testid attribute
+       * @example cy.getByTestId('app-header')
+       */
+      getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to select product card by name
+       * @example cy.getProductCard('Blue Jeans')
+       */
+      getProductCard(productName: string): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
 
 // Custom command to verify the app header is visible
 Cypress.Commands.add('assertHeaderVisible', () => {
-  return cy.get('[data-testid="app-header"]').should('be.visible');
+  return cy.getByTestId('app-header').should('be.visible');
+});
+
+// Custom command to select elements by data-testid attribute
+Cypress.Commands.add('getByTestId', (testId) => {
+  return cy.get(`[data-testid="${testId}"]`);
+});
+
+// Custom command to select product card by name
+Cypress.Commands.add('getProductCard', (productName) => {
+  return cy.contains('[data-testid="product-card"]', productName);
 });
 
 export {};

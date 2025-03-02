@@ -1,9 +1,6 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate } from '@/core/category';
 
-const productCard = '[data-testid="product-card"]';
-const productCardImage = '[data-testid="product-card-image"]';
-
 describe('Shop Page', () => {
   it('displays all products and navigates to product page when clicking product', () => {
     const productsToSeed: ProductCreate[] = [
@@ -17,13 +14,13 @@ describe('Shop Page', () => {
       cy.assertHeaderVisible();
 
       cy.contains('h1', 'חנות').should('be.visible');
-      cy.get(productCard).should('have.length', products.length);
+      cy.getByTestId('product-card').should('have.length', products.length);
 
       products.forEach((product) => {
-        cy.contains(productCard, product.name).within(() => {
+        cy.getProductCard(product.name).within(() => {
           cy.contains(product.name).should('be.visible');
           cy.contains(product.price).should('be.visible');
-          cy.get(productCardImage).should('be.visible');
+          cy.getByTestId('product-card-image').should('be.visible');
         });
       });
 
@@ -62,14 +59,14 @@ describe('Shop Page', () => {
 
         // Should only show products from the pants category
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
-        cy.get(productCard).should('have.length', pantsProducts.length);
+        cy.getByTestId('product-card').should('have.length', pantsProducts.length);
 
         // Verify each pants product is displayed
         pantsProducts.forEach((product) => {
-          cy.contains(productCard, product.name).within(() => {
+          cy.getProductCard(product.name).within(() => {
             cy.contains(product.name).should('be.visible');
             cy.contains(product.price).should('be.visible');
-            cy.get(productCardImage).should('be.visible');
+            cy.getByTestId('product-card-image').should('be.visible');
           });
         });
 
