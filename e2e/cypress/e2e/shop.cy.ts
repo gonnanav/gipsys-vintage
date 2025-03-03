@@ -13,7 +13,7 @@ describe('Shop Page', () => {
 
       cy.getAppHeader().should('be.visible');
 
-      cy.getPageHeading('חנות');
+      cy.getPageHeading('חנות').should('be.visible');
       cy.getProductCards().should('have.length', products.length);
 
       products.forEach((product) => {
@@ -51,7 +51,7 @@ describe('Shop Page', () => {
 
         cy.getAppHeader().should('be.visible');
 
-        cy.getPageHeading(pantsCategory.name);
+        cy.getPageHeading(pantsCategory.name).should('be.visible');
 
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
         cy.getProductCards().should('have.length', pantsProducts.length);
