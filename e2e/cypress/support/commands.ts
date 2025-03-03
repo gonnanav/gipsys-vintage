@@ -16,6 +16,12 @@ declare global {
       getAppHeader(): Chainable<JQuery<HTMLElement>>;
 
       /**
+       * Custom command to get the app header logo
+       * @example cy.getAppHeaderLogo()
+       */
+      getAppHeaderLogo(): Chainable<JQuery<HTMLElement>>;
+
+      /**
        * Custom command to get the page heading
        * @param text The expected text of the heading
        * @example cy.getPageHeading('Shop')
@@ -43,6 +49,10 @@ Cypress.Commands.add('getByTestId', (testId) => {
 
 Cypress.Commands.add('getAppHeader', () => {
   return cy.getByTestId('app-header');
+});
+
+Cypress.Commands.add('getAppHeaderLogo', () => {
+  return cy.getByTestId('app-header-logo');
 });
 
 Cypress.Commands.add('getPageHeading', (text) => {
