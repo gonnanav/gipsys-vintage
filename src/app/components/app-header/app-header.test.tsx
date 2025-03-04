@@ -28,5 +28,5 @@ it('renders the app header logo with the logo image', () => {
 it('renders the shopping cart button', () => {
   render(<AppHeader />);
 
-  expect(screen.getByRole('button', { name: 'סל הקניות' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'פתחי את סל הקניות' })).toBeInTheDocument();
 });

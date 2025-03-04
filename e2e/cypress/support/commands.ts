@@ -28,6 +28,18 @@ declare global {
       getShoppingCartButton(): Chainable<JQuery<HTMLElement>>;
 
       /**
+       * Custom command to get the shopping cart modal
+       * @example cy.getShoppingCartModal()
+       */
+      getShoppingCartModal(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to get the shopping cart title
+       * @example cy.getShoppingCartTitle()
+       */
+      getShoppingCartTitle(): Chainable<JQuery<HTMLElement>>;
+
+      /**
        * Custom command to get the page heading
        * @param text The expected text of the heading
        * @example cy.getPageHeading('Shop')
@@ -45,6 +57,12 @@ declare global {
        * @example cy.getProductCard('Blue Jeans')
        */
       getProductCard(productName: string): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to get the shopping cart close button
+       * @example cy.getShoppingCartCloseButton()
+       */
+      getShoppingCartCloseButton(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -65,6 +83,14 @@ Cypress.Commands.add('getShoppingCartButton', () => {
   return cy.getByTestId('shopping-cart-button');
 });
 
+Cypress.Commands.add('getShoppingCartModal', () => {
+  return cy.getByTestId('shopping-cart-modal');
+});
+
+Cypress.Commands.add('getShoppingCartTitle', () => {
+  return cy.getByTestId('shopping-cart-title');
+});
+
 Cypress.Commands.add('getPageHeading', (text) => {
   return cy.contains('h1', text);
 });
@@ -75,6 +101,10 @@ Cypress.Commands.add('getProductCards', () => {
 
 Cypress.Commands.add('getProductCard', (productName) => {
   return cy.contains('[data-testid="product-card"]', productName);
+});
+
+Cypress.Commands.add('getShoppingCartCloseButton', () => {
+  return cy.getByTestId('shopping-cart-close-button');
 });
 
 export {};

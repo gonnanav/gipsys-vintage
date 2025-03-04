@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Image from 'next/image';
+import { ShoppingCart } from '../shopping-cart/shopping-cart';
 
 export function AppHeader() {
   return (
@@ -22,9 +23,7 @@ export function AppHeader() {
           style={{ objectFit: 'contain' }}
         />
       </Box>
-      <Box data-testid="shopping-cart-button">
-        <button>סל הקניות</button>
-      </Box>
+      <ShoppingCart />
     </Stack>
   );
 }
