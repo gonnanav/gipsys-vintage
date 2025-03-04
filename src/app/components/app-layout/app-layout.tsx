@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Box from '@mui/material/Box';
-import { AppHeader } from './app-header/app-header';
+import { AppHeader } from '../app-header/app-header';
 
 interface AppLayoutProps {
   children: ReactNode;
