@@ -22,6 +22,9 @@ export function AppHeader() {
           style={{ objectFit: 'contain' }}
         />
       </Box>
+      <Box data-testid="shopping-cart-button">
+        <button>סל הקניות</button>
+      </Box>
     </Stack>
   );
 }

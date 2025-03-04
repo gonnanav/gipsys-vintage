@@ -24,3 +24,9 @@ it('renders the app header logo with the logo image', () => {
 
   expect(screen.getByRole('img', { name: "Gipsy's Vintage Logo" })).toBeInTheDocument();
 });
+
+it('renders the shopping cart button', () => {
+  render(<AppHeader />);
+
+  expect(screen.getByRole('button', { name: 'סל הקניות' })).toBeInTheDocument();
+});

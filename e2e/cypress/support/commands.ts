@@ -22,6 +22,12 @@ declare global {
       getAppHeaderLogo(): Chainable<JQuery<HTMLElement>>;
 
       /**
+       * Custom command to get the shopping cart button
+       * @example cy.getShoppingCartButton()
+       */
+      getShoppingCartButton(): Chainable<JQuery<HTMLElement>>;
+
+      /**
        * Custom command to get the page heading
        * @param text The expected text of the heading
        * @example cy.getPageHeading('Shop')
@@ -53,6 +59,10 @@ Cypress.Commands.add('getAppHeader', () => {
 
 Cypress.Commands.add('getAppHeaderLogo', () => {
   return cy.getByTestId('app-header-logo');
+});
+
+Cypress.Commands.add('getShoppingCartButton', () => {
+  return cy.getByTestId('shopping-cart-button');
 });
 
 Cypress.Commands.add('getPageHeading', (text) => {
