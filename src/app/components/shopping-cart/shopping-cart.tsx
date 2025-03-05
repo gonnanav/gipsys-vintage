@@ -43,12 +43,14 @@ export function ShoppingCart({ initialIsOpen = false }: ShoppingCartProps = {}) 
         onClose={handleClose}
         data-testid="shopping-cart-modal"
         ModalProps={{ container: modalPortalRoot }}
+        sx={{ textAlign: 'center' }}
       >
-        <Box sx={{ px: 2, py: 1 }}>
+        <Box sx={{ position: 'relative', px: 2, py: 1, width: { xs: '100vw', sm: '400px' } }}>
           <IconButton
             aria-label="סגרי את עגלת הקניות"
             onClick={handleClose}
             data-testid="shopping-cart-close-button"
+            sx={{ position: 'absolute', top: 5, right: 5 }}
           >
             <CloseIcon />
           </IconButton>

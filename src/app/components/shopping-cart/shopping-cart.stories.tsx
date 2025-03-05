@@ -4,6 +4,9 @@ import { ShoppingCart } from './shopping-cart';
 const meta: Meta<typeof ShoppingCart> = {
   title: 'Components/ShoppingCart',
   component: ShoppingCart,
+  parameters: {
+    layout: 'centered',
+  },
   tags: ['autodocs'],
 };
 
