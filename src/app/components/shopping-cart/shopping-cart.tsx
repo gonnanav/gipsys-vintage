@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
+import { ModalPortalRootContext } from '@/app/contexts';
 
 interface ShoppingCartProps {
   initialIsOpen?: boolean;
@@ -14,6 +15,7 @@ interface ShoppingCartProps {
 
 export function ShoppingCart({ initialIsOpen = false }: ShoppingCartProps = {}) {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
+  const modalPortalRoot = useContext(ModalPortalRootContext);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -40,6 +42,7 @@ export function ShoppingCart({ initialIsOpen = false }: ShoppingCartProps = {}) 
         open={isOpen}
         onClose={handleClose}
         data-testid="shopping-cart-modal"
+        ModalProps={{ container: modalPortalRoot }}
       >
         <Box sx={{ px: 2, py: 1 }}>
           <IconButton
