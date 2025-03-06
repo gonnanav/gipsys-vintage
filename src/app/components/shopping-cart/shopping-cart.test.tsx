@@ -3,21 +3,27 @@ import userEvent from '@testing-library/user-event';
 import { ShoppingCart } from './shopping-cart';
 import { createPortalWrapper } from '@/app/test-utils';
 
+it('renders the shopping cart closed by default', () => {
+  renderShoppingCart();
+
+  expect(queryShoppingCartModal()).not.toBeInTheDocument();
+});
+
 describe('Shopping Cart Closed', () => {
   it('renders the shopping cart button', () => {
-    renderShoppingCart();
+    renderShoppingCartClosed();
 
     expect(getShoppingCartButton()).toBeInTheDocument();
   });
 
   it('renders the shopping cart button with the correct test id for e2e tests', () => {
-    renderShoppingCart();
+    renderShoppingCartClosed();
 
     expect(getShoppingCartButton()).toBe(screen.getByTestId('shopping-cart-button'));
   });
 
   it('opens the shopping cart when the shopping cart button is clicked', async () => {
-    const { user } = renderShoppingCart();
+    const { user } = renderShoppingCartClosed();
 
     await user.click(getShoppingCartButton());
 
@@ -27,7 +33,7 @@ describe('Shopping Cart Closed', () => {
 
 describe('Shopping Cart Open', () => {
   it('renders the shopping cart modal', async () => {
-    renderShoppingCart({ initialIsOpen: true });
+    renderShoppingCartOpen();
 
     const modal = getShoppingCartModal();
     expect(modal).toBeInTheDocument();
@@ -35,25 +41,25 @@ describe('Shopping Cart Open', () => {
   });
 
   it('renders the shopping cart modal with the correct test id for e2e tests', () => {
-    renderShoppingCart({ initialIsOpen: true });
+    renderShoppingCartOpen();
 
     expect(getShoppingCartModal()).toBe(screen.getByTestId('shopping-cart-modal'));
   });
 
   it('renders the shopping cart title with the correct text', () => {
-    renderShoppingCart({ initialIsOpen: true });
+    renderShoppingCartOpen();
 
     expect(getShoppingCartTitle()).toHaveTextContent('סל הקניות');
   });
 
   it('renders the shopping cart title with a the correct test id for e2e tests', () => {
-    renderShoppingCart({ initialIsOpen: true });
+    renderShoppingCartOpen();
 
     expect(getShoppingCartTitle()).toBe(screen.getByTestId('shopping-cart-title'));
   });
 
   it('closes the shopping cart when the close button is clicked', async () => {
-    const { user } = renderShoppingCart({ initialIsOpen: true });
+    const { user } = renderShoppingCartOpen();
 
     await user.click(getShoppingCartCloseButton());
 
@@ -61,19 +67,15 @@ describe('Shopping Cart Open', () => {
   });
 
   it('renders the shopping cart modal under the body element by default', () => {
-    renderShoppingCart({ initialIsOpen: true });
+    renderShoppingCartOpen();
 
-    const modal = getShoppingCartModal();
-    expect(modal.parentElement).toBe(document.body);
+    expect(getShoppingCartModal()).toBeChildOf(document.body);
   });
 
   it('renders the shopping cart modal under the provided portal root element', () => {
-    const PortalWrapper = createPortalWrapper('test-portal-root');
-    renderShoppingCart({ initialIsOpen: true, wrapper: PortalWrapper });
+    renderShoppingCartOpen({ wrapper: createPortalWrapper('test-portal-root') });
 
-    const modal = getShoppingCartModal();
-    const portalRoot = screen.getByTestId('test-portal-root');
-    expect(modal.parentElement).toBe(portalRoot);
+    expect(getShoppingCartModal()).toBeChildOf(screen.getByTestId('test-portal-root'));
   });
 });
 
@@ -95,6 +97,14 @@ function getShoppingCartTitle() {
 
 function getShoppingCartCloseButton() {
   return screen.getByRole('button', { name: 'סגרי את עגלת הקניות' });
+}
+
+function renderShoppingCartOpen(props?: Parameters<typeof renderShoppingCart>[0]) {
+  return renderShoppingCart({ ...props, initialIsOpen: true });
+}
+
+function renderShoppingCartClosed(props?: Parameters<typeof renderShoppingCart>[0]) {
+  return renderShoppingCart({ ...props, initialIsOpen: false });
 }
 
 function renderShoppingCart({

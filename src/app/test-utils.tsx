@@ -1,6 +1,33 @@
 import { useState } from 'react';
 import { ModalPortalRootContext } from './contexts';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace jest {
+    interface Matchers<R> {
+      toBeChildOf(parent: Element): R;
+    }
+  }
+}
+
+/**
+ * Custom Jest matcher to check if an element is a direct child of a specific parent element.
+ */
+expect.extend({
+  toBeChildOf(received: Element, parent: Element) {
+    const { parentElement } = received;
+    const pass = parentElement === parent;
+
+    return {
+      pass,
+      message: () =>
+        pass
+          ? `Expected element not to be a direct child of the specified parent, but it was`
+          : `Expected element to be a direct child of the specified parent, but it wasn't`,
+    };
+  },
+});
+
 /**
  * Creates a wrapper component that provides a portal root element for testing modal components.
  * The wrapper creates a div element that serves as the portal root and provides it through
