@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
-import { createPortalWrapper } from '@/app/test-utils';
+import { createPortalWrapper } from '@/app/test-utils/factories';
 
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();
