@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 import { ModalPortalRootContext } from '@/app/contexts';
 
-interface ShoppingCartProps {
+export interface ShoppingCartProps {
   initialIsOpen?: boolean;
 }
 
