@@ -1,13 +1,15 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { ModalPortalRootContext } from '@/app/contexts';
 import { MuiProviders } from '@/app/mui-providers';
+import { createPortalWrapper } from '@/app/test-utils';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@mui/icons-material';
+
+const PortalWrapper = createPortalWrapper('storybook-portal-root');
 
 const preview: Preview = {
   parameters: {
@@ -19,17 +21,11 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => {
-      const [portalRoot, setPortalRoot] = React.useState<Element | null>(null);
-
-      return (
-        <div id="storybook-app-root" lang="he" dir="rtl" ref={setPortalRoot}>
-          <ModalPortalRootContext.Provider value={portalRoot}>
-            <Story />
-          </ModalPortalRootContext.Provider>
-        </div>
-      );
-    },
+    (Story) => (
+      <PortalWrapper>
+        <Story />
+      </PortalWrapper>
+    ),
     (Story) => (
       <MuiProviders>
         <Story />
