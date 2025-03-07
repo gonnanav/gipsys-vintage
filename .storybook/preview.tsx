@@ -22,10 +22,18 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
+      // Simulates the <html> tag of the app
+      <div dir="rtl">
+        <Story />
+      </div>
+    ),
+    // Simulates the <body> tag of the app
+    (Story) => (
       <PortalWrapper>
         <Story />
       </PortalWrapper>
     ),
+    // Simulates the MuiProviders of the app
     (Story) => (
       <MuiProviders>
         <Story />
