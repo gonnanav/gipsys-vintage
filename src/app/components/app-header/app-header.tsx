@@ -9,7 +9,8 @@ export function AppHeader() {
       component="header"
       data-testid="app-header"
       direction="row"
-      sx={{ height: { xs: 60, sm: 80, md: 100 } }}
+      spacing={{ xs: 2, sm: 3 }}
+      sx={{ height: { xs: 60, sm: 80, md: 100 }, alignItems: 'center', px: { xs: 2, sm: 3 } }}
     >
       <Box
         data-testid="app-header-logo"
