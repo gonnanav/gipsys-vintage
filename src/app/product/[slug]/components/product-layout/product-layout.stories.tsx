@@ -23,6 +23,7 @@ const HEIGHTS = {
 const COLORS = {
   gallery: '#e3f2fd',
   details: '#fff3e0',
+  button: '#e8f5e9',
 } as const;
 
 const createBox = ({
@@ -73,10 +74,17 @@ const tallDetails = createBox({
   children: 'Tall Details',
 });
 
+const addToCartButton = createBox({
+  height: 48,
+  bgcolor: COLORS.button,
+  children: 'Add to Cart Button',
+});
+
 export const Default: Story = {
   args: {
     productGallery: standardGallery,
     productDetails: standardDetails,
+    addToCartButton,
   },
 };
 
@@ -84,6 +92,7 @@ export const TallGallery: Story = {
   args: {
     productGallery: tallGallery,
     productDetails: standardDetails,
+    addToCartButton,
   },
 };
 
@@ -91,6 +100,7 @@ export const TallDetails: Story = {
   args: {
     productGallery: standardGallery,
     productDetails: tallDetails,
+    addToCartButton,
   },
 };
 
@@ -98,6 +108,7 @@ export const Mobile: Story = {
   args: {
     productGallery: standardGallery,
     productDetails: standardDetails,
+    addToCartButton,
   },
   parameters: {
     viewport: {
@@ -110,6 +121,7 @@ export const Tablet: Story = {
   args: {
     productGallery: standardGallery,
     productDetails: standardDetails,
+    addToCartButton,
   },
   parameters: {
     viewport: {

@@ -63,6 +63,12 @@ declare global {
        * @example cy.getShoppingCartCloseButton()
        */
       getShoppingCartCloseButton(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to get the add to cart button
+       * @example cy.getAddToCartButton()
+       */
+      getAddToCartButton(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -105,6 +111,10 @@ Cypress.Commands.add('getProductCard', (productName) => {
 
 Cypress.Commands.add('getShoppingCartCloseButton', () => {
   return cy.getByTestId('shopping-cart-close-button');
+});
+
+Cypress.Commands.add('getAddToCartButton', () => {
+  return cy.getByTestId('add-to-cart-button');
 });
 
 export {};

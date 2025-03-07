@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Product } from '@/core/product';
-import { ProductDetails } from './product-details';
+import { ProductDetails, ProductDetailsProps } from './product-details';
 
 const product: Product = {
   id: 1,
@@ -9,25 +9,25 @@ const product: Product = {
   slug: 'product1',
 };
 
-it('renders the product name as a heading', () => {
+it('renders the product name heading', () => {
   renderProductDetails();
 
-  screen.getByRole('heading', { level: 1, name: product.name });
+  expect(screen.getByRole('heading', { level: 1, name: product.name })).toBeInTheDocument();
 });
 
 it('renders the product price', () => {
   renderProductDetails();
 
-  screen.getByText(`₪${product.price}`);
+  expect(screen.getByText(`₪${product.price}`)).toBeInTheDocument();
 });
 
 it('renders the product description', () => {
   const description = 'A beautiful vintage piece';
-  renderProductDetails({ ...product, description });
+  renderProductDetails({ product: { ...product, description } });
 
-  screen.getByText(description);
+  expect(screen.getByText(description)).toBeInTheDocument();
 });
 
-function renderProductDetails(props: Partial<Product> = {}) {
-  render(<ProductDetails product={{ ...product, ...props }} />);
+function renderProductDetails(props: Partial<ProductDetailsProps> = {}) {
+  render(<ProductDetails product={product} {...props} />);
 }
