@@ -1,14 +1,22 @@
 'use client';
 
 import Button from '@mui/material/Button';
-import { useContext } from 'react';
-import { ShoppingCartContext } from '@/app/contexts';
+import { Product } from '@/core/product';
+import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
 
-export function AddToCartButton() {
-  const { onAddProduct } = useContext(ShoppingCartContext);
+interface AddToCartButtonProps {
+  product: Product;
+}
+
+export function AddToCartButton({ product }: AddToCartButtonProps) {
+  const { addProduct } = useShoppingCart();
 
   return (
-    <Button data-testid="add-to-cart-button" onClick={onAddProduct} variant="contained">
+    <Button
+      data-testid="add-to-cart-button"
+      onClick={() => addProduct(product)}
+      variant="contained"
+    >
       הוסיפי לסל הקניות
     </Button>
   );

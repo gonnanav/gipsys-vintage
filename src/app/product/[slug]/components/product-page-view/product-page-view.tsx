@@ -13,7 +13,7 @@ export function ProductPageView({ product }: ProductPageViewProps) {
     <ProductLayout
       productGallery={<ProductGallery productImages={product.images} />}
       productDetails={<ProductDetails product={product} />}
-      addToCartButton={<AddToCartButton />}
+      addToCartButton={<AddToCartButton product={product} />}
     />
   );
 }
