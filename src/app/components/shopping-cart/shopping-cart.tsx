@@ -7,7 +7,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
+import { Product } from '@/core/product';
 import { ModalPortalRootContext } from '@/app/contexts';
+import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
 
 export interface ShoppingCartProps {
   initialIsOpen?: boolean;
@@ -52,6 +54,8 @@ interface ShoppingCartModalProps {
 }
 
 function ShoppingCartModal({ isOpen, onClose, container }: ShoppingCartModalProps) {
+  const { cart } = useShoppingCart();
+
   return (
     <Drawer
       role="dialog"
@@ -68,6 +72,7 @@ function ShoppingCartModal({ isOpen, onClose, container }: ShoppingCartModalProp
           <ShoppingCartCloseButton onClick={onClose} />
         </Box>
         <ShoppingCartTitle />
+        <ShoppingCartContent cart={cart} />
       </Box>
     </Drawer>
   );
@@ -100,4 +105,35 @@ function ShoppingCartTitle() {
       סל הקניות
     </Typography>
   );
+}
+
+interface ShoppingCartContentProps {
+  cart: Product[];
+}
+
+function ShoppingCartContent({ cart }: ShoppingCartContentProps) {
+  if (cart.length === 0) return <ShoppingCartEmptyMessage />;
+
+  return <ShoppingCartList cart={cart} />;
+}
+
+interface ShoppingCartListProps {
+  cart: Product[];
+}
+
+function ShoppingCartList({ cart }: ShoppingCartListProps) {
+  return (
+    <ul aria-label="פריטים בסל הקניות">
+      {cart.map((product) => (
+        <li key={product.id}>
+          <Typography>{product.name}</Typography>
+          <Typography>{product.price}₪</Typography>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ShoppingCartEmptyMessage() {
+  return <Typography>סל הקניות ריק</Typography>;
 }

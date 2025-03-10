@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
+import {
+  productWithoutImages as product1,
+  productWithOneImage as product2,
+} from '@/fixtures/products';
 import { createPortalWrapper } from '@/app/test-utils/factories';
-
+import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();
 
@@ -71,9 +75,56 @@ describe('Shopping Cart Open', () => {
   });
 
   it('renders the shopping cart modal under the provided portal root element', () => {
-    renderShoppingCartOpen({}, createPortalWrapper('test-portal-root'));
+    const PortalRoot = createPortalWrapper('test-portal-root');
+    renderShoppingCartOpen({}, ({ children }) => (
+      <PortalRoot>
+        <ShoppingCartProvider>{children}</ShoppingCartProvider>
+      </PortalRoot>
+    ));
 
     expect(getShoppingCartModal()).toBeChildOf(screen.getByTestId('test-portal-root'));
+  });
+
+  it('renders the shopping cart list for a non-empty cart', () => {
+    // Arrange
+    const initialCart = [product1, product2];
+
+    // Act
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+    ));
+
+    // Assert
+    expect(getShoppingCartList()).toBeInTheDocument();
+  });
+
+  it('renders the shopping cart items for a non-empty cart', () => {
+    // Arrange
+    const initialCart = [product1, product2];
+
+    // Act
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+    ));
+
+    // Assert
+    const items = getShoppingCartItems();
+
+    initialCart.forEach((product, index) => {
+      const { name, price } = product;
+      const item = items[index];
+
+      expect(item).toHaveTextContent(name);
+      expect(item).toHaveTextContent(`${price}₪`);
+    });
+  });
+
+  it('renders a shopping cart empty message when the cart is empty', () => {
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={[]}>{children}</ShoppingCartProvider>
+    ));
+
+    expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
   });
 });
 
@@ -97,6 +148,18 @@ function getShoppingCartCloseButton() {
   return screen.getByRole('button', { name: 'סגרי את עגלת הקניות' });
 }
 
+function getShoppingCartList() {
+  return screen.getByRole('list', { name: 'פריטים בסל הקניות' });
+}
+
+function getShoppingCartItems() {
+  return within(getShoppingCartList()).getAllByRole('listitem');
+}
+
+function getShoppingCartEmptyMessage() {
+  return screen.getByText('סל הקניות ריק');
+}
+
 function renderShoppingCartOpen(
   props?: ShoppingCartProps,
   wrapper?: React.ComponentType<{ children: React.ReactNode }>,
@@ -111,9 +174,13 @@ function renderShoppingCartClosed(
   return renderShoppingCart({ ...props, initialIsOpen: false }, wrapper);
 }
 
+const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
+  <ShoppingCartProvider>{children}</ShoppingCartProvider>
+);
+
 function renderShoppingCart(
   props?: ShoppingCartProps,
-  wrapper?: React.ComponentType<{ children: React.ReactNode }>,
+  wrapper: React.ComponentType<{ children: React.ReactNode }> = defaultWrapper,
 ) {
   const user = userEvent.setup();
   render(<ShoppingCart {...props} />, { wrapper });
