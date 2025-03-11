@@ -119,12 +119,29 @@ describe('Shopping Cart Open', () => {
     });
   });
 
+  it('renders a shopping cart item with the correct test id for e2e tests', () => {
+    const initialCart = [product1];
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+    ));
+
+    expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
+  });
+
   it('renders a shopping cart empty message when the cart is empty', () => {
     renderShoppingCartOpen({}, ({ children }) => (
       <ShoppingCartProvider initialCart={[]}>{children}</ShoppingCartProvider>
     ));
 
     expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
+  });
+
+  it('renders a shopping cart empty message with the correct test id for e2e tests', () => {
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={[]}>{children}</ShoppingCartProvider>
+    ));
+
+    expect(getShoppingCartEmptyMessage()).toHaveTestId('shopping-cart-empty-message');
   });
 });
 

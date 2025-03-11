@@ -69,6 +69,18 @@ declare global {
        * @example cy.getAddToCartButton()
        */
       getAddToCartButton(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to get the shopping cart empty message
+       * @example cy.getShoppingCartEmptyMessage()
+       */
+      getShoppingCartEmptyMessage(): Chainable<JQuery<HTMLElement>>;
+
+      /**
+       * Custom command to get the shopping cart items
+       * @example cy.getShoppingCartItems()
+       */
+      getShoppingCartItems(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -115,6 +127,14 @@ Cypress.Commands.add('getShoppingCartCloseButton', () => {
 
 Cypress.Commands.add('getAddToCartButton', () => {
   return cy.getByTestId('add-to-cart-button');
+});
+
+Cypress.Commands.add('getShoppingCartEmptyMessage', () => {
+  return cy.getByTestId('shopping-cart-empty-message');
+});
+
+Cypress.Commands.add('getShoppingCartItems', () => {
+  return cy.getByTestId('shopping-cart-item');
 });
 
 export {};

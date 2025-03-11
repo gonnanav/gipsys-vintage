@@ -125,7 +125,7 @@ function ShoppingCartList({ cart }: ShoppingCartListProps) {
   return (
     <ul aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
-        <li key={product.id}>
+        <li key={product.id} data-testid="shopping-cart-item">
           <Typography>{product.name}</Typography>
           <Typography>{product.price}₪</Typography>
         </li>
@@ -135,5 +135,5 @@ function ShoppingCartList({ cart }: ShoppingCartListProps) {
 }
 
 function ShoppingCartEmptyMessage() {
-  return <Typography>סל הקניות ריק</Typography>;
+  return <Typography data-testid="shopping-cart-empty-message">סל הקניות ריק</Typography>;
 }

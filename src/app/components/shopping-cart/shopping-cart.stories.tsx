@@ -13,12 +13,6 @@ const meta: Meta<typeof ShoppingCart> = {
 export default meta;
 type Story = StoryObj<typeof ShoppingCart>;
 
-export const Closed: Story = {
-  args: {
-    initialIsOpen: false,
-  },
-};
-
 export const Open: Story = {
   args: {
     initialIsOpen: true,
