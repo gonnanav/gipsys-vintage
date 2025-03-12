@@ -1,76 +1,47 @@
-import { Product, ProductCreate } from '@/core/product';
+import { Product } from '@/core/product';
+import { shoppingCart, productPage } from '../../support/page-objects';
+import { testData } from '../../support/helpers';
+
+const sampleProducts = testData.getSampleProducts().slice(0, 2);
 
 describe('Shopping Journey', () => {
-  it('allows adding a product to the shopping cart', () => {
-    const productToSeed: ProductCreate = {
-      name: 'Vintage Leather Jacket',
-      price: '299',
-      description: 'Classic leather jacket from the 70s',
-    };
-
-    cy.task<Product>('seed:product', productToSeed).then((product) => {
-      // Start at the product page
-      cy.visit(`product/${product.slug}`);
-
-      // Add to cart
-      cy.getAddToCartButton().click();
-
-      // Verify product appears in cart
-      cy.getShoppingCartButton().click();
-      cy.getShoppingCartModal().within(() => {
-        cy.contains(product.name).should('be.visible');
-        cy.contains(product.price).should('be.visible');
-      });
-    });
-  });
-
-  it('displays and updates items in the shopping cart', () => {
-    const productsToSeed: ProductCreate[] = [
-      {
-        name: 'Vintage Leather Jacket',
-        price: '299',
-        description: 'Classic leather jacket from the 70s',
-      },
-      {
-        name: 'Denim Distressed Jeans',
-        price: '199',
-        description: 'Stylish high-waisted jeans with a vintage wash and distressed details',
-      },
-    ];
-
-    cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
+  it('updates items in the shopping cart', () => {
+    testData.seedProducts(sampleProducts).then((products) => {
       cy.visit('/');
+      verifyCartIsEmpty();
 
-      cy.getShoppingCartButton().click();
-      cy.getShoppingCartModal().within(() => {
-        cy.getShoppingCartItems().should('not.exist');
+      addProductToCart(products[0]);
+      verifyItemsInCart([products[0]]);
 
-        cy.getShoppingCartEmptyMessage().should('be.visible');
-      });
-
-      cy.visit(`product/${products[0].slug}`);
-      cy.getAddToCartButton().click();
-
-      cy.getShoppingCartButton().click();
-      cy.getShoppingCartModal().within(() => {
-        cy.getShoppingCartItems().should('have.length', 1);
-
-        cy.contains(products[0].name).should('be.visible');
-        cy.contains(products[0].price).should('be.visible');
-        cy.getByTestId('shopping-cart-item-image').should('be.visible');
-      });
-
-      cy.visit(`product/${products[1].slug}`);
-      cy.getAddToCartButton().click();
-
-      cy.getShoppingCartButton().click();
-      cy.getShoppingCartModal().within(() => {
-        cy.getShoppingCartItems().should('have.length', 2);
-
-        cy.contains(products[1].name).should('be.visible');
-        cy.contains(products[1].price).should('be.visible');
-        cy.getByTestId('shopping-cart-item-image').should('be.visible');
-      });
+      addProductToCart(products[1]);
+      verifyItemsInCart([products[0], products[1]]);
     });
   });
 });
+
+function addProductToCart(product: Product): void {
+  productPage.visit(product);
+  productPage.addToCart();
+}
+
+function verifyCartIsEmpty(): void {
+  shoppingCart.open();
+
+  shoppingCart.getItems().should('not.exist');
+  shoppingCart.getEmptyMessage().should('be.visible');
+}
+
+function verifyItemsInCart(expectedItems: Product[]): void {
+  shoppingCart.open();
+
+  shoppingCart.getItems().should('have.length', expectedItems.length);
+
+  shoppingCart.getItems().each((item, index) => {
+    cy.wrap(item).within(() => {
+      const { name, price } = expectedItems[index];
+      cy.contains(name).should('be.visible');
+      cy.contains(price).should('be.visible');
+      cy.getByTestId('shopping-cart-item-image').should('be.visible');
+    });
+  });
+}
