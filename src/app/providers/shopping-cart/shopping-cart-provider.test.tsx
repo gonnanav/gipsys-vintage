@@ -76,6 +76,15 @@ describe('Non-empty Shopping Cart', () => {
   });
 });
 
+it('sets the cart to the new state', () => {
+  const newCart = [product1, product2];
+  const { result } = renderShoppingCartHookWithProvider();
+
+  act(() => result.current.setCart(newCart));
+
+  expect(result.current.cart).toEqual(newCart);
+});
+
 function renderShoppingCartHookWithProvider(
   providerProps?: Omit<ShoppingCartProviderProps, 'children'>,
 ) {

@@ -1,9 +1,11 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { Product } from '@/core/product';
+import { useShoppingCartState } from './use-shopping-cart-state';
+import { useSyncWithSessionStorage } from './use-sync-with-session-storage';
 
-interface ShoppingCartContextType {
+export interface ShoppingCartContextType {
   /** Current products in the shopping cart */
   cart: Product[];
   /**
@@ -11,13 +13,28 @@ interface ShoppingCartContextType {
    * If the product is already in the cart, it won't be added again.
    */
   addProduct: (product: Product) => void;
+  /**
+   * Sets the cart to a new state.
+   */
+  setCart: (cart: Product[]) => void;
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | null>(null);
 
 export interface ShoppingCartProviderProps {
   children: React.ReactNode;
+  /**
+   * Initial products to populate the cart with.
+   * Must not contain duplicate products (by id).
+   * @default []
+   */
   initialCart?: Product[];
+  /**
+   * Whether to synchronize the cart with session storage.
+   * When true, the cart will be loaded from and saved to session storage.
+   * @default false
+   */
+  syncSessionStorage?: boolean;
 }
 
 /**
@@ -32,23 +49,26 @@ export interface ShoppingCartProviderProps {
  *   <App />
  * </ShoppingCartProvider>
  * ```
+ *
+ * @example
+ * ```tsx
+ * // With session storage synchronization
+ * <ShoppingCartProvider syncSessionStorage={true}>
+ *   <App />
+ * </ShoppingCartProvider>
+ * ```
  */
-export function ShoppingCartProvider({ children, initialCart = [] }: ShoppingCartProviderProps) {
+export function ShoppingCartProvider({
+  children,
+  initialCart = [],
+  syncSessionStorage = false,
+}: ShoppingCartProviderProps) {
   validateInitialCart(initialCart);
 
-  const [cart, setCart] = useState<Product[]>(initialCart);
-  const addProduct = (product: Product) =>
-    setCart((c) => {
-      if (c.some((p) => p.id === product.id)) return c;
+  const cartState = useShoppingCartState(initialCart);
+  useSyncWithSessionStorage(cartState, syncSessionStorage);
 
-      return [...c, product];
-    });
-
-  return (
-    <ShoppingCartContext.Provider value={{ cart, addProduct }}>
-      {children}
-    </ShoppingCartContext.Provider>
-  );
+  return <ShoppingCartContext value={cartState}>{children}</ShoppingCartContext>;
 }
 
 /**
@@ -67,7 +87,7 @@ export type UseShoppingCartReturn = ShoppingCartContextType;
  * @example
  * ```tsx
  * function ProductPage() {
- *   const { cart, addProduct } = useShoppingCart();
+ *   const { cart, addProduct, setCart } = useShoppingCart();
  *   // ...
  * }
  * ```
