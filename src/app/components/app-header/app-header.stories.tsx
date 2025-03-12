@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AppHeader } from './app-header';
+import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
 
 const meta = {
   title: 'App/AppHeader',
@@ -8,6 +9,13 @@ const meta = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <ShoppingCartProvider>
+        <Story />
+      </ShoppingCartProvider>
+    ),
+  ],
 } satisfies Meta<typeof AppHeader>;
 
 export default meta;

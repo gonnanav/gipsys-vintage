@@ -7,9 +7,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
+import Stack from '@mui/material/Stack';
 import { Product } from '@/core/product';
 import { ModalPortalRootContext } from '@/app/contexts';
 import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 
 export interface ShoppingCartProps {
   initialIsOpen?: boolean;
@@ -71,8 +75,20 @@ function ShoppingCartModal({ isOpen, onClose, container }: ShoppingCartModalProp
         <Box sx={{ position: 'absolute', top: 5, right: 5 }}>
           <ShoppingCartCloseButton onClick={onClose} />
         </Box>
-        <ShoppingCartTitle />
-        <ShoppingCartContent cart={cart} />
+        <Box sx={{ mt: 0.5 }}>
+          <ShoppingCartTitle />
+        </Box>
+        <Box>
+          {cart.length ? (
+            <Box sx={{ mt: 1 }}>
+              <ShoppingCartList cart={cart} />
+            </Box>
+          ) : (
+            <Box sx={{ mt: 5 }}>
+              <ShoppingCartEmptyMessage />
+            </Box>
+          )}
+        </Box>
       </Box>
     </Drawer>
   );
@@ -107,33 +123,29 @@ function ShoppingCartTitle() {
   );
 }
 
-interface ShoppingCartContentProps {
-  cart: Product[];
-}
-
-function ShoppingCartContent({ cart }: ShoppingCartContentProps) {
-  if (cart.length === 0) return <ShoppingCartEmptyMessage />;
-
-  return <ShoppingCartList cart={cart} />;
-}
-
 interface ShoppingCartListProps {
   cart: Product[];
 }
 
 function ShoppingCartList({ cart }: ShoppingCartListProps) {
   return (
-    <ul aria-label="פריטים בסל הקניות">
+    <List aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
-        <li key={product.id} data-testid="shopping-cart-item">
-          <Typography>{product.name}</Typography>
-          <Typography>{product.price}₪</Typography>
-        </li>
+        <ListItem key={product.id} data-testid="shopping-cart-item">
+          <ListItemText primary={product.name} secondary={`₪${product.price}`} />
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 }
 
 function ShoppingCartEmptyMessage() {
-  return <Typography data-testid="shopping-cart-empty-message">סל הקניות ריק</Typography>;
+  return (
+    <Stack spacing={2} alignItems="center">
+      <ShoppingCartIcon sx={{ fontSize: '3rem' }} />
+      <Typography data-testid="shopping-cart-empty-message" sx={{ textAlign: 'center' }}>
+        אין פריטים בסל
+      </Typography>
+    </Stack>
+  );
 }

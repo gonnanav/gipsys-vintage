@@ -115,7 +115,7 @@ describe('Shopping Cart Open', () => {
       const item = items[index];
 
       expect(item).toHaveTextContent(name);
-      expect(item).toHaveTextContent(`${price}₪`);
+      expect(item).toHaveTextContent(`₪${price}`);
     });
   });
 
@@ -174,7 +174,7 @@ function getShoppingCartItems() {
 }
 
 function getShoppingCartEmptyMessage() {
-  return screen.getByText('סל הקניות ריק');
+  return screen.getByText('אין פריטים בסל');
 }
 
 function renderShoppingCartOpen(
