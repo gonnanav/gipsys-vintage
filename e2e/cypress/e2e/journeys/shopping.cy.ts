@@ -57,8 +57,8 @@ describe('Shopping Journey', () => {
 
         cy.contains(products[0].name).should('be.visible');
         cy.contains(products[0].price).should('be.visible');
+        cy.getByTestId('shopping-cart-item-image').should('be.visible');
       });
-      cy.getShoppingCartCloseButton().click();
 
       cy.visit(`product/${products[1].slug}`);
       cy.getAddToCartButton().click();
@@ -69,6 +69,7 @@ describe('Shopping Journey', () => {
 
         cy.contains(products[1].name).should('be.visible');
         cy.contains(products[1].price).should('be.visible');
+        cy.getByTestId('shopping-cart-item-image').should('be.visible');
       });
     });
   });

@@ -116,6 +116,7 @@ describe('Shopping Cart Open', () => {
 
       expect(item).toHaveTextContent(name);
       expect(item).toHaveTextContent(`₪${price}`);
+      expect(within(item).getByRole('img')).toBeInTheDocument();
     });
   });
 
@@ -142,6 +143,16 @@ describe('Shopping Cart Open', () => {
     ));
 
     expect(getShoppingCartEmptyMessage()).toHaveTestId('shopping-cart-empty-message');
+  });
+
+  it('renders a shopping cart item image with the correct test id for e2e tests', () => {
+    renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>
+    ));
+
+    expect(
+      within(getShoppingCartItems()[0]).getByTestId('shopping-cart-item-image'),
+    ).toBeInTheDocument();
   });
 });
 

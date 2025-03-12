@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useContext } from 'react';
+import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
@@ -8,12 +9,17 @@ import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
-import { Product } from '@/core/product';
-import { ModalPortalRootContext } from '@/app/contexts';
-import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { Product, ProductImage } from '@/core/product';
+import { ModalPortalRootContext } from '@/app/contexts';
+import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
+
+const placeholderImage: ProductImage = {
+  src: '/images/product-placeholder.webp',
+  alt: 'אין תמונת מוצר',
+};
 
 export interface ShoppingCartProps {
   initialIsOpen?: boolean;
@@ -132,6 +138,15 @@ function ShoppingCartList({ cart }: ShoppingCartListProps) {
     <List aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
         <ListItem key={product.id} data-testid="shopping-cart-item">
+          <Box sx={{ position: 'relative', aspectRatio: '1 / 1', width: 60 }}>
+            <Image
+              data-testid="shopping-cart-item-image"
+              fill
+              src={product.images?.[0]?.src || placeholderImage.src}
+              alt={product.images?.[0]?.alt || placeholderImage.alt || ''}
+              style={{ objectFit: 'cover' }}
+            />
+          </Box>
           <ListItemText primary={product.name} secondary={`₪${product.price}`} />
         </ListItem>
       ))}
