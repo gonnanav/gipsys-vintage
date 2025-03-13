@@ -15,6 +15,12 @@ describe('Shopping Journey', () => {
 
       addProductToCart(products[1]);
       verifyItemsInCart([products[0], products[1]]);
+
+      removeProductFromCart(products[0]);
+      verifyItemsInCart([products[1]]);
+
+      removeProductFromCart(products[1]);
+      verifyCartIsEmpty();
     });
   });
 });
@@ -22,6 +28,10 @@ describe('Shopping Journey', () => {
 function addProductToCart(product: Product): void {
   productPage.visit(product);
   productPage.addToCart();
+}
+
+function removeProductFromCart(product: Product): void {
+  shoppingCart.removeItem(product);
 }
 
 function verifyCartIsEmpty(): void {

@@ -10,6 +10,13 @@ declare global {
       getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
 
       /**
+       * Custom command to find DOM element by data-testid attribute
+       * @param testId The data-testid attribute value
+       * @example cy.findByTestId('app-header')
+       */
+      findByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
+
+      /**
        * Custom command to get the app header
        * @example cy.getAppHeader()
        */
@@ -85,8 +92,16 @@ declare global {
   }
 }
 
+function testIdSelector(testId: string): string {
+  return `[data-testid="${testId}"]`;
+}
+
 Cypress.Commands.add('getByTestId', (testId) => {
-  return cy.get(`[data-testid="${testId}"]`);
+  return cy.get(testIdSelector(testId));
+});
+
+Cypress.Commands.add('findByTestId', { prevSubject: true }, (subject, testId) => {
+  return cy.wrap(subject).find(testIdSelector(testId));
 });
 
 Cypress.Commands.add('getAppHeader', () => {

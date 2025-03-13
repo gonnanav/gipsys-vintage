@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/app/contexts';
 import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import ListItemButton from '@mui/material/ListItemButton';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
@@ -138,6 +139,9 @@ function ShoppingCartList({ cart }: ShoppingCartListProps) {
     <List aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
         <ListItem key={product.id} data-testid="shopping-cart-item">
+          <ListItemButton data-testid="shopping-cart-item-remove-button">
+            הסירי מסל הקניות
+          </ListItemButton>
           <Box sx={{ position: 'relative', aspectRatio: '1 / 1', width: 60 }}>
             <Image
               data-testid="shopping-cart-item-image"
