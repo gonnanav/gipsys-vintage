@@ -139,14 +139,6 @@ describe('Shopping Cart Open', () => {
     expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
   });
 
-  it('renders a shopping cart empty message with the correct test id for e2e tests', () => {
-    renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={[]}>{children}</ShoppingCartProvider>
-    ));
-
-    expect(getShoppingCartEmptyMessage()).toHaveTestId('shopping-cart-empty-message');
-  });
-
   it('removes a shopping cart item when the remove button is clicked', async () => {
     const { user } = renderShoppingCartOpen({}, ({ children }) => (
       <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>

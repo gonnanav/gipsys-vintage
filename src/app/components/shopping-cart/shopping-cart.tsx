@@ -176,9 +176,7 @@ function ShoppingCartEmptyMessage() {
   return (
     <Stack spacing={2} alignItems="center">
       <ShoppingCartIcon sx={{ fontSize: '3rem' }} />
-      <Typography data-testid="shopping-cart-empty-message" sx={{ textAlign: 'center' }}>
-        אין פריטים בסל
-      </Typography>
+      <Typography sx={{ textAlign: 'center' }}>אין פריטים בסל</Typography>
     </Stack>
   );
 }

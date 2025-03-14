@@ -39,7 +39,6 @@ function removeItemFromCart(item: Product): void {
 
 function verifyCartIsEmpty(): void {
   shoppingCart.getItems().should('not.exist');
-  shoppingCart.getEmptyCartMessage().should('be.visible');
 }
 
 function verifyItemsInCart(expectedItems: Product[]): void {

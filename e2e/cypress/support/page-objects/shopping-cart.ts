@@ -24,10 +24,6 @@ export function getItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
   return getItems().filter(`:contains("${item.name}")`);
 }
 
-export function getEmptyCartMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('shopping-cart-empty-message');
-}
-
 export function getRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
   return getItem(item).findByTestId('shopping-cart-item-remove-button');
 }
