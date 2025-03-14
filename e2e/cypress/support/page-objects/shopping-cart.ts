@@ -1,14 +1,6 @@
 import { Product } from '@/core/product';
 
 /**
- * Open the shopping cart modal
- */
-export function open(): Cypress.Chainable<JQuery<HTMLElement>> {
-  cy.getShoppingCartButton().click();
-  return getModal();
-}
-
-/**
  * Close the shopping cart modal
  */
 export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
@@ -20,13 +12,6 @@ export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
  */
 export function getModal(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.getShoppingCartModal();
-}
-
-/**
- * Get the shopping cart button in the header
- */
-export function getButton(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getShoppingCartButton();
 }
 
 /**

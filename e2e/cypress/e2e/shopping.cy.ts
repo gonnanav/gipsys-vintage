@@ -1,5 +1,5 @@
 import { Product } from '@/core/product';
-import { shoppingCart, productPage } from '../support/page-objects';
+import { header, shoppingCart, productPage } from '../support/page-objects';
 import { testData } from '../support/helpers';
 
 describe('Shopping Journey', () => {
@@ -8,15 +8,15 @@ describe('Shopping Journey', () => {
 
     testData.seedProducts(sampleProducts).then((products) => {
       cy.visit('/');
-      shoppingCart.open();
+      header.clickShoppingCartButton();
       verifyCartIsEmpty();
 
       addItemToCart(products[0]);
-      shoppingCart.open();
+      header.clickShoppingCartButton();
       verifyItemsInCart([products[0]]);
 
       addItemToCart(products[1]);
-      shoppingCart.open();
+      header.clickShoppingCartButton();
       verifyItemsInCart([products[0], products[1]]);
 
       removeItemFromCart(products[0]);
