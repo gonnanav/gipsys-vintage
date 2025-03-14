@@ -157,7 +157,6 @@ function ShoppingCartList({ cart, removeFromCart }: ShoppingCartListProps) {
           <ListItemAvatar sx={{ display: 'flex', justifyContent: 'center' }}>
             <Avatar variant="square" sx={{ position: 'relative' }}>
               <Image
-                data-testid="shopping-cart-item-image"
                 src={product.images?.[0]?.src || placeholderImage.src}
                 alt={product.images?.[0]?.alt || placeholderImage.alt || ''}
                 fill

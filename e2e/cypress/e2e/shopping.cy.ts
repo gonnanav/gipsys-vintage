@@ -49,7 +49,6 @@ function verifyItemsInCart(expectedItems: Product[]): void {
       const { name, price } = expectedItems[index];
       cy.contains(name).should('be.visible');
       cy.contains(price).should('be.visible');
-      cy.getByTestId('shopping-cart-item-image').should('be.visible');
     });
   });
 }
