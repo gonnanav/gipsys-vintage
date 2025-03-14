@@ -20,7 +20,7 @@ export function createPortalWrapper(portalRootTestId: string) {
     const [portalRoot, setPortalRoot] = useState<HTMLDivElement | null>(null);
 
     return (
-      <div data-testid={portalRootTestId} ref={setPortalRoot}>
+      <div dir="rtl" data-testid={portalRootTestId} ref={setPortalRoot}>
         {portalRoot && (
           <ModalPortalRootContext.Provider value={portalRoot}>
             {children}
