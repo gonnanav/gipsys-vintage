@@ -28,6 +28,6 @@ export function getRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTM
   return getItem(item).findByTestId('shopping-cart-item-remove-button');
 }
 
-export function clickRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
+export function removeItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
   return getRemoveItemButton(item).click();
 }

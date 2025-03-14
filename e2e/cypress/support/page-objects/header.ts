@@ -6,6 +6,6 @@ export function getShoppingCartButton(): Cypress.Chainable<JQuery<HTMLElement>> 
   return getHeader().findByTestId('shopping-cart-button');
 }
 
-export function clickShoppingCartButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+export function openShoppingCart(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getShoppingCartButton().click();
 }

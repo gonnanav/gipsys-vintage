@@ -8,34 +8,27 @@ describe('Shopping Journey', () => {
 
     testData.seedProducts(sampleProducts).then((products) => {
       cy.visit('/');
-      header.clickShoppingCartButton();
+      header.openShoppingCart();
       verifyCartIsEmpty();
 
-      addItemToCart(products[0]);
-      header.clickShoppingCartButton();
+      productPage.visit(products[0]);
+      productPage.addToCart();
+      header.openShoppingCart();
       verifyItemsInCart([products[0]]);
 
-      addItemToCart(products[1]);
-      header.clickShoppingCartButton();
+      productPage.visit(products[1]);
+      productPage.addToCart();
+      header.openShoppingCart();
       verifyItemsInCart([products[0], products[1]]);
 
-      removeItemFromCart(products[0]);
+      shoppingCart.removeItem(products[0]);
       verifyItemsInCart([products[1]]);
 
-      removeItemFromCart(products[1]);
+      shoppingCart.removeItem(products[1]);
       verifyCartIsEmpty();
     });
   });
 });
-
-function addItemToCart(item: Product): void {
-  productPage.visit(item);
-  productPage.addToCart();
-}
-
-function removeItemFromCart(item: Product): void {
-  shoppingCart.clickRemoveItemButton(item);
-}
 
 function verifyCartIsEmpty(): void {
   shoppingCart.getItems().should('not.exist');
