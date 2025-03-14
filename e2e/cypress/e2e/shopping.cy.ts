@@ -1,6 +1,6 @@
 import { Product } from '@/core/product';
-import { shoppingCart, productPage } from '../../support/page-objects';
-import { testData } from '../../support/helpers';
+import { shoppingCart, productPage } from '../support/page-objects';
+import { testData } from '../support/helpers';
 
 const sampleProducts = testData.getSampleProducts().slice(0, 2);
 
