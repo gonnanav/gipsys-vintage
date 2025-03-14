@@ -1,52 +1,37 @@
 import { Product } from '@/core/product';
 
-/**
- * Close the shopping cart modal
- */
-export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getShoppingCartCloseButton().click();
-}
-
-/**
- * Get the shopping cart modal
- */
 export function getModal(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getShoppingCartModal();
+  return cy.getByTestId('shopping-cart-modal');
 }
 
-/**
- * Get the shopping cart title
- */
+export function getCloseButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return cy.getByTestId('shopping-cart-close-button');
+}
+
+export function clickCloseButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getCloseButton().click();
+}
+
 export function getTitle(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getShoppingCartTitle();
+  return cy.getByTestId('shopping-cart-title');
 }
 
-/**
- * Get all shopping cart items
- */
 export function getItems(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.getByTestId('shopping-cart-item');
 }
 
-/**
- * Get an item from the shopping cart
- * @param product - The product matching the item to get
- */
-export function getItem(product: Product): Cypress.Chainable<JQuery<HTMLElement>> {
-  return getItems().filter(`:contains("${product.name}")`);
+export function getItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getItems().filter(`:contains("${item.name}")`);
 }
 
-/**
- * Get the empty cart message
- */
-export function getEmptyMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getShoppingCartEmptyMessage();
+export function getEmptyCartMessage(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return cy.getByTestId('shopping-cart-empty-message');
 }
 
-/**
- * Remove an item from the shopping cart
- * @param product - The product matching the item to remove
- */
-export function removeItem(product: Product): Cypress.Chainable<JQuery<HTMLElement>> {
-  return getItem(product).findByTestId('shopping-cart-item-remove-button').click();
+export function getRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getItem(item).findByTestId('shopping-cart-item-remove-button');
+}
+
+export function clickRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getRemoveItemButton(item).click();
 }

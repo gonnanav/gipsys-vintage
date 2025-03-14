@@ -28,18 +28,18 @@ describe('Shopping Journey', () => {
   });
 });
 
-function addItemToCart(product: Product): void {
-  productPage.visit(product);
+function addItemToCart(item: Product): void {
+  productPage.visit(item);
   productPage.addToCart();
 }
 
-function removeItemFromCart(product: Product): void {
-  shoppingCart.removeItem(product);
+function removeItemFromCart(item: Product): void {
+  shoppingCart.clickRemoveItemButton(item);
 }
 
 function verifyCartIsEmpty(): void {
   shoppingCart.getItems().should('not.exist');
-  shoppingCart.getEmptyMessage().should('be.visible');
+  shoppingCart.getEmptyCartMessage().should('be.visible');
 }
 
 function verifyItemsInCart(expectedItems: Product[]): void {
