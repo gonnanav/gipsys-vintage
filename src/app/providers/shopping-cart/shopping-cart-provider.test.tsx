@@ -85,6 +85,14 @@ it('sets the cart to the new state', () => {
   expect(result.current.cart).toEqual(newCart);
 });
 
+it('removes a product from the cart', () => {
+  const { result } = renderShoppingCartHookWithProvider({ initialCart: [product1] });
+
+  act(() => result.current.removeFromCart(product1.id));
+
+  expect(result.current.cart).toEqual([]);
+});
+
 function renderShoppingCartHookWithProvider(
   providerProps?: Omit<ShoppingCartProviderProps, 'children'>,
 ) {

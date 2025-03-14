@@ -1,7 +1,3 @@
-/**
- * Page object for shopping cart functionality
- */
-
 import { Product } from '@/core/product';
 
 /**

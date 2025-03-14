@@ -8,12 +8,15 @@ describe('Shopping Journey', () => {
   it('updates items in the shopping cart', () => {
     testData.seedProducts(sampleProducts).then((products) => {
       cy.visit('/');
+      shoppingCart.open();
       verifyCartIsEmpty();
 
       addProductToCart(products[0]);
+      shoppingCart.open();
       verifyItemsInCart([products[0]]);
 
       addProductToCart(products[1]);
+      shoppingCart.open();
       verifyItemsInCart([products[0], products[1]]);
 
       removeProductFromCart(products[0]);
@@ -35,15 +38,11 @@ function removeProductFromCart(product: Product): void {
 }
 
 function verifyCartIsEmpty(): void {
-  shoppingCart.open();
-
   shoppingCart.getItems().should('not.exist');
   shoppingCart.getEmptyMessage().should('be.visible');
 }
 
 function verifyItemsInCart(expectedItems: Product[]): void {
-  shoppingCart.open();
-
   shoppingCart.getItems().should('have.length', expectedItems.length);
 
   shoppingCart.getItems().each((item, index) => {

@@ -17,6 +17,10 @@ export interface ShoppingCartContextType {
    * Sets the cart to a new state.
    */
   setCart: (cart: Product[]) => void;
+  /**
+   * Removes a product from the cart.
+   */
+  removeFromCart: (productId: number) => void;
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | null>(null);

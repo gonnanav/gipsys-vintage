@@ -7,6 +7,8 @@ import {
 import { createPortalWrapper } from '@/app/test-utils/factories';
 import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
 import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
+import { Product } from '@/core/product';
+
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();
 
@@ -145,14 +147,22 @@ describe('Shopping Cart Open', () => {
     expect(getShoppingCartEmptyMessage()).toHaveTestId('shopping-cart-empty-message');
   });
 
-  it('renders a shopping cart item image with the correct test id for e2e tests', () => {
+  it('removes a shopping cart item when the remove button is clicked', async () => {
+    const { user } = renderShoppingCartOpen({}, ({ children }) => (
+      <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>
+    ));
+
+    await user.click(getShoppingCartRemoveButton(product1));
+
+    expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
+  });
+
+  it('renders the item remove button with the correct test id for e2e tests', () => {
     renderShoppingCartOpen({}, ({ children }) => (
       <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>
     ));
 
-    expect(
-      within(getShoppingCartItems()[0]).getByTestId('shopping-cart-item-image'),
-    ).toBeInTheDocument();
+    expect(getShoppingCartRemoveButton(product1)).toHaveTestId('shopping-cart-item-remove-button');
   });
 });
 
@@ -182,6 +192,20 @@ function getShoppingCartList() {
 
 function getShoppingCartItems() {
   return within(getShoppingCartList()).getAllByRole('listitem');
+}
+
+function getShoppingCartItem(product: Product) {
+  const item = getShoppingCartItems().find((item) => within(item).getByText(product.name));
+
+  if (!item) {
+    throw new Error(`Shopping cart item for product ${product.name} not found`);
+  }
+
+  return item;
+}
+
+function getShoppingCartRemoveButton(product: Product) {
+  return within(getShoppingCartItem(product)).getByRole('button', { name: 'הסירי מסל הקניות' });
 }
 
 function getShoppingCartEmptyMessage() {

@@ -14,5 +14,7 @@ export function useShoppingCartState(initialCart: Product[]): ShoppingCartStateR
       return [...c, product];
     });
 
-  return { cart, addProduct, setCart };
+  const removeFromCart = (productId: number) => setCart((c) => c.filter((p) => p.id !== productId));
+
+  return { cart, addProduct, setCart, removeFromCart };
 }

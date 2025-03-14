@@ -12,10 +12,12 @@ import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Avatar from '@mui/material/Avatar';
 import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/app/contexts';
 import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
-import ListItemButton from '@mui/material/ListItemButton';
+import { ListItemAvatar } from '@mui/material';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
@@ -65,7 +67,7 @@ interface ShoppingCartModalProps {
 }
 
 function ShoppingCartModal({ isOpen, onClose, container }: ShoppingCartModalProps) {
-  const { cart } = useShoppingCart();
+  const { cart, removeFromCart } = useShoppingCart();
 
   return (
     <Drawer
@@ -88,7 +90,7 @@ function ShoppingCartModal({ isOpen, onClose, container }: ShoppingCartModalProp
         <Box>
           {cart.length ? (
             <Box sx={{ mt: 1 }}>
-              <ShoppingCartList cart={cart} />
+              <ShoppingCartList cart={cart} removeFromCart={removeFromCart} />
             </Box>
           ) : (
             <Box sx={{ mt: 5 }}>
@@ -132,25 +134,37 @@ function ShoppingCartTitle() {
 
 interface ShoppingCartListProps {
   cart: Product[];
+  removeFromCart: (productId: number) => void;
 }
 
-function ShoppingCartList({ cart }: ShoppingCartListProps) {
+function ShoppingCartList({ cart, removeFromCart }: ShoppingCartListProps) {
   return (
     <List aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
-        <ListItem key={product.id} data-testid="shopping-cart-item">
-          <ListItemButton data-testid="shopping-cart-item-remove-button">
-            הסירי מסל הקניות
-          </ListItemButton>
-          <Box sx={{ position: 'relative', aspectRatio: '1 / 1', width: 60 }}>
-            <Image
-              data-testid="shopping-cart-item-image"
-              fill
-              src={product.images?.[0]?.src || placeholderImage.src}
-              alt={product.images?.[0]?.alt || placeholderImage.alt || ''}
-              style={{ objectFit: 'cover' }}
-            />
-          </Box>
+        <ListItem
+          key={product.id}
+          data-testid="shopping-cart-item"
+          secondaryAction={
+            <IconButton
+              data-testid="shopping-cart-item-remove-button"
+              aria-label="הסירי מסל הקניות"
+              onClick={() => removeFromCart(product.id)}
+            >
+              <HighlightOffIcon />
+            </IconButton>
+          }
+        >
+          <ListItemAvatar sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Avatar variant="square" sx={{ position: 'relative' }}>
+              <Image
+                data-testid="shopping-cart-item-image"
+                src={product.images?.[0]?.src || placeholderImage.src}
+                alt={product.images?.[0]?.alt || placeholderImage.alt || ''}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </Avatar>
+          </ListItemAvatar>
           <ListItemText primary={product.name} secondary={`₪${product.price}`} />
         </ListItem>
       ))}
