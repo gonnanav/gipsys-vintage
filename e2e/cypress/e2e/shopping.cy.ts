@@ -9,32 +9,32 @@ describe('Shopping Journey', () => {
     testData.seedProducts(sampleProducts).then((products) => {
       cy.visit('/');
       header.openShoppingCart();
-      verifyCartIsEmpty();
+      verifyThatCartIsEmpty();
 
       productPage.visit(products[0]);
       productPage.addToShoppingCart();
       header.openShoppingCart();
-      verifyItemsInCart([products[0]]);
+      verifyThatItemsInCartAre([products[0]]);
 
       productPage.visit(products[1]);
       productPage.addToShoppingCart();
       header.openShoppingCart();
-      verifyItemsInCart([products[0], products[1]]);
+      verifyThatItemsInCartAre([products[0], products[1]]);
 
       shoppingCart.removeItem(products[0]);
-      verifyItemsInCart([products[1]]);
+      verifyThatItemsInCartAre([products[1]]);
 
       shoppingCart.removeItem(products[1]);
-      verifyCartIsEmpty();
+      verifyThatCartIsEmpty();
     });
   });
 });
 
-function verifyCartIsEmpty(): void {
+function verifyThatCartIsEmpty(): void {
   shoppingCart.getItems().should('not.exist');
 }
 
-function verifyItemsInCart(expectedItems: Product[]): void {
+function verifyThatItemsInCartAre(expectedItems: Product[]): void {
   shoppingCart.getItems().should('have.length', expectedItems.length);
 
   expectedItems.forEach(({ name }, index) => {
