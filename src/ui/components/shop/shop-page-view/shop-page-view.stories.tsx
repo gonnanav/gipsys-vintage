@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ShopPageView } from './shop-page-view';
 import { productWithManyImages, productWithOneImage } from '@/fixtures/products';
-import { AppLayout } from '@/app/components/app-layout/app-layout';
+import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
 const meta = {
   title: 'Shop/ShopPageView',

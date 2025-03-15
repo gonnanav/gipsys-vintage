@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AppHeader } from './app-header';
-import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 
 const meta = {
   title: 'App/AppHeader',

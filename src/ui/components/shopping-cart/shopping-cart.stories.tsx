@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ShoppingCart } from './shopping-cart';
-import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import {
   productWithManyImages,
   productWithOneImage,

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { AppHeader } from './app-header';
-import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 
 it('renders the app header with the correct test id', () => {
   renderAppHeader();

@@ -4,8 +4,8 @@ import {
   productWithoutImages as product1,
   productWithOneImage as product2,
 } from '@/fixtures/products';
-import { createPortalWrapper } from '@/app/test-utils/factories';
-import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { createPortalWrapper } from '@/ui/test-utils/factories';
+import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
 import { Product } from '@/core/product';
 

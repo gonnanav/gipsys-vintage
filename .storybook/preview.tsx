@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MuiProviders } from '@/app/mui-providers';
-import { createPortalWrapper } from '@/app/test-utils/factories';
+import { MuiProviders } from '@/ui/providers/mui/mui-providers';
+import { createPortalWrapper } from '@/ui/test-utils/factories';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

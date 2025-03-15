@@ -4,7 +4,7 @@ import { AddToCartButton } from './add-to-cart-button';
 import {
   ShoppingCartProvider,
   useShoppingCart,
-} from '@/app/providers/shopping-cart/shopping-cart-provider';
+} from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { productWithoutImages as product } from '@/fixtures/products';
 import { Product } from '@/core/product';
 it('renders the add to cart button', () => {

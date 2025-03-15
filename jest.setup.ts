@@ -1,2 +1,2 @@
 import '@testing-library/jest-dom';
-import '@/app/test-utils/matchers';
+import '@/ui/test-utils/matchers';

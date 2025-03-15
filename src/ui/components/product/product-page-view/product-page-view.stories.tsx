@@ -5,7 +5,7 @@ import {
   productWithOneImage,
   productWithManyImages,
 } from '@/fixtures/products';
-import { AppLayout } from '@/app/components/app-layout/app-layout';
+import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
 const meta = {
   title: 'Product/ProductPageView',

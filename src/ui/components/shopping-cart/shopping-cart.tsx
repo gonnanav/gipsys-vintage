@@ -15,8 +15,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Avatar from '@mui/material/Avatar';
 import { Product, ProductImage } from '@/core/product';
-import { ModalPortalRootContext } from '@/app/contexts';
-import { useShoppingCart } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
+import { useShoppingCart } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ListItemAvatar } from '@mui/material';
 
 const placeholderImage: ProductImage = {

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Box from '@mui/material/Box';
 import { AppHeader } from '../app-header/app-header';
-import { ShoppingCartProvider } from '@/app/providers/shopping-cart/shopping-cart-provider';
+import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 
 interface AppLayoutProps {
   children: ReactNode;

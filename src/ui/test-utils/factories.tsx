@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ModalPortalRootContext } from '@/app/contexts';
+import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
 
 /**
  * Creates a wrapper component that provides a portal root element for testing modal components.
