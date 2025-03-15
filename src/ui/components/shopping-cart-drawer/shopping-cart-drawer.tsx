@@ -18,19 +18,16 @@ import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
 import { useShoppingCart } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ListItemAvatar } from '@mui/material';
+import { useShoppingCartDrawer } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
   alt: 'אין תמונת מוצר',
 };
 
-export interface ShoppingCartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function ShoppingCartDrawer({ isOpen, onClose }: ShoppingCartDrawerProps) {
+export function ShoppingCartDrawer() {
   const { cart, removeFromCart } = useShoppingCart();
+  const { isOpen, closeDrawer } = useShoppingCartDrawer();
   const container = useContext(ModalPortalRootContext);
 
   return (
@@ -40,13 +37,13 @@ export function ShoppingCartDrawer({ isOpen, onClose }: ShoppingCartDrawerProps)
       aria-label="סל הקניות"
       anchor="right"
       open={isOpen}
-      onClose={onClose}
+      onClose={closeDrawer}
       data-testid="shopping-cart-modal"
       ModalProps={{ container }}
     >
       <Box sx={{ position: 'relative', px: 2, py: 1, width: { xs: '100vw', sm: '400px' } }}>
         <Box sx={{ position: 'absolute', top: 5, right: 5 }}>
-          <ShoppingCartCloseButton onClick={onClose} />
+          <ShoppingCartCloseButton onClick={closeDrawer} />
         </Box>
         <Box sx={{ mt: 0.5 }}>
           <ShoppingCartTitle />

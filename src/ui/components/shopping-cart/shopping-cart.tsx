@@ -1,40 +1,35 @@
 'use client';
 
-import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ShoppingCartDrawer } from '@/ui/components/shopping-cart-drawer/shopping-cart-drawer';
+import {
+  ShoppingCartDrawerProvider,
+  useShoppingCartDrawer,
+} from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
 
 export interface ShoppingCartProps {
   initialIsOpen?: boolean;
 }
 
 export function ShoppingCart({ initialIsOpen = false }: ShoppingCartProps = {}) {
-  const [isOpen, setIsOpen] = useState(initialIsOpen);
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   return (
-    <>
-      <ShoppingCartButton onClick={handleOpen} />
-      <ShoppingCartDrawer isOpen={isOpen} onClose={handleClose} />
-    </>
+    <ShoppingCartDrawerProvider initialIsOpen={initialIsOpen}>
+      <ShoppingCartButton />
+      <ShoppingCartDrawer />
+    </ShoppingCartDrawerProvider>
   );
 }
 
-interface ShoppingCartButtonProps {
-  onClick: () => void;
-}
+function ShoppingCartButton() {
+  const { openDrawer } = useShoppingCartDrawer();
 
-function ShoppingCartButton({ onClick }: ShoppingCartButtonProps) {
   return (
-    <IconButton data-testid="shopping-cart-button" aria-label="פתחי את סל הקניות" onClick={onClick}>
+    <IconButton
+      data-testid="shopping-cart-button"
+      aria-label="פתחי את סל הקניות"
+      onClick={openDrawer}
+    >
       <ShoppingCartIcon sx={{ color: 'primary.main' }} />
     </IconButton>
   );
