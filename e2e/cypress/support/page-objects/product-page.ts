@@ -37,6 +37,6 @@ export function getAddToCartButton(): Cypress.Chainable<JQuery<HTMLElement>> {
 /**
  * Add the current product to the cart
  */
-export function addToCart(): Cypress.Chainable<JQuery<HTMLElement>> {
+export function addToShoppingCart(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getAddToCartButton().click();
 }

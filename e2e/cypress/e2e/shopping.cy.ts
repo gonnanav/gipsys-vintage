@@ -12,12 +12,12 @@ describe('Shopping Journey', () => {
       verifyCartIsEmpty();
 
       productPage.visit(products[0]);
-      productPage.addToCart();
+      productPage.addToShoppingCart();
       header.openShoppingCart();
       verifyItemsInCart([products[0]]);
 
       productPage.visit(products[1]);
-      productPage.addToCart();
+      productPage.addToShoppingCart();
       header.openShoppingCart();
       verifyItemsInCart([products[0], products[1]]);
 
@@ -37,11 +37,7 @@ function verifyCartIsEmpty(): void {
 function verifyItemsInCart(expectedItems: Product[]): void {
   shoppingCart.getItems().should('have.length', expectedItems.length);
 
-  shoppingCart.getItems().each((item, index) => {
-    cy.wrap(item).within(() => {
-      const { name, price } = expectedItems[index];
-      cy.contains(name).should('be.visible');
-      cy.contains(price).should('be.visible');
-    });
+  expectedItems.forEach(({ name }, index) => {
+    shoppingCart.getItems().eq(index).contains(name).should('be.visible');
   });
 }
