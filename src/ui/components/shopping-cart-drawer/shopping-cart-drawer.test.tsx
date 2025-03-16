@@ -28,45 +28,25 @@ const ShoppingCartProviders = ({
   </ShoppingCartProvider>
 );
 
-it('renders the shopping cart modal', async () => {
+it('renders the modal', async () => {
   renderShoppingCartDrawer();
 
   expect(getShoppingCartModal()).toHaveAttribute('aria-modal', 'true');
 });
 
-it('renders the shopping cart modal with the correct test id for e2e tests', () => {
+it('renders the modal with the correct test id for e2e tests', () => {
   renderShoppingCartDrawer();
 
   expect(getShoppingCartModal()).toHaveTestId('shopping-cart-modal');
 });
 
-it('renders the shopping cart title with the correct text', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartTitle()).toHaveTextContent('סל הקניות');
-});
-
-it('renders the shopping cart title with a the correct test id for e2e tests', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartTitle()).toHaveTestId('shopping-cart-title');
-});
-
-it('closes the shopping cart when the close button is clicked', async () => {
-  const { user } = renderShoppingCartDrawer();
-
-  await user.click(getShoppingCartCloseButton());
-
-  expect(queryShoppingCartModal()).not.toBeInTheDocument();
-});
-
-it('renders the shopping cart modal under the body element by default', () => {
+it('renders the modal under the body element by default', () => {
   renderShoppingCartDrawer();
 
   expect(getShoppingCartModal()).toBeChildOf(document.body);
 });
 
-it('renders the shopping cart modal under the provided portal root element', () => {
+it('renders the modal under the provided portal root element', () => {
   const PortalRoot = createPortalWrapper('test-portal-root');
   renderShoppingCartDrawer({
     Wrapper: ({ children }) => (
@@ -81,25 +61,37 @@ it('renders the shopping cart modal under the provided portal root element', () 
   expect(getShoppingCartModal()).toBeChildOf(screen.getByTestId('test-portal-root'));
 });
 
-it('renders the shopping cart list for a non-empty cart', () => {
-  // Arrange
-  const initialCart = [product1, product2];
+it('renders the title with the correct text', () => {
+  renderShoppingCartDrawer();
 
-  // Act
+  expect(getShoppingCartTitle()).toHaveTextContent('סל הקניות');
+});
+
+it('renders the title with a the correct test id for e2e tests', () => {
+  renderShoppingCartDrawer();
+
+  expect(getShoppingCartTitle()).toHaveTestId('shopping-cart-title');
+});
+
+it('renders the list for a non-empty cart', () => {
+  const initialCart = [product1, product2];
   renderShoppingCartDrawer({ initialCart });
 
-  // Assert
   expect(getShoppingCartList()).toBeInTheDocument();
 });
 
-it('renders the shopping cart items for a non-empty cart', () => {
-  // Arrange
-  const initialCart = [product1, product2];
-
-  // Act
+it('renders a shopping cart item with the correct test id for e2e tests', () => {
+  const initialCart = [product1];
   renderShoppingCartDrawer({ initialCart });
 
-  // Assert
+  expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
+});
+
+it('renders the cart items for a non-empty cart', () => {
+  const initialCart = [product1, product2];
+
+  renderShoppingCartDrawer({ initialCart });
+
   const items = getShoppingCartItems();
 
   initialCart.forEach((product, index) => {
@@ -112,23 +104,8 @@ it('renders the shopping cart items for a non-empty cart', () => {
   });
 });
 
-it('renders a shopping cart item with the correct test id for e2e tests', () => {
-  const initialCart = [product1];
-  renderShoppingCartDrawer({ initialCart });
-
-  expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
-});
-
 it('renders a shopping cart empty message when the cart is empty', () => {
   renderShoppingCartDrawer({ initialCart: [] });
-
-  expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
-});
-
-it('removes a shopping cart item when the remove button is clicked', async () => {
-  const { user } = renderShoppingCartDrawer({ initialCart: [product1] });
-
-  await user.click(getShoppingCartRemoveButton(product1));
 
   expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
 });
@@ -137,6 +114,22 @@ it('renders the item remove button with the correct test id for e2e tests', () =
   renderShoppingCartDrawer({ initialCart: [product1] });
 
   expect(getShoppingCartRemoveButton(product1)).toHaveTestId('shopping-cart-item-remove-button');
+});
+
+it('closes when the close button is clicked', async () => {
+  const { user } = renderShoppingCartDrawer();
+
+  await user.click(getShoppingCartCloseButton());
+
+  expect(queryShoppingCartModal()).not.toBeInTheDocument();
+});
+
+it('removes a shopping cart item when the remove button is clicked', async () => {
+  const { user } = renderShoppingCartDrawer({ initialCart: [product1] });
+
+  await user.click(getShoppingCartRemoveButton(product1));
+
+  expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
 });
 
 function getShoppingCartModal() {
