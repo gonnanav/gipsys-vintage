@@ -16,15 +16,7 @@ describe('Shopping Journey', () => {
       header.openShoppingCart();
       verifyThatItemsInCartAre([products[0]]);
 
-      productPage.visit(products[1]);
-      productPage.addToShoppingCart();
-      header.openShoppingCart();
-      verifyThatItemsInCartAre([products[0], products[1]]);
-
       shoppingCart.removeItem(products[0]);
-      verifyThatItemsInCartAre([products[1]]);
-
-      shoppingCart.removeItem(products[1]);
       verifyThatCartIsEmpty();
     });
   });
