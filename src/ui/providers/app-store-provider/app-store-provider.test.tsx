@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useAppStore, AppStoreProvider } from './store-provider';
+import { useAppStore, AppStoreProvider } from './app-store-provider';
 import {
   productWithManyImages as product1,
   productWithOneImage as product2,
@@ -8,7 +8,7 @@ import { act } from 'react';
 
 it('throws an error when used outside the store provider', () => {
   expect(() => renderHook(() => useAppStore((state) => state))).toThrow(
-    'useStore must be used within a StoreProvider',
+    'useAppStore must be used within an AppStoreProvider',
   );
 });
 

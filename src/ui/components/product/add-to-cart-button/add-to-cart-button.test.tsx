@@ -1,12 +1,11 @@
 import { render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AddToCartButton } from './add-to-cart-button';
-import {
-  ShoppingCartProvider,
-  useShoppingCart,
-} from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { productWithoutImages as product } from '@/fixtures/products';
 import { Product } from '@/core/product';
+import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
+import { useCart } from '@/ui/hooks/cart';
+
 it('renders the add to cart button', () => {
   renderAddToCartButton(product);
 
@@ -25,7 +24,7 @@ it('adds the product to the cart when clicked', async () => {
 
   await user.click(getAddToCartButton());
 
-  expect(result.current.cart).toEqual([product]);
+  expect(result.current.items).toEqual([product]);
 });
 
 function getAddToCartButton() {
@@ -37,21 +36,17 @@ function getAddToCartButton() {
  */
 function renderAddToCartButton(product: Product) {
   return render(<AddToCartButton product={product} />, {
-    wrapper: ShoppingCartProvider,
+    wrapper: AppStoreProvider,
   });
 }
 
-/**
- * Renders the add to cart button with the shopping cart provider and a consumer of the shopping cart.
- * This is used to test the add to cart button's behavior.
- */
 function renderAddToCartButtonWithConsumer(product: Product) {
-  return renderHook(() => useShoppingCart(), {
+  return renderHook(() => useCart(), {
     wrapper: ({ children }) => (
-      <ShoppingCartProvider>
+      <AppStoreProvider>
         {children}
         <AddToCartButton product={product} />
-      </ShoppingCartProvider>
+      </AppStoreProvider>
     ),
   });
 }

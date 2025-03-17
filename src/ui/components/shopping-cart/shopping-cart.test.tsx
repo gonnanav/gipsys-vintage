@@ -5,9 +5,9 @@ import {
   productWithOneImage as product2,
 } from '@/fixtures/products';
 import { createPortalWrapper } from '@/ui/test-utils/factories';
-import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
 import { Product } from '@/core/product';
+import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
 
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();
@@ -80,7 +80,7 @@ describe('Shopping Cart Open', () => {
     const PortalRoot = createPortalWrapper('test-portal-root');
     renderShoppingCartOpen({}, ({ children }) => (
       <PortalRoot>
-        <ShoppingCartProvider>{children}</ShoppingCartProvider>
+        <AppStoreProvider initialState={{ cartItems: [] }}>{children}</AppStoreProvider>
       </PortalRoot>
     ));
 
@@ -93,7 +93,7 @@ describe('Shopping Cart Open', () => {
 
     // Act
     renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: initialCart }}>{children}</AppStoreProvider>
     ));
 
     // Assert
@@ -106,7 +106,7 @@ describe('Shopping Cart Open', () => {
 
     // Act
     renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: initialCart }}>{children}</AppStoreProvider>
     ));
 
     // Assert
@@ -125,7 +125,7 @@ describe('Shopping Cart Open', () => {
   it('renders a shopping cart item with the correct test id for e2e tests', () => {
     const initialCart = [product1];
     renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={initialCart}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: initialCart }}>{children}</AppStoreProvider>
     ));
 
     expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
@@ -133,7 +133,7 @@ describe('Shopping Cart Open', () => {
 
   it('renders a shopping cart empty message when the cart is empty', () => {
     renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={[]}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: [] }}>{children}</AppStoreProvider>
     ));
 
     expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
@@ -141,7 +141,7 @@ describe('Shopping Cart Open', () => {
 
   it('removes a shopping cart item when the remove button is clicked', async () => {
     const { user } = renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: [product1] }}>{children}</AppStoreProvider>
     ));
 
     await user.click(getShoppingCartRemoveButton(product1));
@@ -151,7 +151,7 @@ describe('Shopping Cart Open', () => {
 
   it('renders the item remove button with the correct test id for e2e tests', () => {
     renderShoppingCartOpen({}, ({ children }) => (
-      <ShoppingCartProvider initialCart={[product1]}>{children}</ShoppingCartProvider>
+      <AppStoreProvider initialState={{ cartItems: [product1] }}>{children}</AppStoreProvider>
     ));
 
     expect(getShoppingCartRemoveButton(product1)).toHaveTestId('shopping-cart-item-remove-button');
@@ -219,7 +219,7 @@ function renderShoppingCartClosed(
 }
 
 const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ShoppingCartProvider>{children}</ShoppingCartProvider>
+  <AppStoreProvider initialState={{ cartItems: [] }}>{children}</AppStoreProvider>
 );
 
 function renderShoppingCart(

@@ -16,9 +16,9 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Avatar from '@mui/material/Avatar';
 import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
-import { useShoppingCart } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ListItemAvatar } from '@mui/material';
 import { useShoppingCartDrawer } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
+import { useCart } from '@/ui/hooks/cart';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
@@ -26,7 +26,7 @@ const placeholderImage: ProductImage = {
 };
 
 export function ShoppingCartDrawer() {
-  const { cart, removeFromCart } = useShoppingCart();
+  const { items, removeItem } = useCart();
   const { isOpen, closeDrawer } = useShoppingCartDrawer();
   const container = useContext(ModalPortalRootContext);
 
@@ -49,9 +49,9 @@ export function ShoppingCartDrawer() {
           <ShoppingCartTitle />
         </Box>
         <Box>
-          {cart.length ? (
+          {items.length ? (
             <Box sx={{ mt: 1 }}>
-              <ShoppingCartList cart={cart} removeFromCart={removeFromCart} />
+              <ShoppingCartList cart={items} removeFromCart={removeItem} />
             </Box>
           ) : (
             <Box sx={{ mt: 5 }}>

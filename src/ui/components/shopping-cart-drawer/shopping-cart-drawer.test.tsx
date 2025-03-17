@@ -5,10 +5,10 @@ import {
   productWithOneImage as product2,
 } from '@/fixtures/products';
 import { createPortalWrapper } from '@/ui/test-utils/factories';
-import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import { ShoppingCartDrawer } from './shopping-cart-drawer';
 import { Product } from '@/core/product';
 import { ShoppingCartDrawerProvider } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
+import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
 
 interface ShoppingCartProvidersProps {
   initialCart: Product[];
@@ -21,11 +21,11 @@ const ShoppingCartProviders = ({
   initialIsOpen,
   children,
 }: ShoppingCartProvidersProps) => (
-  <ShoppingCartProvider initialCart={initialCart}>
+  <AppStoreProvider initialState={{ cartItems: initialCart }}>
     <ShoppingCartDrawerProvider initialIsOpen={initialIsOpen}>
       {children}
     </ShoppingCartDrawerProvider>
-  </ShoppingCartProvider>
+  </AppStoreProvider>
 );
 
 it('renders the modal', async () => {

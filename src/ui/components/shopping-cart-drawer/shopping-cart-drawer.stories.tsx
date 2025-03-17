@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ShoppingCartProvider } from '@/ui/providers/shopping-cart/shopping-cart-provider';
 import {
   productWithManyImages,
   productWithOneImage,
   productWithoutImages,
 } from '@/fixtures/products';
 import { ShoppingCartDrawer } from './shopping-cart-drawer';
+import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
 
 const meta: Meta<typeof ShoppingCartDrawer> = {
   title: 'Global/ShoppingCartDrawer',
@@ -16,13 +16,6 @@ const meta: Meta<typeof ShoppingCartDrawer> = {
   args: {
     isOpen: true,
   },
-  decorators: [
-    (Story) => (
-      <ShoppingCartProvider>
-        <Story />
-      </ShoppingCartProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -32,9 +25,9 @@ const products = [productWithManyImages, productWithOneImage, productWithoutImag
 export const NonEmptyCart: Story = {
   decorators: [
     (Story) => (
-      <ShoppingCartProvider initialCart={products}>
+      <AppStoreProvider initialState={{ cartItems: products }}>
         <Story />
-      </ShoppingCartProvider>
+      </AppStoreProvider>
     ),
   ],
 };

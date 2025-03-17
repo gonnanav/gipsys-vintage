@@ -2,19 +2,19 @@
 
 import Button from '@mui/material/Button';
 import { Product } from '@/core/product';
-import { useShoppingCart } from '@/ui/providers/shopping-cart/shopping-cart-provider';
+import { useAddItemToCart } from '@/ui/hooks/cart';
 
 interface AddToCartButtonProps {
   product: Product;
 }
 
 export function AddToCartButton({ product }: AddToCartButtonProps) {
-  const { addProduct } = useShoppingCart();
+  const addItemToCart = useAddItemToCart();
 
   return (
     <Button
       data-testid="add-to-cart-button"
-      onClick={() => addProduct(product)}
+      onClick={() => addItemToCart(product)}
       variant="contained"
     >
       הוסיפי לסל הקניות
