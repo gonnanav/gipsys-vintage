@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store/provider/store-provider';
+import { useAppStore } from '@/store/store-provider';
 import { Product } from '@/core/product';
 
 interface UseCartReturn {
