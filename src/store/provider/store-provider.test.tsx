@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useAppStore, AppStoreProvider } from './app-store-provider';
+import { useAppStore, AppStoreProvider } from './store-provider';
 import {
   productWithManyImages as product1,
   productWithOneImage as product2,

@@ -1,1 +1,1 @@
-export { AppStoreProvider as StoreProvider } from './provider/app-store-provider';
+export { AppStoreProvider as StoreProvider } from './provider/store-provider';
