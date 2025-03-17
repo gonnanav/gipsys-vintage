@@ -18,7 +18,7 @@ import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
 import { ListItemAvatar } from '@mui/material';
 import { useShoppingCartDrawer } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
-import { useCart } from '@/store/cart';
+import { useCart } from '@/store';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',

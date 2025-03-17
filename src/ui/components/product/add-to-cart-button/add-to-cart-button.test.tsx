@@ -3,8 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { AddToCartButton } from './add-to-cart-button';
 import { productWithoutImages as product } from '@/fixtures/products';
 import { Product } from '@/core/product';
-import { StoreProvider } from '@/store';
-import { useCart } from '@/store/cart';
+import { StoreProvider, useCart } from '@/store';
 
 it('renders the add to cart button', () => {
   renderAddToCartButton(product);
