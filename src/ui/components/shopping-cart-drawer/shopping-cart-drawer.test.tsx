@@ -8,7 +8,7 @@ import { createPortalWrapper } from '@/ui/test-utils/factories';
 import { ShoppingCartDrawer } from './shopping-cart-drawer';
 import { Product } from '@/core/product';
 import { ShoppingCartDrawerProvider } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
-import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
+import { StoreProvider } from '@/store';
 
 interface ShoppingCartProvidersProps {
   initialCart: Product[];
@@ -21,11 +21,11 @@ const ShoppingCartProviders = ({
   initialIsOpen,
   children,
 }: ShoppingCartProvidersProps) => (
-  <AppStoreProvider initialState={{ cartItems: initialCart }}>
+  <StoreProvider initialState={{ cartItems: initialCart }}>
     <ShoppingCartDrawerProvider initialIsOpen={initialIsOpen}>
       {children}
     </ShoppingCartDrawerProvider>
-  </AppStoreProvider>
+  </StoreProvider>
 );
 
 it('renders the modal', async () => {

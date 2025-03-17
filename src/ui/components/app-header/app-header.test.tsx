@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { AppHeader } from './app-header';
-import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
+import { StoreProvider } from '@/store';
 
 it('renders the app header with the correct test id', () => {
   renderAppHeader();
@@ -33,5 +33,5 @@ it('renders the shopping cart button', () => {
 });
 
 function renderAppHeader() {
-  return render(<AppHeader />, { wrapper: AppStoreProvider });
+  return render(<AppHeader />, { wrapper: StoreProvider });
 }

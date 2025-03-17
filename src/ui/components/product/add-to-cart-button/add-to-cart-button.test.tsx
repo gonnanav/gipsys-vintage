@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { AddToCartButton } from './add-to-cart-button';
 import { productWithoutImages as product } from '@/fixtures/products';
 import { Product } from '@/core/product';
-import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
+import { StoreProvider } from '@/store';
 import { useCart } from '@/ui/hooks/cart';
 
 it('renders the add to cart button', () => {
@@ -36,17 +36,17 @@ function getAddToCartButton() {
  */
 function renderAddToCartButton(product: Product) {
   return render(<AddToCartButton product={product} />, {
-    wrapper: AppStoreProvider,
+    wrapper: StoreProvider,
   });
 }
 
 function renderAddToCartButtonWithConsumer(product: Product) {
   return renderHook(() => useCart(), {
     wrapper: ({ children }) => (
-      <AppStoreProvider>
+      <StoreProvider>
         {children}
         <AddToCartButton product={product} />
-      </AppStoreProvider>
+      </StoreProvider>
     ),
   });
 }

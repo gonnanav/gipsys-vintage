@@ -5,7 +5,7 @@ import {
   productWithoutImages,
 } from '@/fixtures/products';
 import { ShoppingCartDrawer } from './shopping-cart-drawer';
-import { AppStoreProvider } from '@/ui/providers/app-store-provider/app-store-provider';
+import { StoreProvider } from '@/store';
 
 const meta: Meta<typeof ShoppingCartDrawer> = {
   title: 'Global/ShoppingCartDrawer',
@@ -25,9 +25,9 @@ const products = [productWithManyImages, productWithOneImage, productWithoutImag
 export const NonEmptyCart: Story = {
   decorators: [
     (Story) => (
-      <AppStoreProvider initialState={{ cartItems: products }}>
+      <StoreProvider initialState={{ cartItems: products }}>
         <Story />
-      </AppStoreProvider>
+      </StoreProvider>
     ),
   ],
 };
