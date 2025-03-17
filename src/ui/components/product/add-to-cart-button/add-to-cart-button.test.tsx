@@ -4,7 +4,7 @@ import { AddToCartButton } from './add-to-cart-button';
 import { productWithoutImages as product } from '@/fixtures/products';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/store';
-import { useCart } from '@/ui/hooks/cart';
+import { useCart } from '@/store/cart';
 
 it('renders the add to cart button', () => {
   renderAddToCartButton(product);
