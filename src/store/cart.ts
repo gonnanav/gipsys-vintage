@@ -1,22 +1,25 @@
 import { useAppStore } from '@/store/store-provider';
 import { Product } from '@/core/product';
 
-interface UseCartReturn {
-  items: Product[];
+export interface UseCartActionsReturn {
   addItem: (item: Product) => void;
   removeItem: (id: number) => void;
 }
 
-export function useCart(): UseCartReturn {
-  const items = useAppStore((state) => state.cartItems);
-  const addItem = useAddItemToCart();
+export function useCartActions(): UseCartActionsReturn {
+  const addItem = useAppStore((state) => state.addCartItem);
   const removeItem = useAppStore((state) => state.removeCartItem);
 
-  return { items, addItem, removeItem };
+  return { addItem, removeItem };
 }
 
-type UseAddItemToCartReturn = (item: Product) => void;
+export interface UseCartReturn extends UseCartActionsReturn {
+  items: Product[];
+}
 
-export function useAddItemToCart(): UseAddItemToCartReturn {
-  return useAppStore((state) => state.addCartItem);
+export function useCart(): UseCartReturn {
+  const items = useAppStore((state) => state.cartItems);
+  const actions = useCartActions();
+
+  return { items, ...actions };
 }
