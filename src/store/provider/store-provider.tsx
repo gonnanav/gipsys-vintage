@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useRef } from 'react';
 import { useStore } from 'zustand';
-import { AppStore, AppState, createAppStore } from '@/store/app-store';
+import { AppStore, AppState, createAppStore } from '@/store/store';
 
 type AppStoreApi = ReturnType<typeof createAppStore>;
 
