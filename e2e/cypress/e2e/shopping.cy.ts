@@ -31,6 +31,8 @@ describe('Shopping Journey', () => {
   it('shops for a product', () => {
     cy.wrap(products).then((products) => {
       visitShopPage();
+      verifyThatShopTitleIs('חנות');
+      verifyThatProductsInShopAre(products);
 
       goToProduct(products[0]);
       verifyThatProductDisplayedIs(products[0]);
@@ -38,6 +40,13 @@ describe('Shopping Journey', () => {
       addProductToCart();
       verifyThatItemsInCartAre([products[0]]);
     });
+  });
+
+  it('shops by category', () => {
+    visitCategory(pantsCategory);
+    verifyThatShopTitleIs(pantsCategory.name);
+    verifyThatProductsInShopAre([blueJeans, blackPants]);
+    verifyThatProductIsNotInShop(whiteTShirt);
   });
 
   it('adds and removes a product from the cart', () => {
@@ -54,21 +63,6 @@ describe('Shopping Journey', () => {
       removeItemFromCart(products[0]);
       verifyThatCartIsEmpty();
     });
-  });
-
-  it('displays all products and navigates to product page when clicking product', () => {
-    visitShopPage();
-
-    verifyThatShopTitleIs('חנות');
-    verifyThatProductsInShopAre(products);
-  });
-
-  it('displays products filtered by category when visiting category page', () => {
-    visitCategory(pantsCategory);
-
-    verifyThatShopTitleIs(pantsCategory.name);
-    verifyThatProductsInShopAre([blueJeans, blackPants]);
-    verifyThatProductIsNotInShop(whiteTShirt);
   });
 });
 
