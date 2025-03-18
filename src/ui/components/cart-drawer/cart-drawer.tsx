@@ -1,28 +1,14 @@
 'use client';
 
 import { useContext } from 'react';
-import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import CloseIcon from '@mui/icons-material/Close';
-import Stack from '@mui/material/Stack';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import Avatar from '@mui/material/Avatar';
-import { Product, ProductImage } from '@/core/product';
-import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
-import { ListItemAvatar } from '@mui/material';
 import { useCart, useCartDrawer } from '@/store';
-
-const placeholderImage: ProductImage = {
-  src: '/images/product-placeholder.webp',
-  alt: 'אין תמונת מוצר',
-};
+import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
+import { CartCloseButton } from './cart-close-button';
+import { CartTitle } from './cart-title';
+import { CartList } from './cart-list';
+import { CartEmptyMessage } from './cart-empty-message';
 
 export function CartDrawer() {
   const { items, removeItem } = useCart();
@@ -60,82 +46,5 @@ export function CartDrawer() {
         </Box>
       </Box>
     </Drawer>
-  );
-}
-
-interface CartCloseButtonProps {
-  onClick: () => void;
-}
-
-function CartCloseButton({ onClick }: CartCloseButtonProps) {
-  return (
-    <IconButton
-      aria-label="סגרי את עגלת הקניות"
-      onClick={onClick}
-      data-testid="shopping-cart-close-button"
-    >
-      <CloseIcon />
-    </IconButton>
-  );
-}
-
-function CartTitle() {
-  return (
-    <Typography
-      component="h2"
-      variant="h6"
-      data-testid="shopping-cart-title"
-      sx={{ textAlign: 'center' }}
-    >
-      סל הקניות
-    </Typography>
-  );
-}
-
-interface CartListProps {
-  cart: Product[];
-  removeFromCart: (productId: number) => void;
-}
-
-function CartList({ cart, removeFromCart }: CartListProps) {
-  return (
-    <List aria-label="פריטים בסל הקניות">
-      {cart.map((product) => (
-        <ListItem
-          key={product.id}
-          data-testid="shopping-cart-item"
-          secondaryAction={
-            <IconButton
-              data-testid="shopping-cart-item-remove-button"
-              aria-label="הסירי מסל הקניות"
-              onClick={() => removeFromCart(product.id)}
-            >
-              <HighlightOffIcon />
-            </IconButton>
-          }
-        >
-          <ListItemAvatar sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Avatar variant="square" sx={{ position: 'relative' }}>
-              <Image
-                src={product.images?.[0]?.src || placeholderImage.src}
-                alt={product.images?.[0]?.alt || placeholderImage.alt || ''}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={product.name} secondary={`₪${product.price}`} />
-        </ListItem>
-      ))}
-    </List>
-  );
-}
-
-function CartEmptyMessage() {
-  return (
-    <Stack spacing={2} alignItems="center">
-      <ShoppingCartIcon sx={{ fontSize: '3rem' }} />
-      <Typography sx={{ textAlign: 'center' }}>אין פריטים בסל</Typography>
-    </Stack>
   );
 }
