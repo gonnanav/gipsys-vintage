@@ -29,17 +29,15 @@ describe('Shopping Journey', () => {
   });
 
   it('shops for a product', () => {
-    cy.wrap(products).then((products) => {
-      visitShopPage();
-      verifyThatShopTitleIs('חנות');
-      verifyThatProductsInShopAre(products);
+    visitShopPage();
+    verifyThatShopTitleIs('חנות');
+    verifyThatProductsInShopAre(products);
 
-      goToProduct(products[0]);
-      verifyThatProductDisplayedIs(products[0]);
+    goToProduct(products[0]);
+    verifyThatProductDisplayedIs(products[0]);
 
-      addProductToCart();
-      verifyThatItemsInCartAre([products[0]]);
-    });
+    addProductToCart();
+    verifyThatItemsInCartAre([products[0]]);
   });
 
   it('shops by category', () => {
@@ -50,19 +48,17 @@ describe('Shopping Journey', () => {
   });
 
   it('adds and removes a product from the cart', () => {
-    cy.wrap(products).then((products) => {
-      visitProductPage(products[0]);
+    visitProductPage(products[0]);
 
-      openCart();
-      verifyThatCartIsEmpty();
-      closeCart();
+    openCart();
+    verifyThatCartIsEmpty();
+    closeCart();
 
-      addProductToCart();
-      verifyThatItemsInCartAre([products[0]]);
+    addProductToCart();
+    verifyThatItemsInCartAre([products[0]]);
 
-      removeItemFromCart(products[0]);
-      verifyThatCartIsEmpty();
-    });
+    removeItemFromCart(products[0]);
+    verifyThatCartIsEmpty();
   });
 });
 
