@@ -2,8 +2,29 @@ import { Product } from '@/core/product';
 import { header, cart, shopPage, productPage, data } from '../support/helpers';
 
 describe('Shopping Journey', () => {
-  it('adds and removes items from the cart', () => {
-    data.seedProducts(data.sampleProducts).then((products) => {
+  let products: Product[] = [];
+
+  before(() => {
+    data.seedProducts(data.sampleProducts).then((ps) => {
+      products = ps;
+    });
+  });
+
+  it('displays a product on the product page', () => {
+    cy.wrap(products).then(([product]) => {
+      const { name, price, description } = product;
+
+      productPage.visit(product);
+
+      cy.getPageHeading(name).should('be.visible');
+      cy.contains(price).should('be.visible');
+      cy.contains(description).should('be.visible');
+      productPage.getGallery().should('be.visible');
+    });
+  });
+
+  it('adds and removes product items from the cart', () => {
+    cy.wrap(products).then((products) => {
       visitShopPage();
       openCart();
       verifyThatCartIsEmpty();
