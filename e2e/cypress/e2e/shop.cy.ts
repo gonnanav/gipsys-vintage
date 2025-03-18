@@ -1,6 +1,6 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate } from '@/core/category';
-import { shopPage } from '../support/page-objects';
+import { shopPage } from '../support/helpers';
 
 describe('Shop Page', () => {
   it('displays all products and navigates to product page when clicking product', () => {

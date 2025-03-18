@@ -1,5 +1,5 @@
 import { Product, ProductCreate } from '@/core/product';
-import { header, productPage } from '../support/page-objects';
+import { header, productPage } from '../support/helpers';
 
 describe('Product Page', () => {
   it('displays the product details and image gallery', () => {

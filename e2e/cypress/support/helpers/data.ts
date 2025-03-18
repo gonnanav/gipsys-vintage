@@ -1,10 +1,6 @@
 import { Product, ProductCreate } from '@/core/product';
 
 /**
- * Helper functions for setting up test data
- */
-
-/**
  * Seed a single product
  * @param product The product data to seed
  * @returns A Cypress chain that resolves to the seeded product

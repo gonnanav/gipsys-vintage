@@ -1,12 +1,11 @@
 import { Product } from '@/core/product';
-import { header, cart, shopPage, productPage } from '../support/page-objects';
-import { testData } from '../support/helpers';
+import { header, cart, shopPage, productPage, data } from '../support/helpers';
 
 describe('Shopping Journey', () => {
   it('adds and removes items from the cart', () => {
-    const sampleProducts = testData.getSampleProducts().slice(0, 2);
+    const sampleProducts = data.getSampleProducts().slice(0, 2);
 
-    testData.seedProducts(sampleProducts).then((products) => {
+    data.seedProducts(sampleProducts).then((products) => {
       visitShopPage();
       openCart();
       verifyThatCartIsEmpty();

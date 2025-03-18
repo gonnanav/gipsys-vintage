@@ -1,4 +1,4 @@
-import { header } from '../support/page-objects';
+import { header } from '../support/helpers';
 
 describe('Header', () => {
   it('should display the header with logo and shopping cart button', () => {
