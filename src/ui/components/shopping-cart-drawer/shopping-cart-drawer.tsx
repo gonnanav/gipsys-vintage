@@ -17,8 +17,7 @@ import Avatar from '@mui/material/Avatar';
 import { Product, ProductImage } from '@/core/product';
 import { ModalPortalRootContext } from '@/ui/contexts/modal-portal-root-context';
 import { ListItemAvatar } from '@mui/material';
-import { useShoppingCartDrawer } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
-import { useCart } from '@/store';
+import { useCart, useCartDrawer } from '@/store';
 
 const placeholderImage: ProductImage = {
   src: '/images/product-placeholder.webp',
@@ -27,7 +26,7 @@ const placeholderImage: ProductImage = {
 
 export function ShoppingCartDrawer() {
   const { items, removeItem } = useCart();
-  const { isOpen, closeDrawer } = useShoppingCartDrawer();
+  const { isOpen, close } = useCartDrawer();
   const container = useContext(ModalPortalRootContext);
 
   return (
@@ -37,13 +36,13 @@ export function ShoppingCartDrawer() {
       aria-label="סל הקניות"
       anchor="right"
       open={isOpen}
-      onClose={closeDrawer}
+      onClose={close}
       data-testid="shopping-cart-modal"
       ModalProps={{ container }}
     >
       <Box sx={{ position: 'relative', px: 2, py: 1, width: { xs: '100vw', sm: '400px' } }}>
         <Box sx={{ position: 'absolute', top: 5, right: 5 }}>
-          <ShoppingCartCloseButton onClick={closeDrawer} />
+          <ShoppingCartCloseButton onClick={close} />
         </Box>
         <Box sx={{ mt: 0.5 }}>
           <ShoppingCartTitle />

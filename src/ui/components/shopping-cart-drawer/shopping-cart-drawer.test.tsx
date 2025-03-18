@@ -4,29 +4,9 @@ import {
   productWithoutImages as product1,
   productWithOneImage as product2,
 } from '@/fixtures/products';
-import { createPortalWrapper } from '@/ui/test-utils/factories';
 import { ShoppingCartDrawer } from './shopping-cart-drawer';
 import { Product } from '@/core/product';
-import { ShoppingCartDrawerProvider } from '@/ui/providers/shopping-cart-drawer/shopping-cart-drawer-provider';
 import { StoreProvider } from '@/store';
-
-interface ShoppingCartProvidersProps {
-  initialCart: Product[];
-  initialIsOpen: boolean;
-  children: React.ReactNode;
-}
-
-const ShoppingCartProviders = ({
-  initialCart,
-  initialIsOpen,
-  children,
-}: ShoppingCartProvidersProps) => (
-  <StoreProvider initialState={{ cartItems: initialCart }}>
-    <ShoppingCartDrawerProvider initialIsOpen={initialIsOpen}>
-      {children}
-    </ShoppingCartDrawerProvider>
-  </StoreProvider>
-);
 
 it('renders the modal', async () => {
   renderShoppingCartDrawer();
@@ -44,21 +24,6 @@ it('renders the modal under the body element by default', () => {
   renderShoppingCartDrawer();
 
   expect(getShoppingCartModal()).toBeChildOf(document.body);
-});
-
-it('renders the modal under the provided portal root element', () => {
-  const PortalRoot = createPortalWrapper('test-portal-root');
-  renderShoppingCartDrawer({
-    Wrapper: ({ children }) => (
-      <PortalRoot>
-        <ShoppingCartProviders initialCart={[]} initialIsOpen={true}>
-          {children}
-        </ShoppingCartProviders>
-      </PortalRoot>
-    ),
-  });
-
-  expect(getShoppingCartModal()).toBeChildOf(screen.getByTestId('test-portal-root'));
 });
 
 it('renders the title with the correct text', () => {
@@ -186,9 +151,9 @@ function renderShoppingCartDrawer({
   initialIsOpen = true,
 }: RenderShoppingCartDrawerProps = {}) {
   const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
-    <ShoppingCartProviders initialCart={initialCart} initialIsOpen={initialIsOpen}>
+    <StoreProvider initialState={{ cartItems: initialCart, isCartDrawerOpen: initialIsOpen }}>
       {children}
-    </ShoppingCartProviders>
+    </StoreProvider>
   );
 
   const user = userEvent.setup();

@@ -3,17 +3,21 @@ import { Product } from '@/core/product';
 
 export type AppState = {
   cartItems: Product[];
+  isCartDrawerOpen: boolean;
 };
 
 export type AppActions = {
   addCartItem: (item: Product) => void;
   removeCartItem: (id: number) => void;
+  openCartDrawer: () => void;
+  closeCartDrawer: () => void;
 };
 
 export type AppStore = AppState & AppActions;
 
 const defaultInitialState: AppState = {
   cartItems: [],
+  isCartDrawerOpen: false,
 };
 
 export function createAppStore(initialState?: Partial<AppState>): StoreApi<AppStore> {
@@ -22,6 +26,8 @@ export function createAppStore(initialState?: Partial<AppState>): StoreApi<AppSt
     ...initialState,
     addCartItem: (item) => set((state) => addCartItem(state, item)),
     removeCartItem: (id) => set((state) => removeCartItem(state, id)),
+    openCartDrawer: () => set({ isCartDrawerOpen: true }),
+    closeCartDrawer: () => set({ isCartDrawerOpen: false }),
   }));
 }
 

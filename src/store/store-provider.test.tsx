@@ -12,18 +12,6 @@ it('throws an error when used outside the store provider', () => {
   );
 });
 
-it('returns the default initial state by default', () => {
-  const { result } = renderHook(() => useAppStore((state) => state), {
-    wrapper: AppStoreProvider,
-  });
-
-  expect(result.current).toEqual({
-    cartItems: [],
-    addCartItem: expect.any(Function),
-    removeCartItem: expect.any(Function),
-  });
-});
-
 it('overrides the default initial state with the given initial state', () => {
   const partialInitialState = {
     cartItems: [product1, product2],

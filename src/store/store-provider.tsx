@@ -9,8 +9,8 @@ type AppStoreApi = ReturnType<typeof createAppStore>;
 const AppStoreContext = createContext<AppStoreApi | null>(null);
 
 export interface AppStoreProviderProps {
+  initialState?: Partial<AppState>;
   children: React.ReactNode;
-  initialState?: AppState;
 }
 
 export function AppStoreProvider({ initialState, children }: AppStoreProviderProps) {

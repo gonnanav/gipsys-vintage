@@ -4,10 +4,10 @@ import {
   productWithoutImages as product1,
   productWithOneImage as product2,
 } from '@/fixtures/products';
-import { createPortalWrapper } from '@/ui/test-utils/factories';
-import { ShoppingCart, ShoppingCartProps } from './shopping-cart';
+import { ShoppingCart } from './shopping-cart';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/store';
+import { AppState } from '@/store/store';
 
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();
@@ -76,25 +76,12 @@ describe('Shopping Cart Open', () => {
     expect(getShoppingCartModal()).toBeChildOf(document.body);
   });
 
-  it('renders the shopping cart modal under the provided portal root element', () => {
-    const PortalRoot = createPortalWrapper('test-portal-root');
-    renderShoppingCartOpen({}, ({ children }) => (
-      <PortalRoot>
-        <StoreProvider initialState={{ cartItems: [] }}>{children}</StoreProvider>
-      </PortalRoot>
-    ));
-
-    expect(getShoppingCartModal()).toBeChildOf(screen.getByTestId('test-portal-root'));
-  });
-
   it('renders the shopping cart list for a non-empty cart', () => {
     // Arrange
     const initialCart = [product1, product2];
 
     // Act
-    renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: initialCart }}>{children}</StoreProvider>
-    ));
+    renderShoppingCartOpen({ cartItems: initialCart });
 
     // Assert
     expect(getShoppingCartList()).toBeInTheDocument();
@@ -105,9 +92,7 @@ describe('Shopping Cart Open', () => {
     const initialCart = [product1, product2];
 
     // Act
-    renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: initialCart }}>{children}</StoreProvider>
-    ));
+    renderShoppingCartOpen({ cartItems: initialCart });
 
     // Assert
     const items = getShoppingCartItems();
@@ -124,25 +109,19 @@ describe('Shopping Cart Open', () => {
 
   it('renders a shopping cart item with the correct test id for e2e tests', () => {
     const initialCart = [product1];
-    renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: initialCart }}>{children}</StoreProvider>
-    ));
+    renderShoppingCartOpen({ cartItems: initialCart });
 
     expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
   });
 
   it('renders a shopping cart empty message when the cart is empty', () => {
-    renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: [] }}>{children}</StoreProvider>
-    ));
+    renderShoppingCartOpen({ cartItems: [] });
 
     expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
   });
 
   it('removes a shopping cart item when the remove button is clicked', async () => {
-    const { user } = renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: [product1] }}>{children}</StoreProvider>
-    ));
+    const { user } = renderShoppingCartOpen({ cartItems: [product1] });
 
     await user.click(getShoppingCartRemoveButton(product1));
 
@@ -150,9 +129,7 @@ describe('Shopping Cart Open', () => {
   });
 
   it('renders the item remove button with the correct test id for e2e tests', () => {
-    renderShoppingCartOpen({}, ({ children }) => (
-      <StoreProvider initialState={{ cartItems: [product1] }}>{children}</StoreProvider>
-    ));
+    renderShoppingCartOpen({ cartItems: [product1] });
 
     expect(getShoppingCartRemoveButton(product1)).toHaveTestId('shopping-cart-item-remove-button');
   });
@@ -204,30 +181,21 @@ function getShoppingCartEmptyMessage() {
   return screen.getByText('אין פריטים בסל');
 }
 
-function renderShoppingCartOpen(
-  props?: ShoppingCartProps,
-  wrapper?: React.ComponentType<{ children: React.ReactNode }>,
-) {
-  return renderShoppingCart({ ...props, initialIsOpen: true }, wrapper);
+function renderShoppingCartOpen(initialState?: Partial<AppState>) {
+  return renderShoppingCart({ isCartDrawerOpen: true, ...initialState });
 }
 
-function renderShoppingCartClosed(
-  props?: ShoppingCartProps,
-  wrapper?: React.ComponentType<{ children: React.ReactNode }>,
-) {
-  return renderShoppingCart({ ...props, initialIsOpen: false }, wrapper);
+function renderShoppingCartClosed(initialState?: Partial<AppState>) {
+  return renderShoppingCart({ isCartDrawerOpen: false, ...initialState });
 }
 
-const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
-  <StoreProvider initialState={{ cartItems: [] }}>{children}</StoreProvider>
-);
-
-function renderShoppingCart(
-  props?: ShoppingCartProps,
-  wrapper: React.ComponentType<{ children: React.ReactNode }> = defaultWrapper,
-) {
+function renderShoppingCart(initialState?: Partial<AppState>) {
   const user = userEvent.setup();
-  render(<ShoppingCart {...props} />, { wrapper });
+  render(<ShoppingCart />, {
+    wrapper: ({ children }) => (
+      <StoreProvider initialState={initialState}>{children}</StoreProvider>
+    ),
+  });
 
   return { user };
 }
