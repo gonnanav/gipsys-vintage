@@ -2,23 +2,9 @@
 
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { ShoppingCartDrawer } from '@/ui/components/shopping-cart-drawer/shopping-cart-drawer';
-import { useCartDrawer } from '@/store';
+import { useCartDrawer } from '@/store/hooks/cart-drawer';
 
-export interface ShoppingCartProps {
-  initialIsOpen?: boolean;
-}
-
-export function ShoppingCart() {
-  return (
-    <>
-      <ShoppingCartButton />
-      <ShoppingCartDrawer />
-    </>
-  );
-}
-
-function ShoppingCartButton() {
+export function CartButton() {
   const { open } = useCartDrawer();
 
   return (
