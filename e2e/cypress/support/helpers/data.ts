@@ -1,3 +1,5 @@
+import { Category } from '@/core/category';
+import { CategoryCreate } from '@/core/category';
 import { Product, ProductCreate } from '@/core/product';
 
 /**
@@ -18,6 +20,20 @@ export function seedProducts(products: ProductCreate[]): Cypress.Chainable<Produ
   return cy.task<Product[]>('seed:products', products);
 }
 
+export function seedCategories(categories: CategoryCreate[]): Cypress.Chainable<Category[]> {
+  return cy.task<Category[]>('seed:categories', categories);
+}
+
+export const shirtsCategory: CategoryCreate = {
+  name: 'Shirts',
+  slug: 'shirts',
+};
+
+export const pantsCategory: CategoryCreate = {
+  name: 'Pants',
+  slug: 'pants',
+};
+
 export const sampleProducts = [
   {
     name: 'Vintage Leather Jacket',
@@ -35,3 +51,12 @@ export const sampleProducts = [
     description: 'Iconic 60s style sunglasses with UV protection',
   },
 ];
+
+export function createProduct(name: string, category: Category): ProductCreate {
+  return {
+    name,
+    price: '100',
+    description: 'A product description',
+    categoryId: category.id,
+  };
+}
