@@ -1,4 +1,5 @@
 import { Product, ProductCreate } from '@/core/product';
+import { header, productPage } from '../support/page-objects';
 
 describe('Product Page', () => {
   it('displays the product details and image gallery', () => {
@@ -9,16 +10,16 @@ describe('Product Page', () => {
     };
 
     cy.task<Product>('seed:product', productToSeed).then((product) => {
-      const { name, slug, price, description } = product;
+      const { name, price, description } = product;
 
-      cy.visit(`product/${slug}`);
+      productPage.visit(product);
 
-      cy.getAppHeader().should('be.visible');
+      header.getLogo().should('be.visible');
 
       cy.getPageHeading(name).should('be.visible');
       cy.contains(price).should('be.visible');
       cy.contains(description).should('be.visible');
-      cy.getByTestId('product-gallery').should('be.visible');
+      productPage.getGallery().should('be.visible');
     });
   });
 
@@ -28,6 +29,6 @@ describe('Product Page', () => {
     cy.request({ url, failOnStatusCode: false }).its('status').should('equal', 404);
     cy.visit(url, { failOnStatusCode: false });
 
-    cy.getAppHeader().should('be.visible');
+    header.getLogo().should('be.visible');
   });
 });

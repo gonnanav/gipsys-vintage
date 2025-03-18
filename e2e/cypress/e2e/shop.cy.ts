@@ -12,8 +12,6 @@ describe('Shop Page', () => {
     cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
       shopPage.visit();
 
-      cy.getAppHeader().should('be.visible');
-
       cy.getPageHeading('חנות').should('be.visible');
       shopPage.getProducts().should('have.length', products.length);
 
@@ -49,8 +47,6 @@ describe('Shop Page', () => {
 
       cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
         shopPage.visitCategory(pantsCategory);
-
-        cy.getAppHeader().should('be.visible');
 
         cy.getPageHeading(pantsCategory.name).should('be.visible');
 

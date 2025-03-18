@@ -17,41 +17,11 @@ declare global {
       findByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
 
       /**
-       * Custom command to get the app header
-       * @example cy.getAppHeader()
-       */
-      getAppHeader(): Chainable<JQuery<HTMLElement>>;
-
-      /**
-       * Custom command to get the app header logo
-       * @example cy.getAppHeaderLogo()
-       */
-      getAppHeaderLogo(): Chainable<JQuery<HTMLElement>>;
-
-      /**
-       * Custom command to get the shopping cart button
-       * @example cy.getShoppingCartButton()
-       */
-      getShoppingCartButton(): Chainable<JQuery<HTMLElement>>;
-
-      /**
-       * Custom command to get the shopping cart title
-       * @example cy.getShoppingCartTitle()
-       */
-      getShoppingCartTitle(): Chainable<JQuery<HTMLElement>>;
-
-      /**
        * Custom command to get the page heading
        * @param text The expected text of the heading
        * @example cy.getPageHeading('Shop')
        */
       getPageHeading(text: string): Chainable<JQuery<HTMLElement>>;
-
-      /**
-       * Custom command to get the add to cart button
-       * @example cy.getAddToCartButton()
-       */
-      getAddToCartButton(): Chainable<JQuery<HTMLElement>>;
     }
   }
 }
@@ -68,28 +38,8 @@ Cypress.Commands.add('findByTestId', { prevSubject: true }, (subject, testId) =>
   return cy.wrap(subject).find(testIdSelector(testId));
 });
 
-Cypress.Commands.add('getAppHeader', () => {
-  return cy.getByTestId('app-header');
-});
-
-Cypress.Commands.add('getAppHeaderLogo', () => {
-  return cy.getByTestId('app-header-logo');
-});
-
-Cypress.Commands.add('getShoppingCartButton', () => {
-  return cy.getByTestId('shopping-cart-button');
-});
-
-Cypress.Commands.add('getShoppingCartTitle', () => {
-  return cy.getByTestId('shopping-cart-title');
-});
-
 Cypress.Commands.add('getPageHeading', (text) => {
   return cy.contains('h1', text);
-});
-
-Cypress.Commands.add('getAddToCartButton', () => {
-  return cy.getByTestId('add-to-cart-button');
 });
 
 export {};

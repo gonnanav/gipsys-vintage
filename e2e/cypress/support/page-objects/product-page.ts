@@ -9,10 +9,17 @@ export function visit(product: Product): Cypress.Chainable<Cypress.AUTWindow> {
 }
 
 /**
+ * Get the product gallery
+ */
+export function getGallery(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return cy.getByTestId('product-gallery');
+}
+
+/**
  * Get the add to cart button
  */
 export function getAddToCartButton(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getAddToCartButton();
+  return cy.getByTestId('add-to-cart-button');
 }
 
 /**

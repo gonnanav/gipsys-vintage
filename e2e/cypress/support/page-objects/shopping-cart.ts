@@ -12,10 +12,6 @@ export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getCloseButton().click();
 }
 
-export function getTitle(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('shopping-cart-title');
-}
-
 export function getItems(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.getByTestId('shopping-cart-item');
 }
