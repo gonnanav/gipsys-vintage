@@ -1,43 +1,39 @@
 import { createStore, StoreApi } from 'zustand/vanilla';
 import { Product } from '@/core/product';
 
-export type AppState = {
+export interface AppState {
   cartItems: Product[];
-  isCartDrawerOpen: boolean;
-};
-
-export type AppActions = {
   addCartItem: (item: Product) => void;
   removeCartItem: (id: number) => void;
+
+  isCartDrawerOpen: boolean;
   openCartDrawer: () => void;
   closeCartDrawer: () => void;
-};
+}
 
-export type AppStore = AppState & AppActions;
+export type AppStoreApi = StoreApi<AppState>;
 
-const defaultInitialState: AppState = {
-  cartItems: [],
-  isCartDrawerOpen: false,
-};
-
-export function createAppStore(initialState?: Partial<AppState>): StoreApi<AppStore> {
-  return createStore<AppStore>()((set) => ({
-    ...defaultInitialState,
-    ...initialState,
+export function createAppStore(initialState?: Partial<AppState>): AppStoreApi {
+  return createStore<AppState>()((set) => ({
+    cartItems: [],
     addCartItem: (item) => set((state) => addCartItem(state, item)),
     removeCartItem: (id) => set((state) => removeCartItem(state, id)),
+
+    isCartDrawerOpen: false,
     openCartDrawer: () => set({ isCartDrawerOpen: true }),
     closeCartDrawer: () => set({ isCartDrawerOpen: false }),
+
+    ...initialState,
   }));
 }
 
-function addCartItem(state: AppStore, item: Product): Partial<AppStore> {
+function addCartItem(state: AppState, item: Product): Partial<AppState> {
   return {
     cartItems: [...state.cartItems, item],
   };
 }
 
-function removeCartItem(state: AppStore, id: number): Partial<AppStore> {
+function removeCartItem(state: AppState, id: number): Partial<AppState> {
   return {
     cartItems: state.cartItems.filter((item) => item.id != id),
   };

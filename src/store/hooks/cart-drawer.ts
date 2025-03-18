@@ -1,4 +1,4 @@
-import { useAppStore } from './store-provider';
+import { useAppStore } from '../provider/store-provider';
 
 export interface UseCartDrawerActionsReturn {
   open: () => void;

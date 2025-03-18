@@ -6,8 +6,7 @@ import {
 } from '@/fixtures/products';
 import { ShoppingCart } from './shopping-cart';
 import { Product } from '@/core/product';
-import { StoreProvider } from '@/store';
-import { AppState } from '@/store/store';
+import { AppState, StoreProvider } from '@/store';
 
 it('renders the shopping cart closed by default', () => {
   renderShoppingCart();

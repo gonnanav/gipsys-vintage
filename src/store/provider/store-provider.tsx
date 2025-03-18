@@ -2,9 +2,7 @@
 
 import { createContext, useContext, useRef } from 'react';
 import { useStore } from 'zustand';
-import { AppStore, AppState, createAppStore } from '@/store/store';
-
-type AppStoreApi = ReturnType<typeof createAppStore>;
+import { AppState, AppStoreApi, createAppStore } from '../store';
 
 const AppStoreContext = createContext<AppStoreApi | null>(null);
 
@@ -23,7 +21,7 @@ export function AppStoreProvider({ initialState, children }: AppStoreProviderPro
   return <AppStoreContext.Provider value={storeRef.current}>{children}</AppStoreContext.Provider>;
 }
 
-export function useAppStore<T>(selector: (state: AppStore) => T): T {
+export function useAppStore<T>(selector: (state: AppState) => T): T {
   const store = useContext(AppStoreContext);
 
   if (!store) {
