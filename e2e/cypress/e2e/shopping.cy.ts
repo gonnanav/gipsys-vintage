@@ -7,20 +7,44 @@ describe('Shopping Journey', () => {
     const sampleProducts = testData.getSampleProducts().slice(0, 2);
 
     testData.seedProducts(sampleProducts).then((products) => {
-      shopPage.visit();
-      header.openShoppingCart();
+      visitShopPage();
+      openCart();
       verifyThatCartIsEmpty();
-      shoppingCart.close();
+      closeCart();
 
-      shopPage.goToProduct(products[0]);
-      productPage.addToShoppingCart();
+      goToProduct(products[0]);
+      addProductToCart();
       verifyThatItemsInCartAre([products[0]]);
 
-      shoppingCart.removeItem(products[0]);
+      removeItemFromCart(products[0]);
       verifyThatCartIsEmpty();
     });
   });
 });
+
+function visitShopPage(): void {
+  shopPage.visit();
+}
+
+function openCart(): void {
+  header.openShoppingCart();
+}
+
+function closeCart(): void {
+  shoppingCart.close();
+}
+
+function goToProduct(product: Product): void {
+  shopPage.goToProduct(product);
+}
+
+function addProductToCart(): void {
+  productPage.addToShoppingCart();
+}
+
+function removeItemFromCart(product: Product): void {
+  shoppingCart.removeItem(product);
+}
 
 function verifyThatCartIsEmpty(): void {
   shoppingCart.getItems().should('not.exist');
