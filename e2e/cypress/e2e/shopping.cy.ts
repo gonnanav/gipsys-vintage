@@ -3,9 +3,7 @@ import { header, cart, shopPage, productPage, data } from '../support/helpers';
 
 describe('Shopping Journey', () => {
   it('adds and removes items from the cart', () => {
-    const sampleProducts = data.getSampleProducts().slice(0, 2);
-
-    data.seedProducts(sampleProducts).then((products) => {
+    data.seedProducts(data.sampleProducts).then((products) => {
       visitShopPage();
       openCart();
       verifyThatCartIsEmpty();

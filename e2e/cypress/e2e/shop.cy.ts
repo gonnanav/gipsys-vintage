@@ -1,15 +1,10 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate } from '@/core/category';
-import { shopPage } from '../support/helpers';
+import { shopPage, data } from '../support/helpers';
 
 describe('Shop Page', () => {
   it('displays all products and navigates to product page when clicking product', () => {
-    const productsToSeed: ProductCreate[] = [
-      { name: 'product1', price: '100' },
-      { name: 'product2', price: '50' },
-    ];
-
-    cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
+    data.seedProducts(data.sampleProducts).then((products) => {
       shopPage.visit();
 
       cy.getPageHeading('חנות').should('be.visible');
