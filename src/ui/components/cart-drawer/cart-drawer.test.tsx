@@ -4,7 +4,7 @@ import {
   productWithoutImages as product1,
   productWithOneImage as product2,
 } from '@/fixtures/products';
-import { ShoppingCartDrawer } from './shopping-cart-drawer';
+import { CartDrawer } from './cart-drawer';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/store';
 
@@ -157,7 +157,7 @@ function renderShoppingCartDrawer({
   );
 
   const user = userEvent.setup();
-  render(<ShoppingCartDrawer />, { wrapper: Wrapper ?? defaultWrapper });
+  render(<CartDrawer />, { wrapper: Wrapper ?? defaultWrapper });
 
   return { user };
 }

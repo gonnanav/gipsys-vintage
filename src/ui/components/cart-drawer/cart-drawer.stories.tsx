@@ -4,12 +4,12 @@ import {
   productWithOneImage,
   productWithoutImages,
 } from '@/fixtures/products';
-import { ShoppingCartDrawer } from './shopping-cart-drawer';
+import { CartDrawer } from './cart-drawer';
 import { StoreProvider } from '@/store';
 
-const meta: Meta<typeof ShoppingCartDrawer> = {
+const meta: Meta<typeof CartDrawer> = {
   title: 'Global/ShoppingCartDrawer',
-  component: ShoppingCartDrawer,
+  component: CartDrawer,
   parameters: {
     layout: 'centered',
   },
@@ -19,7 +19,7 @@ const meta: Meta<typeof ShoppingCartDrawer> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ShoppingCartDrawer>;
+type Story = StoryObj<typeof CartDrawer>;
 const products = [productWithManyImages, productWithOneImage, productWithoutImages];
 
 export const NonEmptyCart: Story = {

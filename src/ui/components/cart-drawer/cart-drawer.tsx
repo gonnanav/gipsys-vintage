@@ -24,7 +24,7 @@ const placeholderImage: ProductImage = {
   alt: 'אין תמונת מוצר',
 };
 
-export function ShoppingCartDrawer() {
+export function CartDrawer() {
   const { items, removeItem } = useCart();
   const { isOpen, close } = useCartDrawer();
   const container = useContext(ModalPortalRootContext);
@@ -42,19 +42,19 @@ export function ShoppingCartDrawer() {
     >
       <Box sx={{ position: 'relative', px: 2, py: 1, width: { xs: '100vw', sm: '400px' } }}>
         <Box sx={{ position: 'absolute', top: 5, right: 5 }}>
-          <ShoppingCartCloseButton onClick={close} />
+          <CartCloseButton onClick={close} />
         </Box>
         <Box sx={{ mt: 0.5 }}>
-          <ShoppingCartTitle />
+          <CartTitle />
         </Box>
         <Box>
           {items.length ? (
             <Box sx={{ mt: 1 }}>
-              <ShoppingCartList cart={items} removeFromCart={removeItem} />
+              <CartList cart={items} removeFromCart={removeItem} />
             </Box>
           ) : (
             <Box sx={{ mt: 5 }}>
-              <ShoppingCartEmptyMessage />
+              <CartEmptyMessage />
             </Box>
           )}
         </Box>
@@ -63,11 +63,11 @@ export function ShoppingCartDrawer() {
   );
 }
 
-interface ShoppingCartCloseButtonProps {
+interface CartCloseButtonProps {
   onClick: () => void;
 }
 
-function ShoppingCartCloseButton({ onClick }: ShoppingCartCloseButtonProps) {
+function CartCloseButton({ onClick }: CartCloseButtonProps) {
   return (
     <IconButton
       aria-label="סגרי את עגלת הקניות"
@@ -79,7 +79,7 @@ function ShoppingCartCloseButton({ onClick }: ShoppingCartCloseButtonProps) {
   );
 }
 
-function ShoppingCartTitle() {
+function CartTitle() {
   return (
     <Typography
       component="h2"
@@ -92,12 +92,12 @@ function ShoppingCartTitle() {
   );
 }
 
-interface ShoppingCartListProps {
+interface CartListProps {
   cart: Product[];
   removeFromCart: (productId: number) => void;
 }
 
-function ShoppingCartList({ cart, removeFromCart }: ShoppingCartListProps) {
+function CartList({ cart, removeFromCart }: CartListProps) {
   return (
     <List aria-label="פריטים בסל הקניות">
       {cart.map((product) => (
@@ -131,7 +131,7 @@ function ShoppingCartList({ cart, removeFromCart }: ShoppingCartListProps) {
   );
 }
 
-function ShoppingCartEmptyMessage() {
+function CartEmptyMessage() {
   return (
     <Stack spacing={2} alignItems="center">
       <ShoppingCartIcon sx={{ fontSize: '3rem' }} />

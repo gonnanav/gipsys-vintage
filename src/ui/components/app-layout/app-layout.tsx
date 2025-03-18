@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Box from '@mui/material/Box';
 import { AppHeader } from '../app-header/app-header';
 import { StoreProvider } from '@/store';
-import { ShoppingCartDrawer } from '../shopping-cart-drawer/shopping-cart-drawer';
+import { CartDrawer } from '../cart-drawer/cart-drawer';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -15,7 +15,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <Box component="main" sx={{ padding: { xs: 2, sm: 3 } }}>
         {children}
       </Box>
-      <ShoppingCartDrawer />
+      <CartDrawer />
     </StoreProvider>
   );
 }
