@@ -48,18 +48,6 @@ declare global {
       getPageHeading(text: string): Chainable<JQuery<HTMLElement>>;
 
       /**
-       * Custom command to get all product cards on a page
-       * @example cy.getProductCards()
-       */
-      getProductCards(): Chainable<JQuery<HTMLElement>>;
-
-      /**
-       * Custom command to select product card by name
-       * @example cy.getProductCard('Blue Jeans')
-       */
-      getProductCard(productName: string): Chainable<JQuery<HTMLElement>>;
-
-      /**
        * Custom command to get the add to cart button
        * @example cy.getAddToCartButton()
        */
@@ -98,14 +86,6 @@ Cypress.Commands.add('getShoppingCartTitle', () => {
 
 Cypress.Commands.add('getPageHeading', (text) => {
   return cy.contains('h1', text);
-});
-
-Cypress.Commands.add('getProductCards', () => {
-  return cy.getByTestId('product-card');
-});
-
-Cypress.Commands.add('getProductCard', (productName) => {
-  return cy.contains('[data-testid="product-card"]', productName);
 });
 
 Cypress.Commands.add('getAddToCartButton', () => {

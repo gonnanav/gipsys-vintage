@@ -1,5 +1,6 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate } from '@/core/category';
+import * as shopPage from '../support/page-objects/shop-page';
 
 describe('Shop Page', () => {
   it('displays all products and navigates to product page when clicking product', () => {
@@ -9,15 +10,15 @@ describe('Shop Page', () => {
     ];
 
     cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
-      cy.visit('shop');
+      shopPage.visit();
 
       cy.getAppHeader().should('be.visible');
 
       cy.getPageHeading('חנות').should('be.visible');
-      cy.getProductCards().should('have.length', products.length);
+      shopPage.getProducts().should('have.length', products.length);
 
       products.forEach((product) => {
-        cy.getProductCard(product.name).within(() => {
+        shopPage.getProduct(product.name).within(() => {
           cy.contains(product.name).should('be.visible');
           cy.contains(product.price).should('be.visible');
           cy.getByTestId('product-card-image').should('be.visible');
@@ -25,7 +26,7 @@ describe('Shop Page', () => {
       });
 
       const arbitraryProduct = products[0];
-      cy.getProductCard(arbitraryProduct.name).click();
+      shopPage.goToProduct(arbitraryProduct);
       cy.location('pathname').should('eq', `/product/${arbitraryProduct.slug}`);
     });
   });
@@ -47,17 +48,17 @@ describe('Shop Page', () => {
       ];
 
       cy.task<Product[]>('seed:products', productsToSeed).then((products) => {
-        cy.visit(`shop/category/${pantsCategory.slug}`);
+        shopPage.visitCategory(pantsCategory);
 
         cy.getAppHeader().should('be.visible');
 
         cy.getPageHeading(pantsCategory.name).should('be.visible');
 
         const pantsProducts = products.filter((p) => p.categoryId === pantsCategory.id);
-        cy.getProductCards().should('have.length', pantsProducts.length);
+        shopPage.getProducts().should('have.length', pantsProducts.length);
 
         pantsProducts.forEach((product) => {
-          cy.getProductCard(product.name).within(() => {
+          shopPage.getProduct(product.name).within(() => {
             cy.contains(product.name).should('be.visible');
             cy.contains(product.price).should('be.visible');
             cy.getByTestId('product-card-image').should('be.visible');
@@ -65,7 +66,7 @@ describe('Shop Page', () => {
         });
 
         const shirtProduct = products.find((p) => p.categoryId === shirtsCategory.id);
-        cy.getProductCard(shirtProduct.name).should('not.exist');
+        shopPage.getProduct(shirtProduct.name).should('not.exist');
       });
     });
   });
