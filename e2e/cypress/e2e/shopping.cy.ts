@@ -9,7 +9,6 @@ describe('Shopping Journey', () => {
   let whiteTShirt: Product;
   let blueJeans: Product;
   let blackPants: Product;
-  let products: Product[] = [];
 
   before(() => {
     data.seedCategories([data.shirtsCategory, data.pantsCategory]).then((categories) => {
@@ -21,9 +20,8 @@ describe('Shopping Journey', () => {
         createProduct('Black Pants', pantsCategory),
       ];
 
-      data.seedProducts(sampleProducts).then((ps) => {
-        products = ps;
-        [whiteTShirt, blueJeans, blackPants] = ps;
+      data.seedProducts(sampleProducts).then((products) => {
+        [whiteTShirt, blueJeans, blackPants] = products;
       });
     });
   });
@@ -31,33 +29,34 @@ describe('Shopping Journey', () => {
   it('shops for a product', () => {
     visitShopPage();
     verifyThatShopTitleIs('חנות');
-    verifyThatProductsInShopAre(products);
+    verifyThatProductsInShopAre([whiteTShirt, blueJeans, blackPants]);
 
-    goToProduct(products[0]);
-    verifyThatProductDisplayedIs(products[0]);
+    goToProduct(whiteTShirt);
+    verifyThatProductDisplayedIs(whiteTShirt);
 
     addProductToCart();
-    verifyThatItemsInCartAre([products[0]]);
+    verifyThatItemsInCartAre([whiteTShirt]);
   });
 
   it('shops by category', () => {
     visitCategory(pantsCategory);
+
     verifyThatShopTitleIs(pantsCategory.name);
     verifyThatProductsInShopAre([blueJeans, blackPants]);
     verifyThatProductIsNotInShop(whiteTShirt);
   });
 
   it('adds and removes a product from the cart', () => {
-    visitProductPage(products[0]);
+    visitProductPage(whiteTShirt);
 
     openCart();
     verifyThatCartIsEmpty();
     closeCart();
 
     addProductToCart();
-    verifyThatItemsInCartAre([products[0]]);
+    verifyThatItemsInCartAre([whiteTShirt]);
 
-    removeItemFromCart(products[0]);
+    removeItemFromCart(whiteTShirt);
     verifyThatCartIsEmpty();
   });
 });
