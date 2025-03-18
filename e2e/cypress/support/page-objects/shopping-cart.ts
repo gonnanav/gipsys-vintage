@@ -8,7 +8,7 @@ export function getCloseButton(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.getByTestId('shopping-cart-close-button');
 }
 
-export function clickCloseButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getCloseButton().click();
 }
 
