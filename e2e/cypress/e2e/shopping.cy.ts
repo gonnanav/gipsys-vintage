@@ -10,27 +10,26 @@ describe('Shopping Journey', () => {
     });
   });
 
-  it('displays a product on the product page', () => {
-    cy.wrap(products).then(([product]) => {
-      const { name, price, description } = product;
+  it('shops for a product', () => {
+    cy.wrap(products).then((products) => {
+      visitShopPage();
 
-      productPage.visit(product);
+      goToProduct(products[0]);
+      verifyThatProductDisplayedIs(products[0]);
 
-      cy.getPageHeading(name).should('be.visible');
-      cy.contains(price).should('be.visible');
-      cy.contains(description).should('be.visible');
-      productPage.getGallery().should('be.visible');
+      addProductToCart();
+      verifyThatItemsInCartAre([products[0]]);
     });
   });
 
-  it('adds and removes product items from the cart', () => {
+  it('adds and removes a product from the cart', () => {
     cy.wrap(products).then((products) => {
-      visitShopPage();
+      visitProductPage(products[0]);
+
       openCart();
       verifyThatCartIsEmpty();
       closeCart();
 
-      goToProduct(products[0]);
       addProductToCart();
       verifyThatItemsInCartAre([products[0]]);
 
@@ -40,8 +39,19 @@ describe('Shopping Journey', () => {
   });
 });
 
+function verifyThatProductDisplayedIs(product: Product): void {
+  cy.getPageHeading(product.name).should('be.visible');
+  cy.contains(product.price).should('be.visible');
+  cy.contains(product.description).should('be.visible');
+  productPage.getGallery().should('be.visible');
+}
+
 function visitShopPage(): void {
   shopPage.visit();
+}
+
+function visitProductPage(product: Product): void {
+  productPage.visit(product);
 }
 
 function openCart(): void {
