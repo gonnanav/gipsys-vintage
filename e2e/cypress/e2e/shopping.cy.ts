@@ -1,9 +1,9 @@
 import { Product } from '@/core/product';
-import { header, shoppingCart, shopPage, productPage } from '../support/page-objects';
+import { header, cart, shopPage, productPage } from '../support/page-objects';
 import { testData } from '../support/helpers';
 
 describe('Shopping Journey', () => {
-  it('adds and removes items from the shopping cart', () => {
+  it('adds and removes items from the cart', () => {
     const sampleProducts = testData.getSampleProducts().slice(0, 2);
 
     testData.seedProducts(sampleProducts).then((products) => {
@@ -31,7 +31,7 @@ function openCart(): void {
 }
 
 function closeCart(): void {
-  shoppingCart.close();
+  cart.close();
 }
 
 function goToProduct(product: Product): void {
@@ -43,17 +43,17 @@ function addProductToCart(): void {
 }
 
 function removeItemFromCart(product: Product): void {
-  shoppingCart.removeItem(product);
+  cart.removeItem(product);
 }
 
 function verifyThatCartIsEmpty(): void {
-  shoppingCart.getItems().should('not.exist');
+  cart.getItems().should('not.exist');
 }
 
 function verifyThatItemsInCartAre(expectedItems: Product[]): void {
-  shoppingCart.getItems().should('have.length', expectedItems.length);
+  cart.getItems().should('have.length', expectedItems.length);
 
   expectedItems.forEach(({ name }, index) => {
-    shoppingCart.getItems().eq(index).contains(name).should('be.visible');
+    cart.getItems().eq(index).contains(name).should('be.visible');
   });
 }
