@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { MuiProviders } from '@/ui/providers/mui/mui-providers';
+import { MuiProvider } from '@/ui/providers/mui/mui-providers';
+import { StoreProvider } from '@/store';
 import { AppLayout } from '@/ui/components/app-layout/app-layout';
 import './globals.css';
 
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <body>
-        <MuiProviders>
-          <AppLayout>{children}</AppLayout>
-        </MuiProviders>
+        <MuiProvider>
+          <StoreProvider>
+            <AppLayout>{children}</AppLayout>
+          </StoreProvider>
+        </MuiProvider>
       </body>
     </html>
   );

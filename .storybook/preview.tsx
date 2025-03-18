@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MuiProviders } from '@/ui/providers/mui/mui-providers';
+import { MuiProvider } from '@/ui/providers/mui/mui-providers';
 import { createPortalWrapper } from '@/ui/test-utils/factories';
 import { StoreProvider } from '@/store';
 
@@ -35,9 +35,9 @@ const preview: Preview = {
     ),
     // Simulates the MuiProviders of the app
     (Story) => (
-      <MuiProviders>
+      <MuiProvider>
         <Story />
-      </MuiProviders>
+      </MuiProvider>
     ),
     (Story) => (
       <StoreProvider>

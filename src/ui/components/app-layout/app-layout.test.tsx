@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { AppLayout } from './app-layout';
+import { StoreProvider } from '@/store';
 
 const childTestId = 'child';
 
@@ -23,8 +24,10 @@ it('renders the app header', () => {
 
 function renderAppLayout() {
   return render(
-    <AppLayout>
-      <div data-testid={childTestId} />
-    </AppLayout>,
+    <StoreProvider>
+      <AppLayout>
+        <div data-testid={childTestId} />
+      </AppLayout>
+    </StoreProvider>,
   );
 }
