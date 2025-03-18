@@ -30,6 +30,7 @@ export function createAppStore(initialState?: Partial<AppState>): AppStoreApi {
 function addCartItem(state: AppState, item: Product): Partial<AppState> {
   return {
     cartItems: [...state.cartItems, item],
+    isCartDrawerOpen: true,
   };
 }
 

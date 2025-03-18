@@ -13,7 +13,6 @@ describe('Shopping Journey', () => {
 
       productPage.visit(products[0]);
       productPage.addToShoppingCart();
-      header.openShoppingCart();
       verifyThatItemsInCartAre([products[0]]);
 
       shoppingCart.removeItem(products[0]);
