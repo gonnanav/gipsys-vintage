@@ -55,11 +55,11 @@ function renderNavDrawer({ isOpen = true }: RenderNavDrawerProps = {}) {
 }
 
 function getNavigationDrawer() {
-  return screen.getByRole('dialog');
+  return screen.getByRole('dialog', { name: 'תפריט הניווט' });
 }
 
 function queryNavigationDrawer() {
-  return screen.queryByRole('dialog');
+  return screen.queryByRole('dialog', { name: 'תפריט הניווט' });
 }
 
 function getNavigationMenu() {

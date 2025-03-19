@@ -11,7 +11,7 @@ export function NavDrawer() {
   const { isOpen, close } = useNavDrawer();
 
   return (
-    <Drawer role="dialog" aria-modal="true" open={isOpen} onClose={close}>
+    <Drawer role="dialog" aria-label="תפריט הניווט" aria-modal="true" open={isOpen} onClose={close}>
       <nav>
         <div>תפריט הניווט</div>
         <Button onClick={close}>סגרי את תפריט הניווט</Button>
