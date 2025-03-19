@@ -12,6 +12,13 @@ const meta: Meta<typeof CartDrawer> = {
   args: {
     isOpen: true,
   },
+  decorators: [
+    (Story) => (
+      <StoreProvider initialState={{ isCartDrawerOpen: true }}>
+        <Story />
+      </StoreProvider>
+    ),
+  ],
 };
 
 export default meta;
@@ -21,7 +28,7 @@ const products = [leatherJacket, puffSleeveTop, cottonScarf];
 export const NonEmptyCart: Story = {
   decorators: [
     (Story) => (
-      <StoreProvider initialState={{ cartItems: products }}>
+      <StoreProvider initialState={{ cartItems: products, isCartDrawerOpen: true }}>
         <Story />
       </StoreProvider>
     ),

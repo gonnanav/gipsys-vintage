@@ -1,26 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { useNavDrawer } from '@/store';
-import { Button } from '@mui/material';
+import { SideDrawerLayout } from '../side-drawer-layout';
 
 export function NavDrawer() {
   const { isOpen, close } = useNavDrawer();
 
   return (
-    <Drawer role="dialog" aria-label="תפריט הניווט" aria-modal="true" open={isOpen} onClose={close}>
+    <SideDrawerLayout
+      title="תפריט הניווט"
+      closeButtonName="סגרי את תפריט הניווט"
+      isOpen={isOpen}
+      onClose={close}
+    >
       <nav>
-        <div>תפריט הניווט</div>
-        <Button onClick={close}>סגרי את תפריט הניווט</Button>
         <List>
           <ListItem>
             <Link href="/shop">חנות</Link>
           </ListItem>
         </List>
       </nav>
-    </Drawer>
+    </SideDrawerLayout>
   );
 }

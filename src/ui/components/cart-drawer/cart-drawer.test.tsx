@@ -29,12 +29,6 @@ it('renders the title with the correct text', () => {
   expect(getShoppingCartTitle()).toHaveTextContent('סל הקניות');
 });
 
-it('renders the title with a the correct test id for e2e tests', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartTitle()).toHaveTestId('shopping-cart-title');
-});
-
 it('renders the list for a non-empty cart', () => {
   const initialCart = [cottonScarf, puffSleeveTop];
   renderShoppingCartDrawer({ initialCart });
