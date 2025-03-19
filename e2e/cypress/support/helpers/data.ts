@@ -34,24 +34,6 @@ export const pantsCategory: CategoryCreate = {
   slug: 'pants',
 };
 
-export const sampleProducts = [
-  {
-    name: 'Vintage Leather Jacket',
-    price: '299',
-    description: 'Classic leather jacket from the 70s',
-  },
-  {
-    name: 'Denim Distressed Jeans',
-    price: '199',
-    description: 'Stylish high-waisted jeans with a vintage wash and distressed details',
-  },
-  {
-    name: 'Retro Sunglasses',
-    price: '89',
-    description: 'Iconic 60s style sunglasses with UV protection',
-  },
-];
-
 export function createProduct(name: string, category: Category): ProductCreate {
   return {
     name,
