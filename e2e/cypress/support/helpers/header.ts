@@ -13,3 +13,11 @@ export function getShoppingCartButton(): Cypress.Chainable<JQuery<HTMLElement>> 
 export function openShoppingCart(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getShoppingCartButton().click();
 }
+
+export function getNavigationMenuButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getHeader().findByTestId('navigation-menu-button');
+}
+
+export function openNavigationMenu(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getNavigationMenuButton().click();
+}
