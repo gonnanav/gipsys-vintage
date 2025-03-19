@@ -5,6 +5,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { useNavDrawer } from '@/store';
 import { SideDrawerLayout } from '../side-drawer-layout';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 export function NavDrawer() {
   const { isOpen, close } = useNavDrawer();
@@ -18,11 +20,24 @@ export function NavDrawer() {
     >
       <nav>
         <List>
-          <ListItem>
-            <Link href="/shop">חנות</Link>
-          </ListItem>
+          <NavItem href="/shop">חנות</NavItem>
         </List>
       </nav>
     </SideDrawerLayout>
+  );
+}
+
+interface NavItemProps {
+  href: string;
+  children: React.ReactNode;
+}
+
+function NavItem({ href, children }: NavItemProps) {
+  return (
+    <ListItem>
+      <ListItemButton component={Link} href={href}>
+        <ListItemText>{children}</ListItemText>
+      </ListItemButton>
+    </ListItem>
   );
 }
