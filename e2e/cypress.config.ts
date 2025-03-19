@@ -13,15 +13,11 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on) {
       on('task', {
-        'seed:product': async (product) => {
-          const products = await app.replaceAllProducts([product]);
-          return products[0];
+        'seed:categories': async (newCategories) => {
+          return app.replaceAllCategories(newCategories);
         },
         'seed:products': async (newProducts) => {
           return app.replaceAllProducts(newProducts);
-        },
-        'seed:categories': async (newCategories) => {
-          return app.replaceAllCategories(newCategories);
         },
       });
     },
