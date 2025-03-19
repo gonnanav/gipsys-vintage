@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ShopPageView } from './shop-page-view';
-import { productWithManyImages, productWithOneImage } from '@/fixtures/products';
+import { leatherJacket, puffSleeveTop } from '@/fixtures/products';
 import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
 const meta = {
@@ -27,13 +27,13 @@ type Story = StoryObj<typeof meta>;
 
 export const WithManyProducts: Story = {
   args: {
-    products: [productWithManyImages, productWithOneImage],
+    products: [leatherJacket, puffSleeveTop],
   },
 };
 
 export const WithOneProduct: Story = {
   args: {
-    products: [productWithOneImage],
+    products: [puffSleeveTop],
   },
 };
 

@@ -1,19 +1,18 @@
 import { Product } from '@/core/product';
 
-export const productWithoutImages: Product = {
+export const cottonScarf: Product = {
   id: 1,
-  name: 'מכנסי פשתן מתרחבים',
-  slug: 'wide-leg-linen-pants',
-  price: '349.90',
-  description:
-    'מכנסי פשתן איכותיים בגזרה מתרחבת עם כיסים נסתרים וחגורת מותן אלסטית. בד קליל ונעים המתאים במיוחד לקיץ הישראלי.',
+  name: 'צעיף כותנה קלאסי',
+  slug: 'classic-cotton-scarf',
+  price: '120',
+  description: 'צעיף כותנה רך בצבע אפור בהיר.',
 };
 
-export const productWithOneImage: Product = {
+export const puffSleeveTop: Product = {
   id: 2,
   name: 'חולצת פרחים מלמלה',
   slug: 'floral-puff-sleeve-top',
-  price: '289.90',
+  price: '300',
   description:
     "חולצת פרחים רומנטית עם שרוולי מלמלה נפוחים. הדפס פרחוני צבעוני בגווני סגול, ורוד וירוק. מושלמת לשילוב עם ג'ינס או מכנסיים קצרים.",
   images: [
@@ -24,11 +23,11 @@ export const productWithOneImage: Product = {
   ],
 };
 
-export const productWithManyImages: Product = {
+export const leatherJacket: Product = {
   id: 3,
   name: "ג'קט עור לבן",
   slug: 'white-leather-jacket',
-  price: '799.90',
+  price: '800',
   description:
     "ג'קט עור וינטג' בגוון לבן שנהב מרהיב. עיצוב קלאסי עם רוכסן אלכסוני, כיסי צד וצווארון דו-שכבתי. תפירה איכותית עם תשומת לב לפרטים, כולל רוכסנים דקורטיביים בשרוולים וחגורת מותן מתכווננת. העור הרך והאיכותי מעניק מראה יוקרתי ונוח ללבישה. פריט הצהרתי שמשלב אלגנטיות קלאסית עם נגיעה מודרנית.",
   images: [

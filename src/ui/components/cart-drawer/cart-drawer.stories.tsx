@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  productWithManyImages,
-  productWithOneImage,
-  productWithoutImages,
-} from '@/fixtures/products';
+import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 import { CartDrawer } from './cart-drawer';
 import { StoreProvider } from '@/store';
 
@@ -20,7 +16,7 @@ const meta: Meta<typeof CartDrawer> = {
 
 export default meta;
 type Story = StoryObj<typeof CartDrawer>;
-const products = [productWithManyImages, productWithOneImage, productWithoutImages];
+const products = [leatherJacket, puffSleeveTop, cottonScarf];
 
 export const NonEmptyCart: Story = {
   decorators: [

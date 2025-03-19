@@ -1,9 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  productWithoutImages as product1,
-  productWithOneImage as product2,
-} from '@/fixtures/products';
+import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
 import { CartDrawer } from './cart-drawer';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/store';
@@ -39,21 +36,21 @@ it('renders the title with a the correct test id for e2e tests', () => {
 });
 
 it('renders the list for a non-empty cart', () => {
-  const initialCart = [product1, product2];
+  const initialCart = [cottonScarf, puffSleeveTop];
   renderShoppingCartDrawer({ initialCart });
 
   expect(getShoppingCartList()).toBeInTheDocument();
 });
 
 it('renders a shopping cart item with the correct test id for e2e tests', () => {
-  const initialCart = [product1];
+  const initialCart = [cottonScarf];
   renderShoppingCartDrawer({ initialCart });
 
   expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
 });
 
 it('renders the cart items for a non-empty cart', () => {
-  const initialCart = [product1, product2];
+  const initialCart = [cottonScarf, puffSleeveTop];
 
   renderShoppingCartDrawer({ initialCart });
 
@@ -76,9 +73,9 @@ it('renders a shopping cart empty message when the cart is empty', () => {
 });
 
 it('renders the item remove button with the correct test id for e2e tests', () => {
-  renderShoppingCartDrawer({ initialCart: [product1] });
+  renderShoppingCartDrawer({ initialCart: [cottonScarf] });
 
-  expect(getShoppingCartRemoveButton(product1)).toHaveTestId('shopping-cart-item-remove-button');
+  expect(getShoppingCartRemoveButton(cottonScarf)).toHaveTestId('shopping-cart-item-remove-button');
 });
 
 it('closes when the close button is clicked', async () => {
@@ -90,9 +87,9 @@ it('closes when the close button is clicked', async () => {
 });
 
 it('removes a shopping cart item when the remove button is clicked', async () => {
-  const { user } = renderShoppingCartDrawer({ initialCart: [product1] });
+  const { user } = renderShoppingCartDrawer({ initialCart: [cottonScarf] });
 
-  await user.click(getShoppingCartRemoveButton(product1));
+  await user.click(getShoppingCartRemoveButton(cottonScarf));
 
   expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
 });

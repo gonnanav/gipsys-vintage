@@ -1,9 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { useAppStore, AppStoreProvider } from './store-provider';
-import {
-  productWithManyImages as product1,
-  productWithOneImage as product2,
-} from '@/fixtures/products';
+import { leatherJacket, puffSleeveTop } from '@/fixtures/products';
 import { act } from 'react';
 
 it('throws an error when used outside the store provider', () => {
@@ -14,7 +11,7 @@ it('throws an error when used outside the store provider', () => {
 
 it('overrides the default initial state with the given initial state', () => {
   const partialInitialState = {
-    cartItems: [product1, product2],
+    cartItems: [leatherJacket, puffSleeveTop],
   };
 
   const { result } = renderHook(() => useAppStore((state) => state), {
@@ -31,11 +28,11 @@ it('maintains the store state when re-rendering', () => {
   const { result, rerender } = renderHook(() => useAppStore((state) => state), {
     wrapper: AppStoreProvider,
   });
-  act(() => result.current.addCartItem(product1));
+  act(() => result.current.addCartItem(leatherJacket));
 
   // Act
   rerender();
 
   // Assert
-  expect(result.current.cartItems).toEqual([product1]);
+  expect(result.current.cartItems).toEqual([leatherJacket]);
 });

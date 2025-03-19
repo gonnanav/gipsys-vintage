@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProductGallery } from './product-gallery';
-import { productWithOneImage, productWithManyImages } from '@/fixtures/products';
+import { puffSleeveTop, leatherJacket } from '@/fixtures/products';
 import Box from '@mui/material/Box';
 
 const meta = {
@@ -25,12 +25,12 @@ export const NoImages: Story = {
 
 export const SingleImage: Story = {
   args: {
-    productImages: productWithOneImage.images,
+    productImages: puffSleeveTop.images,
   },
 };
 
 export const MultipleImages: Story = {
   args: {
-    productImages: productWithManyImages.images,
+    productImages: leatherJacket.images,
   },
 };

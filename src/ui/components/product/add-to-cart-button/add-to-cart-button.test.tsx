@@ -1,29 +1,29 @@
 import { render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AddToCartButton } from './add-to-cart-button';
-import { productWithoutImages as product } from '@/fixtures/products';
+import { cottonScarf } from '@/fixtures/products';
 import { Product } from '@/core/product';
 import { StoreProvider, useCart } from '@/store';
 
 it('renders the add to cart button', () => {
-  renderAddToCartButton(product);
+  renderAddToCartButton(cottonScarf);
 
   expect(getAddToCartButton()).toBeInTheDocument();
 });
 
 it('renders the button with the correct test id for e2e tests', () => {
-  renderAddToCartButton(product);
+  renderAddToCartButton(cottonScarf);
 
   expect(getAddToCartButton()).toHaveTestId('add-to-cart-button');
 });
 
 it('adds the product to the cart when clicked', async () => {
   const user = userEvent.setup();
-  const { result } = renderAddToCartButtonWithConsumer(product);
+  const { result } = renderAddToCartButtonWithConsumer(cottonScarf);
 
   await user.click(getAddToCartButton());
 
-  expect(result.current.items).toEqual([product]);
+  expect(result.current.items).toEqual([cottonScarf]);
 });
 
 function getAddToCartButton() {

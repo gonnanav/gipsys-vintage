@@ -1,10 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ProductPageView } from './product-page-view';
-import {
-  productWithoutImages,
-  productWithOneImage,
-  productWithManyImages,
-} from '@/fixtures/products';
+import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
 import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
 const meta = {
@@ -28,18 +24,18 @@ type Story = StoryObj<typeof meta>;
 
 export const WithManyImages: Story = {
   args: {
-    product: productWithManyImages,
+    product: leatherJacket,
   },
 };
 
 export const WithOneImage: Story = {
   args: {
-    product: productWithOneImage,
+    product: puffSleeveTop,
   },
 };
 
 export const WithoutImages: Story = {
   args: {
-    product: productWithoutImages,
+    product: cottonScarf,
   },
 };
