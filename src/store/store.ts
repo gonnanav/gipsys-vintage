@@ -8,6 +8,7 @@ export interface AppState {
 
   isNavDrawerOpen: boolean;
   openNavDrawer: () => void;
+  closeNavDrawer: () => void;
 
   isCartDrawerOpen: boolean;
   openCartDrawer: () => void;
@@ -24,6 +25,7 @@ export function createAppStore(initialState?: Partial<AppState>): AppStoreApi {
 
     isNavDrawerOpen: false,
     openNavDrawer: () => set({ isNavDrawerOpen: true }),
+    closeNavDrawer: () => set({ isNavDrawerOpen: false }),
 
     isCartDrawerOpen: false,
     openCartDrawer: () => set({ isCartDrawerOpen: true }),

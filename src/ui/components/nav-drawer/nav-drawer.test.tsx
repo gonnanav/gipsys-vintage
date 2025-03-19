@@ -1,11 +1,21 @@
 import { render, screen, within } from '@testing-library/react';
 import { StoreProvider } from '@/store';
 import { NavDrawer } from './nav-drawer';
+import userEvent from '@testing-library/user-event';
 
-it('renders no content when the drawer is closed', () => {
+it('renders nothing when the drawer is closed', () => {
   const { container } = renderNavDrawer({ isOpen: false });
 
   expect(container).toBeEmptyDOMElement();
+});
+
+it('closes the drawer when the close button is clicked', async () => {
+  const user = userEvent.setup();
+  renderNavDrawer();
+
+  await user.click(getCloseButton());
+
+  expect(queryNavigationDrawer()).not.toBeInTheDocument();
 });
 
 it('renders the drawer modal', () => {
@@ -26,7 +36,7 @@ it('renders the navigation list', () => {
   expect(getNavigationList()).toBeInTheDocument();
 });
 
-it('renders a link to the shop page', async () => {
+it('renders the link to the shop page', async () => {
   renderNavDrawer();
 
   expect(getShopLink()).toHaveAttribute('href', '/shop');
@@ -48,6 +58,10 @@ function getNavigationDrawer() {
   return screen.getByRole('dialog');
 }
 
+function queryNavigationDrawer() {
+  return screen.queryByRole('dialog');
+}
+
 function getNavigationMenu() {
   return within(getNavigationDrawer()).getByRole('navigation');
 }
@@ -58,4 +72,8 @@ function getNavigationList() {
 
 function getShopLink() {
   return within(getNavigationList()).getByRole('link', { name: 'חנות' });
+}
+
+function getCloseButton() {
+  return within(getNavigationDrawer()).getByRole('button', { name: 'סגרי את תפריט הניווט' });
 }
