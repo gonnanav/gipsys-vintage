@@ -11,19 +11,22 @@ describe('Shopping Journey', () => {
   let blackPants: Product;
 
   before(() => {
-    data.seedCategories([data.shirtsCategory, data.pantsCategory]).then((categories) => {
-      [shirtsCategory, pantsCategory] = categories;
+    data
+      .seedCategories([data.shirtsCategory, data.pantsCategory])
+      .then((categories) => {
+        [shirtsCategory, pantsCategory] = categories;
 
-      const sampleProducts: ProductCreate[] = [
-        createProduct('White T-Shirt', shirtsCategory),
-        createProduct('Blue Jeans', pantsCategory),
-        createProduct('Black Pants', pantsCategory),
-      ];
+        const sampleProducts: ProductCreate[] = [
+          createProduct('White T-Shirt', shirtsCategory),
+          createProduct('Blue Jeans', pantsCategory),
+          createProduct('Black Pants', pantsCategory),
+        ];
 
-      data.seedProducts(sampleProducts).then((products) => {
+        return data.seedProducts(sampleProducts);
+      })
+      .then((products) => {
         [whiteTShirt, blueJeans, blackPants] = products;
       });
-    });
   });
 
   it('shops for a product', () => {
