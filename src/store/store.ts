@@ -6,6 +6,9 @@ export interface AppState {
   addCartItem: (item: Product) => void;
   removeCartItem: (id: number) => void;
 
+  isNavDrawerOpen: boolean;
+  openNavDrawer: () => void;
+
   isCartDrawerOpen: boolean;
   openCartDrawer: () => void;
   closeCartDrawer: () => void;
@@ -18,6 +21,9 @@ export function createAppStore(initialState?: Partial<AppState>): AppStoreApi {
     cartItems: [],
     addCartItem: (item) => set((state) => addCartItem(state, item)),
     removeCartItem: (id) => set((state) => removeCartItem(state, id)),
+
+    isNavDrawerOpen: false,
+    openNavDrawer: () => set({ isNavDrawerOpen: true }),
 
     isCartDrawerOpen: false,
     openCartDrawer: () => set({ isCartDrawerOpen: true }),

@@ -1,5 +1,5 @@
 export function getNavigationMenu(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('navigation-menu');
+  return cy.get('nav');
 }
 
 export function navigateToShopPage(): Cypress.Chainable<JQuery<HTMLElement>> {
