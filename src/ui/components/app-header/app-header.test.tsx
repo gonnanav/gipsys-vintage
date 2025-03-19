@@ -32,6 +32,12 @@ it('renders the shopping cart button', () => {
   expect(screen.getByRole('button', { name: 'פתחי את סל הקניות' })).toBeInTheDocument();
 });
 
+it('renders the navigation menu button', () => {
+  renderAppHeader();
+
+  expect(screen.getByRole('button', { name: 'פתחי את תפריט הניווט' })).toBeInTheDocument();
+});
+
 function renderAppHeader() {
   return render(<AppHeader />, { wrapper: StoreProvider });
 }
