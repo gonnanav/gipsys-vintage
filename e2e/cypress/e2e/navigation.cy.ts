@@ -7,11 +7,19 @@ describe('Navigation', () => {
     header.openNavigationMenu();
     navigationMenu.navigateToShopPage();
     verifyThatPageIsShopPage();
+
+    header.openNavigationMenu();
+    navigationMenu.navigateToHomePage();
+    verifyThatPageIsHomePage();
   });
 });
 
 function verifyThatPageIsShopPage() {
   verifyPageRelativeUrl('/shop');
+}
+
+function verifyThatPageIsHomePage() {
+  verifyPageRelativeUrl('/');
 }
 
 function verifyPageRelativeUrl(url: string) {

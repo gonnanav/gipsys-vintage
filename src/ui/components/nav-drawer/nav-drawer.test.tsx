@@ -42,6 +42,21 @@ it('renders the link to the shop page', async () => {
   expect(getShopLink()).toHaveAttribute('href', '/shop');
 });
 
+it('renders the link to the home page', async () => {
+  renderNavDrawer();
+
+  expect(getHomeLink()).toHaveAttribute('href', '/');
+});
+
+it('closes the drawer when clicking on a link', async () => {
+  const user = userEvent.setup();
+  renderNavDrawer();
+
+  await user.click(getShopLink());
+
+  expect(queryNavigationDrawer()).not.toBeInTheDocument();
+});
+
 interface RenderNavDrawerProps {
   isOpen?: boolean;
 }
@@ -72,6 +87,10 @@ function getNavigationList() {
 
 function getShopLink() {
   return within(getNavigationList()).getByRole('link', { name: 'חנות' });
+}
+
+function getHomeLink() {
+  return within(getNavigationList()).getByRole('link', { name: 'עמוד הבית' });
 }
 
 function getCloseButton() {

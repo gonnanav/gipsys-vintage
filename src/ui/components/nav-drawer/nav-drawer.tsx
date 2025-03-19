@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { useNavDrawer } from '@/store';
+import { useNavDrawer, useNavDrawerActions } from '@/store';
 import { SideDrawerLayout } from '../side-drawer-layout';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -20,6 +20,7 @@ export function NavDrawer() {
     >
       <nav>
         <List>
+          <NavItem href="/">עמוד הבית</NavItem>
           <NavItem href="/shop">חנות</NavItem>
         </List>
       </nav>
@@ -33,9 +34,11 @@ interface NavItemProps {
 }
 
 function NavItem({ href, children }: NavItemProps) {
+  const { close } = useNavDrawerActions();
+
   return (
     <ListItem>
-      <ListItemButton component={Link} href={href}>
+      <ListItemButton component={Link} href={href} onClick={close}>
         <ListItemText>{children}</ListItemText>
       </ListItemButton>
     </ListItem>
