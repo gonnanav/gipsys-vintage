@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ProductPageView } from './product-page-view';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
-import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
 const meta = {
   title: 'Product/ProductPageView',
@@ -9,13 +8,6 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    (Story) => (
-      <AppLayout>
-        <Story />
-      </AppLayout>
-    ),
-  ],
 } satisfies Meta<typeof ProductPageView>;
 
 export default meta;

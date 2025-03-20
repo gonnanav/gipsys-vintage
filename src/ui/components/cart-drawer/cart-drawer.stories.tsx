@@ -6,12 +6,6 @@ import { StoreProvider } from '@/store';
 const meta: Meta<typeof CartDrawer> = {
   title: 'Global/ShoppingCartDrawer',
   component: CartDrawer,
-  parameters: {
-    layout: 'centered',
-  },
-  args: {
-    isOpen: true,
-  },
   decorators: [
     (Story) => (
       <StoreProvider initialState={{ isCartDrawerOpen: true }}>
