@@ -1,21 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ShopPageView } from './shop-page-view';
-import { leatherJacket, puffSleeveTop } from '@/fixtures/products';
-import { AppLayout } from '@/ui/components/app-layout/app-layout';
+import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 
 const meta = {
-  title: 'Shop/ShopPageView',
+  title: 'Shop/Shop Page',
   component: ShopPageView,
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [
-    (Story) => (
-      <AppLayout>
-        <Story />
-      </AppLayout>
-    ),
-  ],
   args: {
     title: 'חנות',
   },
@@ -24,19 +16,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithManyProducts: Story = {
+export const Full: Story = {
   args: {
-    products: [leatherJacket, puffSleeveTop],
+    products: [leatherJacket, puffSleeveTop, cottonScarf],
   },
 };
 
-export const WithOneProduct: Story = {
-  args: {
-    products: [puffSleeveTop],
-  },
-};
-
-export const WithoutProducts: Story = {
+export const Empty: Story = {
   args: {
     products: [],
   },

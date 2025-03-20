@@ -3,7 +3,7 @@ import { ProductPageView } from './product-page-view';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
 
 const meta = {
-  title: 'Product/ProductPageView',
+  title: 'Product/Product Page',
   component: ProductPageView,
   parameters: {
     layout: 'fullscreen',
@@ -13,19 +13,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithManyImages: Story = {
+export const LeatherJacket: Story = {
   args: {
     product: leatherJacket,
   },
 };
 
-export const WithOneImage: Story = {
+export const PuffSleeveTop: Story = {
   args: {
     product: puffSleeveTop,
   },
 };
 
-export const WithoutImages: Story = {
+export const CottonScarf: Story = {
   args: {
     product: cottonScarf,
   },

@@ -4,7 +4,7 @@ import { CartDrawer } from './cart-drawer';
 import { StoreProvider } from '@/store';
 
 const meta: Meta<typeof CartDrawer> = {
-  title: 'Global/ShoppingCartDrawer',
+  title: 'Global/Cart Drawer',
   component: CartDrawer,
   decorators: [
     (Story) => (
@@ -19,7 +19,7 @@ export default meta;
 type Story = StoryObj<typeof CartDrawer>;
 const products = [leatherJacket, puffSleeveTop, cottonScarf];
 
-export const NonEmptyCart: Story = {
+export const Full: Story = {
   decorators: [
     (Story) => (
       <StoreProvider initialState={{ cartItems: products, isCartDrawerOpen: true }}>
@@ -29,4 +29,4 @@ export const NonEmptyCart: Story = {
   ],
 };
 
-export const EmptyCart: Story = {};
+export const Empty: Story = {};
