@@ -3,7 +3,7 @@ import { ProductPageView } from './product-page-view';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
 
 const meta = {
-  title: 'Product/Product Page',
+  title: 'Product Page',
   component: ProductPageView,
   parameters: {
     layout: 'fullscreen',

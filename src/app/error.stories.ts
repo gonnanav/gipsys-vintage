@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import PageError from './error';
 
 const meta = {
-  title: 'Global/Error Page',
+  title: 'Error Page',
   component: PageError,
   parameters: {
     layout: 'fullscreen',

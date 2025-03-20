@@ -4,7 +4,7 @@ import { CartDrawer } from './cart-drawer';
 import { StoreProvider } from '@/store';
 
 const meta: Meta<typeof CartDrawer> = {
-  title: 'Global/Cart Drawer',
+  title: 'Cart Drawer',
   component: CartDrawer,
   decorators: [
     (Story) => (

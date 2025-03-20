@@ -4,7 +4,7 @@ import { NavDrawer } from './nav-drawer';
 import { StoreProvider } from '@/store';
 
 const meta: Meta<typeof NavDrawer> = {
-  title: 'Global/Navigation Drawer',
+  title: 'Navigation Drawer',
   component: NavDrawer,
   decorators: [
     (Story) => (
