@@ -22,7 +22,7 @@ export function ProductGallery({ productImages }: ProductGalleryProps) {
   const hasMultipleImages = productImages && productImages.length > 1;
 
   return (
-    <Box data-testid="product-gallery" role="region" aria-label="תמונות המוצר">
+    <Box role="region" aria-label="תמונות המוצר">
       <MainImage productImage={mainImage} />
       {hasMultipleImages && (
         <Thumbnails
@@ -43,7 +43,7 @@ function MainImage({ productImage }: MainImageProps) {
   const { src, alt = '' } = productImage;
 
   return (
-    <Box data-testid="product-main-image" sx={{ position: 'relative', aspectRatio: '3 / 4' }}>
+    <Box role="region" aria-label="תמונה ראשית" sx={{ position: 'relative', aspectRatio: '3 / 4' }}>
       <Image alt={alt} src={src} fill style={{ objectFit: 'cover' }} />
     </Box>
   );
@@ -57,7 +57,7 @@ interface ThumbnailsProps {
 
 function Thumbnails({ productImages, selectedIndex, onSelect }: ThumbnailsProps) {
   return (
-    <ImageList data-testid="product-thumbnails" cols={3} gap={8}>
+    <ImageList aria-label="תמונות נוספות" cols={3} gap={8}>
       {productImages.map((productImage, index) => (
         <ImageListItem key={productImage.src}>
           <Thumbnail
@@ -82,7 +82,6 @@ function Thumbnail({ productImage, isSelected, onClick }: ThumbnailProps) {
 
   return (
     <Box
-      data-testid="product-thumbnail"
       sx={{
         position: 'relative',
         aspectRatio: '1 / 1',

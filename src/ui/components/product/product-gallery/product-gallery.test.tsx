@@ -10,12 +10,6 @@ const productImages: ProductImage[] = [
 ];
 const [firstImage, secondImage, thirdImage] = productImages;
 
-it('renders the product gallery with the correct test id', () => {
-  renderProductGallery();
-
-  expect(screen.getByTestId('product-gallery')).toBeInTheDocument();
-});
-
 it('renders the placeholder image as the main image when there are no images', () => {
   renderProductGallery();
 
@@ -72,16 +66,18 @@ it('switches the main image when the thumbnail is clicked', async () => {
 });
 
 function getMainImage({ name }: { name?: string }) {
-  const mainImage = screen.getByTestId('product-main-image');
-  return within(mainImage).getByRole('img', { name });
+  return within(screen.getByRole('region', { name: 'תמונה ראשית' })).getByRole('img', {
+    name,
+    hidden: true,
+  });
 }
 
 function queryThumbnails() {
-  return screen.queryByTestId('product-thumbnails');
+  return screen.queryByRole('list', { name: 'תמונות נוספות' });
 }
 
 function getThumbnails() {
-  return screen.getByTestId('product-thumbnails');
+  return screen.getByRole('list', { name: 'תמונות נוספות' });
 }
 
 function getThumbnail({ name }: { name?: string }) {

@@ -11,12 +11,6 @@ it('renders the add to cart button', () => {
   expect(getAddToCartButton()).toBeInTheDocument();
 });
 
-it('renders the button with the correct test id for e2e tests', () => {
-  renderAddToCartButton(cottonScarf);
-
-  expect(getAddToCartButton()).toHaveTestId('add-to-cart-button');
-});
-
 it('adds the product to the cart when clicked', async () => {
   const user = userEvent.setup();
   const { result } = renderAddToCartButtonWithConsumer(cottonScarf);

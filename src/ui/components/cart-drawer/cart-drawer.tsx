@@ -17,12 +17,8 @@ export function CartDrawer() {
     <SideDrawerLayout
       title="סל הקניות"
       closeButtonName="סגרי את עגלת הקניות"
-      closeButtonProps={{
-        'data-testid': 'shopping-cart-close-button',
-      }}
       drawerProps={{
         anchor: 'right',
-        'data-testid': 'shopping-cart-modal',
         ModalProps: { container },
       }}
       isOpen={isOpen}

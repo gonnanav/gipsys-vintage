@@ -11,12 +11,6 @@ it('renders the modal', async () => {
   expect(getShoppingCartModal()).toHaveAttribute('aria-modal', 'true');
 });
 
-it('renders the modal with the correct test id for e2e tests', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartModal()).toHaveTestId('shopping-cart-modal');
-});
-
 it('renders the modal under the body element by default', () => {
   renderShoppingCartDrawer();
 
@@ -34,13 +28,6 @@ it('renders the list for a non-empty cart', () => {
   renderShoppingCartDrawer({ initialCart });
 
   expect(getShoppingCartList()).toBeInTheDocument();
-});
-
-it('renders a shopping cart item with the correct test id for e2e tests', () => {
-  const initialCart = [cottonScarf];
-  renderShoppingCartDrawer({ initialCart });
-
-  expect(getShoppingCartItems()[0]).toHaveTestId('shopping-cart-item');
 });
 
 it('renders the cart items for a non-empty cart', () => {
@@ -64,12 +51,6 @@ it('renders a shopping cart empty message when the cart is empty', () => {
   renderShoppingCartDrawer({ initialCart: [] });
 
   expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
-});
-
-it('renders the item remove button with the correct test id for e2e tests', () => {
-  renderShoppingCartDrawer({ initialCart: [cottonScarf] });
-
-  expect(getShoppingCartRemoveButton(cottonScarf)).toHaveTestId('shopping-cart-item-remove-button');
 });
 
 it('closes when the close button is clicked', async () => {

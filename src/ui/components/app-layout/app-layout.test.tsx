@@ -19,7 +19,7 @@ it('renders the main content', () => {
 it('renders the app header', () => {
   renderAppLayout();
 
-  expect(screen.getByTestId('app-header')).toBeInTheDocument();
+  expect(screen.getByRole('banner')).toBeInTheDocument();
 });
 
 function renderAppLayout() {

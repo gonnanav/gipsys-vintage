@@ -24,13 +24,8 @@ export function CartList({ cart, removeFromCart }: CartListProps) {
       {cart.map((product) => (
         <ListItem
           key={product.id}
-          data-testid="shopping-cart-item"
           secondaryAction={
-            <IconButton
-              data-testid="shopping-cart-item-remove-button"
-              aria-label="הסירי מסל הקניות"
-              onClick={() => removeFromCart(product.id)}
-            >
+            <IconButton aria-label="הסירי מסל הקניות" onClick={() => removeFromCart(product.id)}>
               <HighlightOffIcon />
             </IconButton>
           }

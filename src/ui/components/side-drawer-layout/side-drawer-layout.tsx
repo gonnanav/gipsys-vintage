@@ -1,4 +1,3 @@
-import { ButtonProps } from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -9,8 +8,7 @@ export interface SideDrawerLayoutProps {
   isOpen: boolean;
   title: string;
   closeButtonName: string;
-  closeButtonProps?: ButtonProps & { 'data-testid'?: string };
-  drawerProps?: DrawerProps & { 'data-testid'?: string };
+  drawerProps?: DrawerProps;
   onClose: () => void;
   children: React.ReactNode;
 }
@@ -19,7 +17,6 @@ export function SideDrawerLayout({
   isOpen,
   title,
   closeButtonName,
-  closeButtonProps,
   drawerProps,
   onClose,
   children,
@@ -35,7 +32,7 @@ export function SideDrawerLayout({
     >
       <Box sx={{ position: 'relative', px: 2, py: 1, width: { xs: '100vw', sm: '400px' } }}>
         <Box sx={{ position: 'absolute', top: 5, right: 5 }}>
-          <CloseButton {...closeButtonProps} closeButtonName={closeButtonName} onClick={onClose} />
+          <CloseButton closeButtonName={closeButtonName} onClick={onClose} />
         </Box>
         <Box sx={{ mt: 0.5 }}>
           <Title title={title} />
@@ -48,13 +45,12 @@ export function SideDrawerLayout({
 
 interface CloseButtonProps {
   closeButtonName: string;
-  'data-testid'?: string;
   onClick: () => void;
 }
 
-function CloseButton({ closeButtonName, 'data-testid': dataTestId, onClick }: CloseButtonProps) {
+function CloseButton({ closeButtonName, onClick }: CloseButtonProps) {
   return (
-    <IconButton aria-label={closeButtonName} onClick={onClick} data-testid={dataTestId}>
+    <IconButton aria-label={closeButtonName} onClick={onClick}>
       <CloseIcon />
     </IconButton>
   );

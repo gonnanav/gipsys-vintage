@@ -17,13 +17,12 @@ export function ProductCard({ product }: ProductCardProps) {
   const priceShekels = `₪${price}`;
 
   return (
-    <Card component="article" variant="outlined" data-testid="product-card">
+    <Card component="article" variant="outlined">
       <CardActionArea component={Link} href={`/product/${slug}`}>
         <CardMedia
           title={name}
           image={src}
           sx={{ width: '100%', height: 0, paddingBottom: '133%' }}
-          data-testid="product-card-image"
         />
         <CardContent>
           <Typography component="h2" variant="body1">

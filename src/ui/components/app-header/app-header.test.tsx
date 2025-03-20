@@ -4,18 +4,6 @@ import { AppHeader } from './app-header';
 import { StoreProvider } from '@/store';
 import { NavDrawer } from '../nav-drawer/nav-drawer';
 
-it('renders the app header with the correct test id', () => {
-  renderAppHeader();
-
-  expect(screen.getByTestId('app-header')).toBeInTheDocument();
-});
-
-it('renders the app header logo with the correct test id', () => {
-  renderAppHeader();
-
-  expect(screen.getByTestId('app-header-logo')).toBeInTheDocument();
-});
-
 it('renders a banner', () => {
   renderAppHeader();
 
