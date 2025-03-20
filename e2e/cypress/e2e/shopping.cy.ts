@@ -65,7 +65,7 @@ describe('Shopping Journey', () => {
 });
 
 function verifyThatProductDisplayedIs(product: Product): void {
-  cy.getPageHeading(product.name).should('be.visible');
+  cy.findByRole('heading', { name: product.name }).should('be.visible');
   cy.contains(product.price).should('be.visible');
   cy.contains(product.description).should('be.visible');
   productPage.getGallery().should('be.visible');
@@ -116,7 +116,7 @@ function visitCategory(category: Category): void {
 }
 
 function verifyThatShopTitleIs(title: string): void {
-  cy.getPageHeading(title).should('be.visible');
+  cy.findByRole('heading', { name: title }).should('be.visible');
 }
 
 function verifyThatProductsInShopAre(products: Product[]): void {
@@ -126,7 +126,7 @@ function verifyThatProductsInShopAre(products: Product[]): void {
     shopPage.getProduct(product.name).within(() => {
       cy.contains(product.name).should('be.visible');
       cy.contains(product.price).should('be.visible');
-      cy.getByTestId('product-card-image').should('be.visible');
+      cy.findByRole('img').should('be.visible');
     });
   });
 }

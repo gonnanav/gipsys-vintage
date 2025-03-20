@@ -1,11 +1,7 @@
 import { Product } from '@/core/product';
 
-export function getModal(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('shopping-cart-modal');
-}
-
 export function getCloseButton(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('shopping-cart-close-button');
+  return cy.findByRole('button', { name: 'סגרי את עגלת הקניות' });
 }
 
 export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
@@ -13,7 +9,7 @@ export function close(): Cypress.Chainable<JQuery<HTMLElement>> {
 }
 
 export function getItems(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('shopping-cart-item');
+  return cy.findAllByRole('listitem');
 }
 
 export function getItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
@@ -21,7 +17,7 @@ export function getItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
 }
 
 export function getRemoveItemButton(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {
-  return getItem(item).findByTestId('shopping-cart-item-remove-button');
+  return getItem(item).findByRole('button', { name: 'הסירי מסל הקניות' });
 }
 
 export function removeItem(item: Product): Cypress.Chainable<JQuery<HTMLElement>> {

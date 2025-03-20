@@ -12,14 +12,14 @@ export function visit(product: Product): Cypress.Chainable<Cypress.AUTWindow> {
  * Get the product gallery
  */
 export function getGallery(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('product-gallery');
+  return cy.findByRole('region', { name: 'תמונות המוצר' });
 }
 
 /**
  * Get the add to cart button
  */
 export function getAddToCartButton(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('add-to-cart-button');
+  return cy.findByRole('button', { name: 'הוסיפי לסל הקניות' });
 }
 
 /**

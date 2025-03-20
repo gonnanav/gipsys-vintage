@@ -22,7 +22,7 @@ export function ProductGallery({ productImages }: ProductGalleryProps) {
   const hasMultipleImages = productImages && productImages.length > 1;
 
   return (
-    <Box data-testid="product-gallery">
+    <Box data-testid="product-gallery" role="region" aria-label="תמונות המוצר">
       <MainImage productImage={mainImage} />
       {hasMultipleImages && (
         <Thumbnails

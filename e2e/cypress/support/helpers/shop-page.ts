@@ -20,7 +20,7 @@ export function visitCategory(category: Category): Cypress.Chainable<Cypress.AUT
  * Get all product on the shop page
  */
 export function getProducts(): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.getByTestId('product-card');
+  return cy.findAllByRole('article');
 }
 
 /**
@@ -28,7 +28,7 @@ export function getProducts(): Cypress.Chainable<JQuery<HTMLElement>> {
  * @param productName The name of the product
  */
 export function getProduct(productName: string): Cypress.Chainable<JQuery<HTMLElement>> {
-  return cy.contains('[data-testid="product-card"]', productName);
+  return getProducts().filter(`:contains("${productName}")`);
 }
 
 /**
