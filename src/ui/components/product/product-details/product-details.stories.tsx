@@ -4,7 +4,6 @@ import { ProductDetails } from './product-details';
 const meta = {
   title: 'Product/ProductDetails',
   component: ProductDetails,
-  tags: ['autodocs'],
 } satisfies Meta<typeof ProductDetails>;
 
 export default meta;

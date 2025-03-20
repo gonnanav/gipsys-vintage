@@ -9,7 +9,6 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <AppLayout>

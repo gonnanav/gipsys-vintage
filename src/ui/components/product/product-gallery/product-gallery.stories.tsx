@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 const meta = {
   title: 'Product/ProductGallery',
   component: ProductGallery,
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
