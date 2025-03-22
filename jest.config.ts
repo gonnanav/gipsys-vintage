@@ -6,9 +6,7 @@ const createJestConfig = nextJest({
 });
 
 const config: Config = {
-  collectCoverage: true,
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  collectCoverage: false,
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
