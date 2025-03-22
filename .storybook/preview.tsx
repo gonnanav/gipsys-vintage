@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MuiProvider } from '@/ui/providers/mui/mui-providers';
+import { MuiProvider } from '@/ui/components/mui-provider';
 import { StoreProvider } from '@/store';
 import { AppLayout } from '@/ui/components/app-layout/app-layout';
 
