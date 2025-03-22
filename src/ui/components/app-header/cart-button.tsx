@@ -7,12 +7,5 @@ import { HeaderButton } from './header-button';
 export function CartButton() {
   const { open } = useCartDrawer();
 
-  return (
-    <HeaderButton
-      testId="shopping-cart-button"
-      ariaLabel="פתחי את סל הקניות"
-      Icon={ShoppingCartIcon}
-      onClick={open}
-    />
-  );
+  return <HeaderButton ariaLabel="פתחי את סל הקניות" Icon={ShoppingCartIcon} onClick={open} />;
 }

@@ -7,12 +7,5 @@ import { HeaderButton } from './header-button';
 export function NavigationButton() {
   const { open } = useNavDrawerActions();
 
-  return (
-    <HeaderButton
-      testId="navigation-menu-button"
-      ariaLabel="פתחי את תפריט הניווט"
-      Icon={MenuIcon}
-      onClick={open}
-    />
-  );
+  return <HeaderButton ariaLabel="פתחי את תפריט הניווט" Icon={MenuIcon} onClick={open} />;
 }
