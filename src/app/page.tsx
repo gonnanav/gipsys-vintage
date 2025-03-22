@@ -1,3 +1,9 @@
+import { GoToShopButton } from '@/components/homepage';
+
 export default function Home() {
-  return <div />;
+  return (
+    <div>
+      <GoToShopButton />
+    </div>
+  );
 }
