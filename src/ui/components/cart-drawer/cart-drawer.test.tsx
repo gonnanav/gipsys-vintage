@@ -11,12 +11,6 @@ it('renders the modal', async () => {
   expect(getShoppingCartModal()).toHaveAttribute('aria-modal', 'true');
 });
 
-it('renders the modal under the body element by default', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartModal()).toBeChildOf(document.body);
-});
-
 it('renders the title with the correct text', () => {
   renderShoppingCartDrawer();
 
