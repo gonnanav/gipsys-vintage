@@ -2,7 +2,9 @@ import React from 'react';
 import type { Preview } from '@storybook/react';
 import { MuiProvider } from '@/components/mui-provider';
 import { StoreProvider } from '@/store';
-import { AppLayout } from '@/components/app-layout/app-layout';
+import { Main } from '@/components/main';
+import { NavDrawer } from '@/components/nav-drawer';
+import { CartDrawer } from '@/components/cart-drawer';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -21,12 +23,14 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <div dir="rtl">
+      <div lang="he" dir="rtl">
         <MuiProvider>
           <StoreProvider>
-            <AppLayout>
+            <NavDrawer />
+            <CartDrawer />
+            <Main>
               <Story />
-            </AppLayout>
+            </Main>
           </StoreProvider>
         </MuiProvider>
       </div>

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { MuiProvider } from '@/components/mui-provider';
 import { StoreProvider } from '@/store';
-import { AppLayout } from '@/components/app-layout/app-layout';
+import { AppHeader } from '@/components/app-header/app-header';
+import { Main } from '@/components/main';
+import { NavDrawer } from '@/components/nav-drawer';
+import { CartDrawer } from '@/components/cart-drawer';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -18,7 +21,10 @@ export default function RootLayout({
       <body>
         <MuiProvider>
           <StoreProvider>
-            <AppLayout>{children}</AppLayout>
+            <AppHeader />
+            <Main>{children}</Main>
+            <NavDrawer />
+            <CartDrawer />
           </StoreProvider>
         </MuiProvider>
       </body>
