@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AppHeader } from './app-header';
+import { Header } from './header';
 import { StoreProvider } from '@/store';
 import { NavDrawer } from '../nav-drawer/nav-drawer';
 
@@ -31,7 +31,7 @@ it('opens the navigation drawer when the navigation button is clicked', async ()
 });
 
 function renderAppHeader() {
-  return render(<AppHeader />, { wrapper: StoreProvider });
+  return render(<Header />, { wrapper: StoreProvider });
 }
 
 function renderAppHeaderWithNavDrawer() {
@@ -39,7 +39,7 @@ function renderAppHeaderWithNavDrawer() {
 
   render(
     <StoreProvider>
-      <AppHeader />
+      <Header />
       <NavDrawer />
     </StoreProvider>,
   );

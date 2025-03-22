@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { MuiProvider } from '@/components/mui-provider';
 import { StoreProvider } from '@/store';
-import { AppHeader } from '@/components/app-header/app-header';
+import { Header } from '@/components/header';
 import { Main } from '@/components/main';
 import { NavDrawer } from '@/components/nav-drawer';
 import { CartDrawer } from '@/components/cart-drawer';
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <MuiProvider>
           <StoreProvider>
-            <AppHeader />
+            <Header />
             <Main>{children}</Main>
             <NavDrawer />
             <CartDrawer />

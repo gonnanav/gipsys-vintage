@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { NavigationButton } from './navigation-button';
 import { CartButton } from './cart-button';
 
-export function AppHeader() {
+export function Header() {
   return (
     <Stack
       component="header"
