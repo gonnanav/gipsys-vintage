@@ -1,5 +1,6 @@
 import { createStore, StoreApi } from 'zustand/vanilla';
 import { Product } from '@/core/product';
+import { addItemToCart, removeItemFromCart } from '@/core/cart';
 
 export interface AppState {
   cartItems: Product[];
@@ -37,13 +38,13 @@ export function createAppStore(initialState?: Partial<AppState>): AppStoreApi {
 
 function addCartItem(state: AppState, item: Product): Partial<AppState> {
   return {
-    cartItems: [...state.cartItems, item],
+    cartItems: addItemToCart(state.cartItems, item),
     isCartDrawerOpen: true,
   };
 }
 
 function removeCartItem(state: AppState, id: number): Partial<AppState> {
   return {
-    cartItems: state.cartItems.filter((item) => item.id != id),
+    cartItems: removeItemFromCart(state.cartItems, id),
   };
 }
