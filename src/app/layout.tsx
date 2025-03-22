@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { MuiProvider } from '@/ui/components/mui-provider';
+import { MuiProvider } from '@/components/mui-provider';
 import { StoreProvider } from '@/store';
-import { AppLayout } from '@/ui/components/app-layout/app-layout';
+import { AppLayout } from '@/components/app-layout/app-layout';
 import './globals.css';
 
 export const metadata: Metadata = {

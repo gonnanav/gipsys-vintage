@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { MuiProvider } from '@/ui/components/mui-provider';
+import { MuiProvider } from '@/components/mui-provider';
 import { StoreProvider } from '@/store';
-import { AppLayout } from '@/ui/components/app-layout/app-layout';
+import { AppLayout } from '@/components/app-layout/app-layout';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

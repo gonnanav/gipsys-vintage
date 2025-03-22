@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { ShopLayout } from '@/ui/components/shop/shop-layout/shop-layout';
-import { ProductsLayout } from '@/ui/components/shop/products-layout/products-layout';
+import { ShopLayout } from '@/components/shop/shop-layout/shop-layout';
+import { ProductsLayout } from '@/components/shop/products-layout/products-layout';
 
 export default function Loading() {
   return (

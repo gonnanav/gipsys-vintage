@@ -1,5 +1,5 @@
 import { createApplication } from '@/composition-root';
-import { ShopPageView } from '@/ui/components/shop/shop-page-view/shop-page-view';
+import { ShopPageView } from '@/components/shop/shop-page-view/shop-page-view';
 
 const app = createApplication();
 
