@@ -1,6 +1,6 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category } from '@/core/category';
-import { header, cart, shopPage, productPage, data } from '../support/helpers';
+import { header, cart, shopPage, productPage, data, homepage } from '../support/helpers';
 import { createProduct } from '../support/helpers/data';
 
 describe('Shopping Journey', () => {
@@ -24,7 +24,8 @@ describe('Shopping Journey', () => {
   it('shops for a product', function () {
     const [whiteTShirt, blueJeans, blackPants] = this.products;
 
-    visitShopPage();
+    visitHomePage();
+    goToShopPage();
     verifyThatShopTitleIs('חנות');
     verifyThatProductsInShopAre([whiteTShirt, blueJeans, blackPants]);
 
@@ -71,8 +72,12 @@ function verifyThatProductDisplayedIs(product: Product): void {
   productPage.getGallery().should('be.visible');
 }
 
-function visitShopPage(): void {
-  shopPage.visit();
+function visitHomePage(): void {
+  homepage.visit();
+}
+
+function goToShopPage(): void {
+  homepage.goToShopPage();
 }
 
 function visitProductPage(product: Product): void {
