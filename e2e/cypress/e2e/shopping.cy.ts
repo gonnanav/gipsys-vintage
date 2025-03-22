@@ -4,17 +4,12 @@ import { header, cart, shopPage, productPage, data } from '../support/helpers';
 import { createProduct } from '../support/helpers/data';
 
 describe('Shopping Journey', () => {
-  let shirtsCategory: Category;
-  let pantsCategory: Category;
-  let whiteTShirt: Product;
-  let blueJeans: Product;
-  let blackPants: Product;
-
-  before(() => {
+  beforeEach(() => {
     data
       .seedCategories([data.shirtsCategory, data.pantsCategory])
+      .as('categories')
       .then((categories) => {
-        [shirtsCategory, pantsCategory] = categories;
+        const [shirtsCategory, pantsCategory] = categories;
 
         const sampleProducts: ProductCreate[] = [
           createProduct('White T-Shirt', shirtsCategory),
@@ -22,14 +17,13 @@ describe('Shopping Journey', () => {
           createProduct('Black Pants', pantsCategory),
         ];
 
-        return data.seedProducts(sampleProducts);
-      })
-      .then((products) => {
-        [whiteTShirt, blueJeans, blackPants] = products;
+        data.seedProducts(sampleProducts).as('products');
       });
   });
 
-  it('shops for a product', () => {
+  it('shops for a product', function () {
+    const [whiteTShirt, blueJeans, blackPants] = this.products;
+
     visitShopPage();
     verifyThatShopTitleIs('חנות');
     verifyThatProductsInShopAre([whiteTShirt, blueJeans, blackPants]);
@@ -41,15 +35,21 @@ describe('Shopping Journey', () => {
     verifyThatItemsInCartAre([whiteTShirt]);
   });
 
-  it('shops by category', () => {
-    visitCategory(pantsCategory);
+  it('shops by category', function () {
+    const [, pantsCategory] = this.categories;
 
+    visitCategory(pantsCategory);
     verifyThatShopTitleIs(pantsCategory.name);
+
+    const [whiteTShirt, blueJeans, blackPants] = this.products;
+
     verifyThatProductsInShopAre([blueJeans, blackPants]);
     verifyThatProductIsNotInShop(whiteTShirt);
   });
 
-  it('adds and removes a product from the cart', () => {
+  it('adds and removes a product from the cart', function () {
+    const [whiteTShirt] = this.products;
+
     visitProductPage(whiteTShirt);
 
     openCart();
