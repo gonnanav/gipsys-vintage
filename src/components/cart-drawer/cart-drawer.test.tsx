@@ -5,90 +5,96 @@ import { CartDrawer } from './cart-drawer';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/store';
 
-it('renders the modal', async () => {
-  renderShoppingCartDrawer();
+describe('when the cart is closed', () => {
+  it('renders nothing', () => {
+    renderCartDrawer({ initialIsOpen: false });
 
-  expect(getShoppingCartModal()).toHaveAttribute('aria-modal', 'true');
-});
-
-it('renders the title with the correct text', () => {
-  renderShoppingCartDrawer();
-
-  expect(getShoppingCartTitle()).toHaveTextContent('סל הקניות');
-});
-
-it('renders the list for a non-empty cart', () => {
-  const initialCart = [cottonScarf, puffSleeveTop];
-  renderShoppingCartDrawer({ initialCart });
-
-  expect(getShoppingCartList()).toBeInTheDocument();
-});
-
-it('renders the cart items for a non-empty cart', () => {
-  const initialCart = [cottonScarf, puffSleeveTop];
-
-  renderShoppingCartDrawer({ initialCart });
-
-  const items = getShoppingCartItems();
-
-  initialCart.forEach((product, index) => {
-    const { name, price } = product;
-    const item = items[index];
-
-    expect(item).toHaveTextContent(name);
-    expect(item).toHaveTextContent(`₪${price}`);
-    expect(within(item).getByRole('img')).toBeInTheDocument();
+    expect(queryCartDrawer()).not.toBeInTheDocument();
   });
 });
 
-it('renders a shopping cart empty message when the cart is empty', () => {
-  renderShoppingCartDrawer({ initialCart: [] });
+describe('when the cart is open', () => {
+  it('renders the cart drawer and title', () => {
+    renderCartDrawer();
 
-  expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
+    expect(getCartDrawer()).toBeInTheDocument();
+    expect(getCartTitle()).toBeInTheDocument();
+  });
+
+  it('closes the cart', async () => {
+    const { closeCart } = renderCartDrawer();
+
+    await closeCart();
+
+    expect(queryCartDrawer()).not.toBeInTheDocument();
+  });
 });
 
-it('closes when the close button is clicked', async () => {
-  const { user } = renderShoppingCartDrawer();
+describe('when the cart is empty', () => {
+  it('renders the empty cart message', () => {
+    renderCartDrawer({ initialCart: [] });
 
-  await user.click(getShoppingCartCloseButton());
-
-  expect(queryShoppingCartModal()).not.toBeInTheDocument();
+    expect(getCartIsEmptyMessage()).toBeInTheDocument();
+  });
 });
 
-it('removes a shopping cart item when the remove button is clicked', async () => {
-  const { user } = renderShoppingCartDrawer({ initialCart: [cottonScarf] });
+describe('when the cart has items', () => {
+  it('renders the cart items', () => {
+    renderCartDrawer({ initialCart: [cottonScarf, puffSleeveTop] });
 
-  await user.click(getShoppingCartRemoveButton(cottonScarf));
+    const items = getAllCartItems();
 
-  expect(getShoppingCartEmptyMessage()).toBeInTheDocument();
+    expect(items).toHaveLength(2);
+
+    expect(items[0]).toHaveTextContent(cottonScarf.name);
+    expect(items[0]).toHaveTextContent(`₪${cottonScarf.price}`);
+    expect(within(items[0]).getByRole('img')).toBeInTheDocument();
+
+    expect(items[1]).toHaveTextContent(puffSleeveTop.name);
+    expect(items[1]).toHaveTextContent(`₪${puffSleeveTop.price}`);
+    expect(within(items[1]).getByRole('img')).toBeInTheDocument();
+  });
+
+  it('removes an item from the cart', async () => {
+    const { removeItem } = renderCartDrawer({ initialCart: [cottonScarf, puffSleeveTop] });
+
+    await removeItem(cottonScarf);
+
+    const items = getAllCartItems();
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toHaveTextContent(puffSleeveTop.name);
+    expect(items[0]).toHaveTextContent(`₪${puffSleeveTop.price}`);
+    expect(within(items[0]).getByRole('img')).toBeInTheDocument();
+  });
 });
 
-function getShoppingCartModal() {
+function getCartDrawer() {
   return screen.getByRole('dialog', { name: 'סל הקניות' });
 }
 
-function queryShoppingCartModal() {
+function queryCartDrawer() {
   return screen.queryByRole('dialog', { name: 'סל הקניות' });
 }
 
-function getShoppingCartTitle() {
-  return screen.getByRole('heading', { name: 'סל הקניות' });
+function getCartTitle() {
+  return within(getCartDrawer()).getByRole('heading', { name: 'סל הקניות' });
 }
 
-function getShoppingCartCloseButton() {
+function getCartCloseButton() {
   return screen.getByRole('button', { name: 'סגרי את עגלת הקניות' });
 }
 
-function getShoppingCartList() {
+function getCartList() {
   return screen.getByRole('list', { name: 'פריטים בסל הקניות' });
 }
 
-function getShoppingCartItems() {
-  return within(getShoppingCartList()).getAllByRole('listitem');
+function getAllCartItems() {
+  return within(getCartList()).getAllByRole('listitem');
 }
 
-function getShoppingCartItem(product: Product) {
-  const item = getShoppingCartItems().find((item) => within(item).getByText(product.name));
+function getCartItem(product: Product) {
+  const item = getAllCartItems().find((item) => within(item).getByText(product.name));
 
   if (!item) {
     throw new Error(`Shopping cart item for product ${product.name} not found`);
@@ -97,25 +103,25 @@ function getShoppingCartItem(product: Product) {
   return item;
 }
 
-function getShoppingCartRemoveButton(product: Product) {
-  return within(getShoppingCartItem(product)).getByRole('button', { name: 'הסירי מסל הקניות' });
+function getCartRemoveButton(product: Product) {
+  return within(getCartItem(product)).getByRole('button', { name: 'הסירי מסל הקניות' });
 }
 
-function getShoppingCartEmptyMessage() {
-  return screen.getByText('אין פריטים בסל');
+function getCartIsEmptyMessage() {
+  return within(getCartDrawer()).getByText('אין פריטים בסל');
 }
 
-interface RenderShoppingCartDrawerProps {
+interface RenderCartDrawerProps {
   initialCart?: Product[];
   initialIsOpen?: boolean;
   Wrapper?: React.ComponentType<{ children: React.ReactNode }>;
 }
 
-function renderShoppingCartDrawer({
+function renderCartDrawer({
   Wrapper,
   initialCart = [],
   initialIsOpen = true,
-}: RenderShoppingCartDrawerProps = {}) {
+}: RenderCartDrawerProps = {}) {
   const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
     <StoreProvider initialState={{ cartItems: initialCart, isCartDrawerOpen: initialIsOpen }}>
       {children}
@@ -125,5 +131,8 @@ function renderShoppingCartDrawer({
   const user = userEvent.setup();
   render(<CartDrawer />, { wrapper: Wrapper ?? defaultWrapper });
 
-  return { user };
+  const closeCart = () => user.click(getCartCloseButton());
+  const removeItem = (product: Product) => user.click(getCartRemoveButton(product));
+
+  return { closeCart, removeItem };
 }
