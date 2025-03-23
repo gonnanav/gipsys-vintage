@@ -22,6 +22,7 @@ export function NavDrawer() {
         <List>
           <NavItem href="/">עמוד הבית</NavItem>
           <NavItem href="/shop">חנות</NavItem>
+          <NavItem href="/policy/website">תקנון האתר</NavItem>
         </List>
       </nav>
     </SideDrawerLayout>

@@ -48,6 +48,12 @@ it('renders the link to the home page', async () => {
   expect(getHomeLink()).toHaveAttribute('href', '/');
 });
 
+it('renders the link to the website policy page', async () => {
+  renderNavDrawer();
+
+  expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy/website');
+});
+
 it('closes the drawer when clicking on a link', async () => {
   const user = userEvent.setup();
   renderNavDrawer();
@@ -91,6 +97,10 @@ function getShopLink() {
 
 function getHomeLink() {
   return within(getNavigationList()).getByRole('link', { name: 'עמוד הבית' });
+}
+
+function getWebsitePolicyLink() {
+  return within(getNavigationList()).getByRole('link', { name: 'תקנון האתר' });
 }
 
 function getCloseButton() {
