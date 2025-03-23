@@ -1,6 +1,8 @@
 import { render, screen, within } from '@testing-library/react';
+import { Category } from '@/core/category';
 import { StoreProvider } from '@/store';
 import { NavDrawer } from './nav-drawer';
+import { createCategory } from '@/fixtures/categories';
 import userEvent from '@testing-library/user-event';
 
 it('renders nothing when the drawer is closed', () => {
@@ -54,6 +56,18 @@ it('renders the link to the website policy page', async () => {
   expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy/website');
 });
 
+it('renders the categories links for the given categories', () => {
+  const pantsCategory = createCategory('מכנסיים', 'pants');
+  const shirtsCategory = createCategory('חולצות', 'shirts');
+
+  renderNavDrawer({
+    categories: [pantsCategory, shirtsCategory],
+  });
+
+  expect(getCategoryLink(pantsCategory)).toHaveAttribute('href', '/category/pants');
+  expect(getCategoryLink(shirtsCategory)).toHaveAttribute('href', '/category/shirts');
+});
+
 it('closes the drawer when clicking on a link', async () => {
   const user = userEvent.setup();
   renderNavDrawer();
@@ -65,12 +79,13 @@ it('closes the drawer when clicking on a link', async () => {
 
 interface RenderNavDrawerProps {
   isOpen?: boolean;
+  categories?: Category[];
 }
 
-function renderNavDrawer({ isOpen = true }: RenderNavDrawerProps = {}) {
+function renderNavDrawer({ isOpen = true, categories }: RenderNavDrawerProps = {}) {
   return render(
     <StoreProvider initialState={{ isNavDrawerOpen: isOpen }}>
-      <NavDrawer />
+      <NavDrawer categories={categories} />
     </StoreProvider>,
   );
 }
@@ -88,7 +103,7 @@ function getNavigationMenu() {
 }
 
 function getNavigationList() {
-  return within(getNavigationMenu()).getByRole('list');
+  return within(getNavigationMenu()).getByRole('list', { name: 'תפריט הניווט' });
 }
 
 function getShopLink() {
@@ -105,4 +120,8 @@ function getWebsitePolicyLink() {
 
 function getCloseButton() {
   return within(getNavigationDrawer()).getByRole('button', { name: 'סגרי את תפריט הניווט' });
+}
+
+function getCategoryLink(category: Category) {
+  return within(getNavigationList()).getByRole('link', { name: category.name });
 }

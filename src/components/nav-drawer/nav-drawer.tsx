@@ -7,8 +7,14 @@ import { useNavDrawer, useNavDrawerActions } from '@/store';
 import { SideDrawerLayout } from '../side-drawer-layout';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import { Category } from '@/core/category';
+import Divider from '@mui/material/Divider';
 
-export function NavDrawer() {
+export interface NavDrawerProps {
+  categories?: Category[];
+}
+
+export function NavDrawer({ categories }: NavDrawerProps) {
   const { isOpen, close } = useNavDrawer();
 
   return (
@@ -19,10 +25,11 @@ export function NavDrawer() {
       onClose={close}
     >
       <nav>
-        <List>
+        <List aria-label="תפריט הניווט">
           <NavItem href="/">עמוד הבית</NavItem>
           <NavItem href="/shop">חנות</NavItem>
           <NavItem href="/policy/website">תקנון האתר</NavItem>
+          <NavCategoryItems categories={categories} />
         </List>
       </nav>
     </SideDrawerLayout>
@@ -43,5 +50,24 @@ function NavItem({ href, children }: NavItemProps) {
         <ListItemText>{children}</ListItemText>
       </ListItemButton>
     </ListItem>
+  );
+}
+
+interface NavCategoryItemsProps {
+  categories?: Category[];
+}
+
+function NavCategoryItems({ categories = [] }: NavCategoryItemsProps) {
+  if (!categories.length) return null;
+
+  return (
+    <>
+      <Divider component="li" />
+      {categories.map((category) => (
+        <NavItem key={category.id} href={`/category/${category.slug}`}>
+          {category.name}
+        </NavItem>
+      ))}
+    </>
   );
 }
