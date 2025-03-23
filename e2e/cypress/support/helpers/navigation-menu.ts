@@ -1,3 +1,5 @@
+import { Category } from '@/core/category';
+
 export function getNavigationMenu(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.findByRole('navigation');
 }
@@ -12,4 +14,8 @@ export function navigateToWebsitePolicyPage(): Cypress.Chainable<JQuery<HTMLElem
 
 export function navigateToHomePage(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getNavigationMenu().findByRole('link', { name: 'עמוד הבית' }).click();
+}
+
+export function navigateToCategory(category: Category): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getNavigationMenu().findByRole('link', { name: category.name }).click();
 }

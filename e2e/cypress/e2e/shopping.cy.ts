@@ -1,6 +1,14 @@
 import { Product, ProductCreate } from '@/core/product';
 import { Category } from '@/core/category';
-import { header, cart, shopPage, productPage, data, homepage } from '../support/helpers';
+import {
+  header,
+  cart,
+  shopPage,
+  productPage,
+  data,
+  homepage,
+  navigationMenu,
+} from '../support/helpers';
 import { createProduct } from '../support/helpers/data';
 
 describe('Shopping Journey', () => {
@@ -38,12 +46,12 @@ describe('Shopping Journey', () => {
 
   it('shops by category', function () {
     const [, pantsCategory] = this.categories;
-
-    visitCategory(pantsCategory);
-    verifyThatShopTitleIs(pantsCategory.name);
-
     const [whiteTShirt, blueJeans, blackPants] = this.products;
 
+    visitHomePage();
+
+    goToCategory(pantsCategory);
+    verifyThatShopTitleIs(pantsCategory.name);
     verifyThatProductsInShopAre([blueJeans, blackPants]);
     verifyThatProductIsNotInShop(whiteTShirt);
   });
@@ -116,8 +124,9 @@ function verifyThatItemsInCartAre(expectedItems: Product[]): void {
   });
 }
 
-function visitCategory(category: Category): void {
-  shopPage.visitCategory(category);
+function goToCategory(category: Category): void {
+  header.openNavigationMenu();
+  navigationMenu.navigateToCategory(category);
 }
 
 function verifyThatShopTitleIs(title: string): void {
