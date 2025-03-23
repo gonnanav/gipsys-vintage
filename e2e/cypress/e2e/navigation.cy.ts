@@ -9,6 +9,10 @@ describe('Navigation', () => {
     verifyThatPageIsShopPage();
 
     header.openNavigationMenu();
+    navigationMenu.navigateToWebsitePolicyPage();
+    verifyThatPageIsWebsitePolicyPage();
+
+    header.openNavigationMenu();
     navigationMenu.navigateToHomePage();
     verifyThatPageIsHomePage();
   });
@@ -16,6 +20,10 @@ describe('Navigation', () => {
 
 function verifyThatPageIsShopPage() {
   verifyPageRelativeUrl('/shop');
+}
+
+function verifyThatPageIsWebsitePolicyPage() {
+  verifyPageRelativeUrl('/policy/website');
 }
 
 function verifyThatPageIsHomePage() {

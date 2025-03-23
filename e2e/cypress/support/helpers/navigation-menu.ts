@@ -6,6 +6,10 @@ export function navigateToShopPage(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getNavigationMenu().findByRole('link', { name: 'חנות' }).click();
 }
 
+export function navigateToWebsitePolicyPage(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return getNavigationMenu().findByRole('link', { name: 'תקנון האתר' }).click();
+}
+
 export function navigateToHomePage(): Cypress.Chainable<JQuery<HTMLElement>> {
   return getNavigationMenu().findByRole('link', { name: 'עמוד הבית' }).click();
 }
