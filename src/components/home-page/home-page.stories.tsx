@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { GoToShopButton } from './go-to-shop-button';
+import Home from '@/app/page';
 
-const meta: Meta<typeof GoToShopButton> = {
+const meta: Meta<typeof Home> = {
   title: 'Homepage',
-  component: GoToShopButton,
+  component: Home,
   parameters: {
     layout: 'fullscreen',
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof GoToShopButton>;
+type Story = StoryObj<typeof Home>;
 
 export const Default: Story = {};

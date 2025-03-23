@@ -1,1 +1,2 @@
 export { GoToShopButton } from './go-to-shop-button';
+export { HeroImage } from './hero-image';
