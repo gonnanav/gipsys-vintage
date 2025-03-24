@@ -64,8 +64,8 @@ it('renders the categories links for the given categories', () => {
     categories: [pantsCategory, shirtsCategory],
   });
 
-  expect(getCategoryLink(pantsCategory)).toHaveAttribute('href', '/category/pants');
-  expect(getCategoryLink(shirtsCategory)).toHaveAttribute('href', '/category/shirts');
+  expect(getCategoryLink(pantsCategory)).toHaveAttribute('href', '/shop/category/pants');
+  expect(getCategoryLink(shirtsCategory)).toHaveAttribute('href', '/shop/category/shirts');
 });
 
 it('closes the drawer when clicking on a link', async () => {

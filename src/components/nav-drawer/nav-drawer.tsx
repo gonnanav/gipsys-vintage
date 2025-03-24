@@ -64,7 +64,7 @@ function NavCategoryItems({ categories = [] }: NavCategoryItemsProps) {
     <>
       <Divider component="li" />
       {categories.map((category) => (
-        <NavItem key={category.id} href={`/category/${category.slug}`}>
+        <NavItem key={category.id} href={`/shop/category/${category.slug}`}>
           {category.name}
         </NavItem>
       ))}
