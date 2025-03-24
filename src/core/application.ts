@@ -64,4 +64,12 @@ export interface Application {
    * @throws May throw if there's a network or system error
    */
   getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null>;
+
+  /**
+   * Retrieves all available categories.
+   *
+   * @returns Promise resolving to an array of categories
+   * @throws May throw if there's a network or system error
+   */
+  getCategories(): Promise<Category[]>;
 }

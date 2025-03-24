@@ -67,4 +67,10 @@ export class WooCommerceAdapter implements Application {
       products: products.map(fromWooCommerceProduct),
     };
   }
+
+  async getCategories(): Promise<Category[]> {
+    const categories = await this.api.getCategories();
+
+    return categories.map(fromWooCommerceCategory);
+  }
 }
