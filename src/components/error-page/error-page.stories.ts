@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { AppError } from './app-error';
+import { ErrorPage } from './error-page';
 
 const meta = {
   title: 'Error Page',
-  component: AppError,
+  component: ErrorPage,
   parameters: {
     layout: 'fullscreen',
   },
@@ -12,7 +12,7 @@ const meta = {
     error: new Error('error'),
     reset: fn(),
   },
-} satisfies Meta<typeof AppError>;
+} satisfies Meta<typeof ErrorPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
