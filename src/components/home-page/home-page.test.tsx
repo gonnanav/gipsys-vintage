@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import Home from '@/app/page';
+import { HomePage } from '@/components/home-page';
 
 it('renders the go to shop link', () => {
-  render(<Home />);
+  render(<HomePage />);
 
   expect(screen.getByRole('link', { name: /shop now/i })).toBeInTheDocument();
 });
 
 it('renders the hero image', () => {
-  render(<Home />);
+  render(<HomePage />);
 
   expect(screen.getByRole('img', { name: `תמונה ראשית של ג'יפסיז וינטג'` })).toBeInTheDocument();
 });
