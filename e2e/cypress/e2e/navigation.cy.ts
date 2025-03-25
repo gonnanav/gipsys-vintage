@@ -23,7 +23,7 @@ function verifyThatPageIsShopPage() {
 }
 
 function verifyThatPageIsWebsitePolicyPage() {
-  verifyPageRelativeUrl('/policy/website');
+  verifyPageRelativeUrl('/policy');
 }
 
 function verifyThatPageIsHomePage() {

@@ -28,7 +28,7 @@ export function NavDrawer({ categories }: NavDrawerProps) {
         <List aria-label="תפריט הניווט">
           <NavItem href="/">עמוד הבית</NavItem>
           <NavItem href="/shop">חנות</NavItem>
-          <NavItem href="/policy/website">תקנון האתר</NavItem>
+          <NavItem href="/policy">תקנון האתר</NavItem>
           <NavCategoryItems categories={categories} />
         </List>
       </nav>

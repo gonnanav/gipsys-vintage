@@ -53,7 +53,7 @@ it('renders the link to the home page', async () => {
 it('renders the link to the website policy page', async () => {
   renderNavDrawer();
 
-  expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy/website');
+  expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy');
 });
 
 it('renders the categories links for the given categories', () => {

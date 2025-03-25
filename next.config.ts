@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
 
 const withMDX = createMDX({});
