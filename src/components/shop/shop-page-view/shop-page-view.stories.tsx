@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ShopPageView } from './shop-page-view';
-import Loading from '@/app/shop/loading';
+import { ShopPageLoading } from '@/components/shop';
 import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 
 const meta = {
@@ -30,7 +30,7 @@ export const Empty: Story = {
 };
 
 export const LoadingPage: Story = {
-  render: () => <Loading />,
+  render: () => <ShopPageLoading />,
   args: {
     products: [],
   },
