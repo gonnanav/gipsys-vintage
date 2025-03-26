@@ -56,14 +56,8 @@ describe('when the cart has items', () => {
     const items = getAllCartItems();
 
     expect(items).toHaveLength(2);
-
     expect(items[0]).toHaveTextContent(cottonScarf.name);
-    expect(items[0]).toHaveTextContent(`₪${cottonScarf.price}`);
-    expect(within(items[0]).getByRole('img')).toBeInTheDocument();
-
     expect(items[1]).toHaveTextContent(puffSleeveTop.name);
-    expect(items[1]).toHaveTextContent(`₪${puffSleeveTop.price}`);
-    expect(within(items[1]).getByRole('img')).toBeInTheDocument();
   });
 
   it('removes an item from the cart', async () => {

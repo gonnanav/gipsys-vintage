@@ -63,3 +63,8 @@ export interface ProductImage {
   /** Optional alt text for accessibility */
   alt?: string;
 }
+
+export const placeholderImage: ProductImage = {
+  src: '/images/product-placeholder.webp',
+  alt: 'אין תמונת מוצר',
+};
