@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ProductPageView } from './product-page-view';
+import { ProductPage } from './product-page';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
 
 const meta = {
   title: 'Product Page',
-  component: ProductPageView,
+  component: ProductPage,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof ProductPageView>;
+} satisfies Meta<typeof ProductPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

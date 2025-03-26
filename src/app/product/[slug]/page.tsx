@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
-import { ProductPageView } from '@/ui/product/product-page-view/product-page-view';
+import { ProductPage } from '@/ui/product';
 
 const app = createApplication();
 
@@ -13,5 +13,5 @@ export default async function Page({ params }: PageProps) {
   const product = await app.getProduct(slug);
   if (!product) notFound();
 
-  return <ProductPageView product={product} />;
+  return <ProductPage product={product} />;
 }
