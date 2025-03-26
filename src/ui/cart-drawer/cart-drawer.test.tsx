@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
 import { CartDrawer } from './cart-drawer';
 import { Product } from '@/core/product';
-import { StoreProvider } from '@/components/store';
+import { StoreProvider } from '@/ui/store';
 
 describe('when the cart is closed', () => {
   it('renders nothing', () => {

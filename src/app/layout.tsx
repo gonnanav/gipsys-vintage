@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { createApplication } from '@/composition-root';
-import { AppLayout, AppProviders } from '@/components/app-layout';
+import { AppLayout, AppProviders } from '@/ui/app-layout';
 import './globals.css';
 
 export const metadata: Metadata = {

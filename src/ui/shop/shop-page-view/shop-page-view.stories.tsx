@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ShopPageView } from './shop-page-view';
-import { ShopPageLoading } from '@/components/shop';
+import { ShopPageLoading } from '@/ui/shop';
 import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 
 const meta = {

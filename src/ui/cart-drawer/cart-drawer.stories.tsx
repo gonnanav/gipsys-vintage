@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 import { CartDrawer } from './cart-drawer';
-import { StoreProvider } from '@/components/store';
+import { StoreProvider } from '@/ui/store';
 
 const meta: Meta<typeof CartDrawer> = {
   title: 'Cart Drawer',

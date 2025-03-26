@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { AddToCartButton } from './add-to-cart-button';
 import { cottonScarf } from '@/fixtures/products';
 import { Product } from '@/core/product';
-import { StoreProvider, useCart } from '@/components/store';
+import { StoreProvider, useCart } from '@/ui/store';
 
 it('renders the add to cart button', () => {
   renderAddToCartButton(cottonScarf);

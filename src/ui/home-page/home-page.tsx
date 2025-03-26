@@ -1,4 +1,4 @@
-import { GoToShopButton, HeroImage } from '@/components/home-page';
+import { GoToShopButton, HeroImage } from '@/ui/home-page';
 import Box from '@mui/material/Box';
 
 export function HomePage() {

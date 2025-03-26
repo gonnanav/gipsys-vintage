@@ -1,7 +1,7 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { useCart, useCartDrawer } from '@/components/store';
+import { useCart, useCartDrawer } from '@/ui/store';
 import { CartList } from './cart-list';
 import { CartEmptyMessage } from './cart-empty-message';
 import { SideDrawerLayout } from '../side-drawer-layout';

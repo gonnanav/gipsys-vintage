@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createApplication } from '@/composition-root';
-import { ProductPageView } from '@/components/product/product-page-view/product-page-view';
+import { ProductPageView } from '@/ui/product/product-page-view/product-page-view';
 
 const app = createApplication();
 

@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { Category } from '@/core/category';
-import { StoreProvider } from '@/components/store';
+import { StoreProvider } from '@/ui/store';
 import { NavDrawer } from './nav-drawer';
 import { createCategory } from '@/fixtures/categories';
 import userEvent from '@testing-library/user-event';

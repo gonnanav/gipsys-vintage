@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { StoreProvider } from '@/components/store';
+import { StoreProvider } from '@/ui/store';
 import { Header } from './header';
 import { NavDrawer } from '../nav-drawer/nav-drawer';
 import { CartDrawer } from '../cart-drawer/cart-drawer';
