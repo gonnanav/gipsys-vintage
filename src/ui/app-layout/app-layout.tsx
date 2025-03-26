@@ -1,6 +1,6 @@
 import { Category } from '@/core/category';
 import { Header } from './header';
-import { Main } from '@/ui/main';
+import { Main } from './main';
 import { NavDrawer } from './nav-drawer';
 import { CartDrawer } from './cart-drawer';
 
