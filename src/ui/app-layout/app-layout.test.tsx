@@ -1,48 +1,61 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StoreProvider } from '@/ui/store';
-import { AppLayout } from './app-layout';
+import { AppLayout, AppLayoutProps } from './app-layout';
 
-it('renders its children as the main content', () => {
-  render(<AppLayout>App Content</AppLayout>, { wrapper: StoreProvider });
+it('renders the header', () => {
+  renderAppLayout();
 
-  expect(getMainContent()).toHaveTextContent('App Content');
+  expect(getHeader()).toBeInTheDocument();
+});
+
+it('renders the main content', () => {
+  renderAppLayout({ children: <div>Main Content</div> });
+
+  expect(getMain()).toHaveTextContent('Main Content');
 });
 
 it('opens the navigation drawer', async () => {
-  render(<AppLayout>App Content</AppLayout>, { wrapper: StoreProvider });
-  const openNavDrawer = setupOpenNavDrawer();
+  const { openNavDrawer } = renderAppLayoutWithUserActions();
 
   await openNavDrawer();
 
   expect(getNavDrawer()).toBeInTheDocument();
 });
 
-it('opens the shopping cart drawer', async () => {
-  render(<AppLayout>App Content</AppLayout>, { wrapper: StoreProvider });
-  const openCartDrawer = setupOpenCartDrawer();
+it('opens the cart drawer', async () => {
+  const { openCartDrawer } = renderAppLayoutWithUserActions();
 
   await openCartDrawer();
 
   expect(getCartDrawer()).toBeInTheDocument();
 });
 
-function setupOpenNavDrawer() {
-  const user = userEvent.setup();
-  const openNavDrawer = () => user.click(getOpenNavigationButton());
-
-  return openNavDrawer;
+function renderAppLayout(props: Partial<AppLayoutProps> = {}) {
+  return render(<AppLayout {...props}>{props.children}</AppLayout>, { wrapper: StoreProvider });
 }
 
-function setupOpenCartDrawer() {
+function renderAppLayoutWithUserActions(props: Partial<AppLayoutProps> = {}) {
+  const userActions = setupUserActions();
+  const renderResult = renderAppLayout(props);
+
+  return { ...renderResult, ...userActions };
+}
+
+function setupUserActions() {
   const user = userEvent.setup();
+  const openNavDrawer = () => user.click(getOpenNavigationButton());
   const openCartDrawer = () => user.click(getOpenCartButton());
 
-  return openCartDrawer;
+  return { openNavDrawer, openCartDrawer };
 }
 
 function getHeader() {
   return screen.getByRole('banner');
+}
+
+function getMain() {
+  return screen.getByRole('main');
 }
 
 function getOpenNavigationButton() {
@@ -59,8 +72,4 @@ function getNavDrawer() {
 
 function getCartDrawer() {
   return screen.getByRole('dialog', { name: 'סל הקניות' });
-}
-
-function getMainContent() {
-  return screen.getByRole('main');
 }
