@@ -1,7 +1,7 @@
 'use client';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavDrawerActions } from '@/store';
+import { useNavDrawerActions } from '@/components/store';
 import { HeaderButton } from './header-button';
 
 export function NavigationButton() {

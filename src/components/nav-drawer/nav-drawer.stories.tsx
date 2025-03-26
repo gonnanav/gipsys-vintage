@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { NavDrawer } from './nav-drawer';
-import { StoreProvider } from '@/store';
+import { StoreProvider } from '@/components/store';
 import { accessoriesCategory, topsCategory } from '@/fixtures/categories';
 
 const meta: Meta<typeof NavDrawer> = {

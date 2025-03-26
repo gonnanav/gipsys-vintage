@@ -2,7 +2,7 @@
 
 import Button from '@mui/material/Button';
 import { Product } from '@/core/product';
-import { useCartActions } from '@/store';
+import { useCartActions } from '@/components/store';
 
 interface AddToCartButtonProps {
   product: Product;

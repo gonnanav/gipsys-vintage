@@ -1,7 +1,7 @@
 'use client';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useCartDrawer } from '@/store';
+import { useCartDrawer } from '@/components/store';
 import { HeaderButton } from './header-button';
 
 export function CartButton() {

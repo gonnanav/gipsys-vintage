@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { useNavDrawer, useNavDrawerActions } from '@/store';
+import { useNavDrawer, useNavDrawerActions } from '@/components/store';
 import { SideDrawerLayout } from '../side-drawer-layout';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';

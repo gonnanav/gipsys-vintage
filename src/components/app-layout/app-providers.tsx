@@ -1,5 +1,5 @@
 import { MuiProvider } from '../mui-provider';
-import { StoreProvider } from '@/store';
+import { StoreProvider } from '@/components/store';
 
 export interface AppProvidersProps {
   children: React.ReactNode;
