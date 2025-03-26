@@ -13,7 +13,7 @@ export function visit(): Cypress.Chainable<Cypress.AUTWindow> {
  * @param category The category to navigate to
  */
 export function visitCategory(category: Category): Cypress.Chainable<Cypress.AUTWindow> {
-  return cy.visit(`/shop/category/${category.slug}`);
+  return cy.visit(`/shop/${category.slug}`);
 }
 
 /**
