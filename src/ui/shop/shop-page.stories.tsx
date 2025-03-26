@@ -1,18 +1,18 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ShopPageView } from './shop-page-view';
-import { ShopPageLoading } from '@/ui/shop';
+import { ShopPage } from './shop-page';
+import { ShopPageLoading } from './shop-page-loading';
 import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 
 const meta = {
   title: 'Shop Page',
-  component: ShopPageView,
+  component: ShopPage,
   parameters: {
     layout: 'fullscreen',
   },
   args: {
     title: 'חנות',
   },
-} satisfies Meta<typeof ShopPageView>;
+} satisfies Meta<typeof ShopPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

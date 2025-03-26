@@ -1,5 +1,5 @@
 import { createApplication } from '@/composition-root';
-import { ShopPageView } from '@/ui/shop/shop-page-view/shop-page-view';
+import { ShopPage } from '@/ui/shop';
 import { notFound } from 'next/navigation';
 
 const app = createApplication();
@@ -13,5 +13,5 @@ export default async function Page({ params }: PageProps) {
   const category = await app.getCategoryWithProducts(slug);
   if (!category) notFound();
 
-  return <ShopPageView title={category.name} products={category.products} />;
+  return <ShopPage title={category.name} products={category.products} />;
 }
