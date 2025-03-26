@@ -2,7 +2,7 @@ import { Category } from '@/core/category';
 import { Header } from '@/ui/header';
 import { Main } from '@/ui/main';
 import { NavDrawer } from '@/ui/nav-drawer';
-import { CartDrawer } from '@/ui/cart-drawer';
+import { CartDrawer } from './cart-drawer';
 
 export interface AppLayoutProps {
   categories?: Category[];
