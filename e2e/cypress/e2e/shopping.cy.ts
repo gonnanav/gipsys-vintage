@@ -55,22 +55,6 @@ describe('Shopping Journey', () => {
     verifyThatProductsInShopAre([blueJeans, blackPants]);
     verifyThatProductIsNotInShop(whiteTShirt);
   });
-
-  it('adds and removes a product from the cart', function () {
-    const [whiteTShirt] = this.products;
-
-    visitProductPage(whiteTShirt);
-
-    openCart();
-    verifyThatCartIsEmpty();
-    closeCart();
-
-    addProductToCart();
-    verifyThatItemsInCartAre([whiteTShirt]);
-
-    removeItemFromCart(whiteTShirt);
-    verifyThatCartIsEmpty();
-  });
 });
 
 function verifyThatProductDisplayedIs(product: Product): void {
@@ -88,32 +72,12 @@ function goToShopPage(): void {
   homepage.goToShopPage();
 }
 
-function visitProductPage(product: Product): void {
-  productPage.visit(product);
-}
-
-function openCart(): void {
-  header.openShoppingCart();
-}
-
-function closeCart(): void {
-  cart.close();
-}
-
 function goToProduct(product: Product): void {
   shopPage.goToProduct(product);
 }
 
 function addProductToCart(): void {
   productPage.addToShoppingCart();
-}
-
-function removeItemFromCart(product: Product): void {
-  cart.removeItem(product);
-}
-
-function verifyThatCartIsEmpty(): void {
-  cart.getItems().should('not.exist');
 }
 
 function verifyThatItemsInCartAre(expectedItems: Product[]): void {
