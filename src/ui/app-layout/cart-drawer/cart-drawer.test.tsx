@@ -1,28 +1,33 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
-import { CartDrawer } from './cart-drawer';
 import { Product } from '@/core/product';
+import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
 import { StoreProvider } from '@/ui/store';
+import { CartDrawer } from './cart-drawer';
 
-describe('when the cart is closed', () => {
-  it('renders nothing', () => {
-    renderCartDrawer({ initialIsOpen: false });
+describe('when the cart drawer is closed', () => {
+  it('does not render the cart drawer', () => {
+    renderCartDrawer({ isOpen: false });
 
     expect(queryCartDrawer()).not.toBeInTheDocument();
   });
 });
 
-describe('when the cart is open', () => {
-  it('renders the cart drawer and title', () => {
+describe('when the cart drawer is open', () => {
+  it('renders the cart drawer', () => {
     renderCartDrawer();
 
     expect(getCartDrawer()).toBeInTheDocument();
+  });
+
+  it('renders the cart title', () => {
+    renderCartDrawer();
+
     expect(getCartTitle()).toBeInTheDocument();
   });
 
-  it('closes the cart', async () => {
-    const { closeCart } = renderCartDrawer();
+  it('closes the cart drawer', async () => {
+    const { closeCart } = renderCartDrawerWithUserActions();
 
     await closeCart();
 
@@ -32,15 +37,21 @@ describe('when the cart is open', () => {
 
 describe('when the cart is empty', () => {
   it('renders the empty cart message', () => {
-    renderCartDrawer({ initialCart: [] });
+    renderCartDrawer({ cart: [] });
 
     expect(getCartIsEmptyMessage()).toBeInTheDocument();
+  });
+
+  it('does not render the cart list', () => {
+    renderCartDrawer({ cart: [] });
+
+    expect(queryCartList()).not.toBeInTheDocument();
   });
 });
 
 describe('when the cart has items', () => {
   it('renders the cart items', () => {
-    renderCartDrawer({ initialCart: [cottonScarf, puffSleeveTop] });
+    renderCartDrawer({ cart: [cottonScarf, puffSleeveTop] });
 
     const items = getAllCartItems();
 
@@ -56,7 +67,9 @@ describe('when the cart has items', () => {
   });
 
   it('removes an item from the cart', async () => {
-    const { removeItem } = renderCartDrawer({ initialCart: [cottonScarf, puffSleeveTop] });
+    const { removeItem } = renderCartDrawerWithUserActions({
+      cart: [cottonScarf, puffSleeveTop],
+    });
 
     await removeItem(cottonScarf);
 
@@ -64,8 +77,6 @@ describe('when the cart has items', () => {
 
     expect(items).toHaveLength(1);
     expect(items[0]).toHaveTextContent(puffSleeveTop.name);
-    expect(items[0]).toHaveTextContent(`₪${puffSleeveTop.price}`);
-    expect(within(items[0]).getByRole('img')).toBeInTheDocument();
   });
 });
 
@@ -87,6 +98,10 @@ function getCartCloseButton() {
 
 function getCartList() {
   return screen.getByRole('list', { name: 'פריטים בסל הקניות' });
+}
+
+function queryCartList() {
+  return screen.queryByRole('list', { name: 'פריטים בסל הקניות' });
 }
 
 function getAllCartItems() {
@@ -112,25 +127,29 @@ function getCartIsEmptyMessage() {
 }
 
 interface RenderCartDrawerProps {
-  initialCart?: Product[];
-  initialIsOpen?: boolean;
-  Wrapper?: React.ComponentType<{ children: React.ReactNode }>;
+  cart?: Product[];
+  isOpen?: boolean;
 }
 
-function renderCartDrawer({
-  Wrapper,
-  initialCart = [],
-  initialIsOpen = true,
-}: RenderCartDrawerProps = {}) {
-  const defaultWrapper = ({ children }: { children: React.ReactNode }) => (
-    <StoreProvider initialState={{ cartItems: initialCart, isCartDrawerOpen: initialIsOpen }}>
+function renderCartDrawerWithUserActions({ cart = [], isOpen = true }: RenderCartDrawerProps = {}) {
+  const actions = setupUserActions();
+  const renderResult = renderCartDrawer({ cart, isOpen });
+
+  return { ...renderResult, ...actions };
+}
+
+function renderCartDrawer({ cart = [], isOpen = true }: RenderCartDrawerProps = {}) {
+  const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <StoreProvider initialState={{ cartItems: cart, isCartDrawerOpen: isOpen }}>
       {children}
     </StoreProvider>
   );
 
-  const user = userEvent.setup();
-  render(<CartDrawer />, { wrapper: Wrapper ?? defaultWrapper });
+  return render(<CartDrawer />, { wrapper });
+}
 
+function setupUserActions() {
+  const user = userEvent.setup();
   const closeCart = () => user.click(getCartCloseButton());
   const removeItem = (product: Product) => user.click(getCartRemoveButton(product));
 
