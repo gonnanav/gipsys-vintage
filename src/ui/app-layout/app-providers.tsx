@@ -1,4 +1,4 @@
-import { MuiProvider } from '../mui-provider';
+import { MuiProvider } from '@/ui/mui';
 import { StoreProvider } from '@/ui/store';
 
 export interface AppProvidersProps {
