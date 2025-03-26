@@ -1,6 +1,10 @@
 import Stack from '@mui/material/Stack';
 
-export function HeaderLayout({ children }: { children: React.ReactNode }) {
+interface HeaderLayoutProps {
+  children: React.ReactNode;
+}
+
+export function HeaderLayout({ children }: HeaderLayoutProps) {
   return (
     <Stack
       component="header"

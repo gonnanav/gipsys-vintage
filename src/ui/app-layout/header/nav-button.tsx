@@ -4,8 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useNavDrawerActions } from '@/ui/store';
 import { HeaderButton } from './header-button';
 
-export function NavigationButton() {
+export function NavButton() {
   const { open } = useNavDrawerActions();
 
-  return <HeaderButton ariaLabel="פתחי את תפריט הניווט" Icon={MenuIcon} onClick={open} />;
+  return <HeaderButton name="פתחי את תפריט הניווט" Icon={MenuIcon} onClick={open} />;
 }
