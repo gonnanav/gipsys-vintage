@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { HomePage } from '@/ui/home-page';
+import { HomePage } from '@/ui/home';
 
 it('renders the go to shop link', () => {
   render(<HomePage />);

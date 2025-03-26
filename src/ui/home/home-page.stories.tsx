@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { HomePage } from '@/ui/home-page';
+import { HomePage } from '@/ui/home';
 
 const meta: Meta<typeof HomePage> = {
   title: 'Homepage',
