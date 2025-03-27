@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node", "@testing-library/cypress"],
+    "target": "ES2015",
+    "lib": ["es5", "dom", "ES2015"],
+    "types": ["cypress", "node", "@testing-library/cypress", "zod"],
     "baseUrl": "../",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
     }
