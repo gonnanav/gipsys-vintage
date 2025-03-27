@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ProductPage } from './product-page';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
+import { ProductPageLoading } from './product-page-loading';
 
 const meta = {
   title: 'Product Page',
@@ -28,5 +29,12 @@ export const PuffSleeveTop: Story = {
 export const CottonScarf: Story = {
   args: {
     product: cottonScarf,
+  },
+};
+
+export const Loading: Story = {
+  render: () => <ProductPageLoading />,
+  args: {
+    product: leatherJacket,
   },
 };
