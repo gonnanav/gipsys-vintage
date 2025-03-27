@@ -1,4 +1,4 @@
-import { createApplication } from '@/composition-root';
+import { createApplication } from '@/application-factory';
 import { ShopPage } from '@/ui/shop';
 
 const app = createApplication();

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { createApplication } from '@/composition-root';
+import { createApplication } from '@/application-factory';
 import { AppLayout, AppProviders } from '@/ui/app-layout';
 import './globals.css';
 

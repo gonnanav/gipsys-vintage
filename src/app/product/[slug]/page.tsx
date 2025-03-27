@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { createApplication } from '@/composition-root';
+import { createApplication } from '@/application-factory';
 import { ProductPage } from '@/ui/product';
 
 const app = createApplication();
