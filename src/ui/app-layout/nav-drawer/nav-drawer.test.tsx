@@ -5,10 +5,68 @@ import { NavDrawer } from './nav-drawer';
 import { createCategory } from '@/fixtures/categories';
 import userEvent from '@testing-library/user-event';
 
-it('renders nothing when the drawer is closed', () => {
-  const { container } = renderNavDrawer({ isOpen: false });
+describe('when the navigation drawer is closed', () => {
+  it('does not render the drawer', () => {
+    renderNavDrawer({ isOpen: false });
 
-  expect(container).toBeEmptyDOMElement();
+    expect(queryNavDrawer()).not.toBeInTheDocument();
+  });
+});
+
+describe('when the navigation drawer is open', () => {
+  it('renders the drawer', () => {
+    renderNavDrawer();
+
+    expect(getNavDrawer()).toBeInTheDocument();
+  });
+
+  it('renders the title', () => {
+    renderNavDrawer();
+
+    expect(getNavTitle()).toBeInTheDocument();
+  });
+
+  it('renders the navigation', () => {
+    renderNavDrawer();
+
+    expect(getNavigation()).toBeInTheDocument();
+  });
+
+  it('renders the navigation list', () => {
+    renderNavDrawer();
+
+    expect(getNavigationList()).toBeInTheDocument();
+  });
+
+  it('renders the shop page link', async () => {
+    renderNavDrawer();
+
+    expect(getShopLink()).toHaveAttribute('href', '/shop');
+  });
+
+  it('renders the home page link', async () => {
+    renderNavDrawer();
+
+    expect(getHomeLink()).toHaveAttribute('href', '/');
+  });
+
+  it('renders the policy page link', async () => {
+    renderNavDrawer();
+
+    expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy');
+  });
+
+  it('renders the categories pages links', () => {
+    const pantsCategory = createCategory('מכנסיים', 'pants');
+    const shirtsCategory = createCategory('חולצות', 'shirts');
+
+    renderNavDrawer({
+      categories: [pantsCategory, shirtsCategory],
+    });
+
+    expect(getCategoryLink(pantsCategory)).toHaveAttribute('href', '/shop/pants');
+    expect(getCategoryLink(shirtsCategory)).toHaveAttribute('href', '/shop/shirts');
+  });
 });
 
 it('closes the drawer when the close button is clicked', async () => {
@@ -17,55 +75,7 @@ it('closes the drawer when the close button is clicked', async () => {
 
   await user.click(getCloseButton());
 
-  expect(queryNavigationDrawer()).not.toBeInTheDocument();
-});
-
-it('renders the drawer modal', () => {
-  renderNavDrawer();
-
-  expect(getNavigationDrawer()).toHaveAttribute('aria-modal', 'true');
-});
-
-it('renders the navigation menu', () => {
-  renderNavDrawer();
-
-  expect(getNavigationMenu()).toBeInTheDocument();
-});
-
-it('renders the navigation list', () => {
-  renderNavDrawer();
-
-  expect(getNavigationList()).toBeInTheDocument();
-});
-
-it('renders the link to the shop page', async () => {
-  renderNavDrawer();
-
-  expect(getShopLink()).toHaveAttribute('href', '/shop');
-});
-
-it('renders the link to the home page', async () => {
-  renderNavDrawer();
-
-  expect(getHomeLink()).toHaveAttribute('href', '/');
-});
-
-it('renders the link to the website policy page', async () => {
-  renderNavDrawer();
-
-  expect(getWebsitePolicyLink()).toHaveAttribute('href', '/policy');
-});
-
-it('renders the categories links for the given categories', () => {
-  const pantsCategory = createCategory('מכנסיים', 'pants');
-  const shirtsCategory = createCategory('חולצות', 'shirts');
-
-  renderNavDrawer({
-    categories: [pantsCategory, shirtsCategory],
-  });
-
-  expect(getCategoryLink(pantsCategory)).toBeInTheDocument();
-  expect(getCategoryLink(shirtsCategory)).toBeInTheDocument();
+  expect(queryNavDrawer()).not.toBeInTheDocument();
 });
 
 it('closes the drawer when clicking on a link', async () => {
@@ -74,7 +84,7 @@ it('closes the drawer when clicking on a link', async () => {
 
   await user.click(getShopLink());
 
-  expect(queryNavigationDrawer()).not.toBeInTheDocument();
+  expect(queryNavDrawer()).not.toBeInTheDocument();
 });
 
 interface RenderNavDrawerProps {
@@ -90,20 +100,24 @@ function renderNavDrawer({ isOpen = true, categories }: RenderNavDrawerProps = {
   );
 }
 
-function getNavigationDrawer() {
+function getNavDrawer() {
   return screen.getByRole('dialog', { name: 'תפריט הניווט' });
 }
 
-function queryNavigationDrawer() {
+function queryNavDrawer() {
   return screen.queryByRole('dialog', { name: 'תפריט הניווט' });
 }
 
-function getNavigationMenu() {
-  return within(getNavigationDrawer()).getByRole('navigation');
+function getNavigation() {
+  return within(getNavDrawer()).getByRole('navigation');
+}
+
+function getNavTitle() {
+  return screen.getByRole('heading', { name: 'תפריט הניווט' });
 }
 
 function getNavigationList() {
-  return within(getNavigationMenu()).getByRole('list', { name: 'תפריט הניווט' });
+  return within(getNavigation()).getByRole('list', { name: 'תפריט הניווט' });
 }
 
 function getShopLink() {
@@ -119,7 +133,7 @@ function getWebsitePolicyLink() {
 }
 
 function getCloseButton() {
-  return within(getNavigationDrawer()).getByRole('button', { name: 'סגרי את תפריט הניווט' });
+  return within(getNavDrawer()).getByRole('button', { name: 'סגרי את תפריט הניווט' });
 }
 
 function getCategoryLink(category: Category) {
