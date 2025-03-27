@@ -16,6 +16,9 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
   },
   decorators: [
     (Story) => (
