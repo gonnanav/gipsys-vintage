@@ -1,6 +1,37 @@
 # Gipsy's Vintage Web App
 
-This project contains the full-stack development for Gipsy's Vintage, an e-commerce web app selling vintage clothing items for women for a local Israeli audience.
+A modern, full-stack e-commerce application built with Next.js, React Server Components, TypeScript, and WooCommerce integration.
+
+![Status: Under Development](https://img.shields.io/badge/Status-Under%20Development-yellow)
+
+## Project Overview
+
+This project implements a full-stack e-commerce application for Gipsy's Vintage, a boutique selling curated vintage clothing items for women to a local Israeli audience. The application leverages Next.js and React Server Components for an optimized user experience, with WooCommerce serving as the backing e-commerce platform.
+
+## ⚠️ Development Status
+
+**IMPORTANT**: This project is currently under active development and is not yet operational.
+
+## Technical Highlights
+
+- **Architecture**: Implements Hexagonal Architecture (Ports & Adapters pattern) for clean separation of core business logic from external dependencies
+- **Full-Stack Implementation**: Next.js with TypeScript, React Server Components, and server-side rendering
+- **Testing**: Jest for unit testing, React Testing Library for component testing, and Cypress for E2E tests
+- **State Management**: Zustand for global state management with custom hooks for encapsulating data access
+- **API Integration**: Type-safe WooCommerce REST API client with proper error handling
+- **Development Workflow**: ESLint, Prettier, TypeScript, and Jest for code quality
+- **UI Development**: Storybook for component development and documentation
+
+## Architecture
+
+The application follows a clean architecture approach:
+
+- **Core Domain**: Pure TypeScript models and business logic with no external dependencies
+- **Application Layer**: Defines ports (interfaces) that external systems adapt to
+- **Adapters**: Implementations of interfaces for specific technologies (WooCommerce)
+- **UI Layer**: React components for presenting the domain and handling user interaction
+
+This architecture ensures that the business logic remains independent of frameworks and external systems, making the code more maintainable and testable.
 
 ## Usage Terms
 
@@ -63,44 +94,3 @@ This application is built as a headless frontend for WooCommerce. It requires:
 - API keys with appropriate permissions (see [WooCommerce REST API docs](https://woocommerce.github.io/woocommerce-rest-api-docs/))
 
 The app communicates with WooCommerce exclusively through its REST API for all e-commerce operations.
-
-## Architecture & Development
-
-### Core Principles
-
-1. **Clean Architecture**
-
-   - Core business logic and types in `/src/core` are independent of external concerns
-   - Dependency rule: dependencies only point inward, toward core
-   - External dependencies (WooCommerce, UI) depend on core interfaces, never the reverse
-
-2. **Ports and Adapters (Hexagonal Architecture)**
-
-   - Core defines ports (interfaces) that external systems must adapt to
-   - Example: Application port in `/src/core/application.ts`:
-     ```typescript
-     // Primary port - drives the application
-     interface Application {
-       getProduct(id: number): Promise<Product>;
-       getProducts(): Promise<Product[]>;
-       // ...
-     }
-     ```
-
-3. **Test-Driven Development**
-   - Outside-in TDD approach inspired by GOOS (Growing Object-Oriented Software, Guided by Tests)
-   - Start with end-to-end tests that drive the design from the user's perspective
-   - Follow with focused unit tests to drive out the implementation details
-   - Tests colocated with implementation for better maintainability
-
-### Project Structure
-
-```
-src/
-├── core/           # Domain models and types
-├── woocommerce/    # WooCommerce integration
-├── composition-root.ts  # Dependency composition
-└── app/            # Next.js application code
-    ├── shop/       # Product listing pages
-    └── product/    # Product detail pages
-```
