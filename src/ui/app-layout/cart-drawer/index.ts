@@ -1,1 +1,1 @@
-export { CartDrawer } from './cart-drawer';
+export { CartDrawerAdapter } from './cart-drawer-adapter';

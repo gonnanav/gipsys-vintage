@@ -2,7 +2,6 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Product } from '@/core/product';
 import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
-import { StoreProvider } from '@/ui/store';
 import { CartDrawer } from './cart-drawer';
 
 describe('when the cart drawer is closed', () => {
@@ -26,12 +25,12 @@ describe('when the cart drawer is open', () => {
     expect(getCartTitle()).toBeInTheDocument();
   });
 
-  it('closes the cart drawer', async () => {
-    const { closeCart } = renderCartDrawerWithUserActions();
+  it('calls onClose when the close button is clicked', async () => {
+    const { closeCart, onClose } = renderCartDrawerWithUserActions();
 
     await closeCart();
 
-    expect(queryCartDrawer()).not.toBeInTheDocument();
+    expect(onClose).toHaveBeenCalled();
   });
 });
 
@@ -60,17 +59,14 @@ describe('when the cart has items', () => {
     expect(items[1]).toHaveTextContent(puffSleeveTop.name);
   });
 
-  it('removes an item from the cart', async () => {
-    const { removeItem } = renderCartDrawerWithUserActions({
+  it('calls onRemoveItem when the remove button is clicked', async () => {
+    const { removeItem, onRemoveItem } = renderCartDrawerWithUserActions({
       cart: [cottonScarf, puffSleeveTop],
     });
 
     await removeItem(cottonScarf);
 
-    const items = getAllCartItems();
-
-    expect(items).toHaveLength(1);
-    expect(items[0]).toHaveTextContent(puffSleeveTop.name);
+    expect(onRemoveItem).toHaveBeenCalledWith(cottonScarf.id);
   });
 });
 
@@ -123,23 +119,26 @@ function getCartIsEmptyMessage() {
 interface RenderCartDrawerProps {
   cart?: Product[];
   isOpen?: boolean;
+  onClose?: jest.Mock;
+  onRemoveItem?: jest.Mock;
 }
 
 function renderCartDrawerWithUserActions({ cart = [], isOpen = true }: RenderCartDrawerProps = {}) {
   const actions = setupUserActions();
-  const renderResult = renderCartDrawer({ cart, isOpen });
+  const { onClose, onRemoveItem } = renderCartDrawer({ cart, isOpen });
 
-  return { ...renderResult, ...actions };
+  return { ...actions, onClose, onRemoveItem };
 }
 
-function renderCartDrawer({ cart = [], isOpen = true }: RenderCartDrawerProps = {}) {
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <StoreProvider initialState={{ cartItems: cart, isCartDrawerOpen: isOpen }}>
-      {children}
-    </StoreProvider>
-  );
+function renderCartDrawer({
+  cart = [],
+  isOpen = true,
+  onClose = jest.fn(),
+  onRemoveItem = jest.fn(),
+}: RenderCartDrawerProps = {}) {
+  render(<CartDrawer cart={cart} onRemoveItem={onRemoveItem} isOpen={isOpen} onClose={onClose} />);
 
-  return render(<CartDrawer />, { wrapper });
+  return { onClose, onRemoveItem };
 }
 
 function setupUserActions() {

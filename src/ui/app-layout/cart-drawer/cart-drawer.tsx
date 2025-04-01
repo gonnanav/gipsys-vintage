@@ -1,27 +1,30 @@
-'use client';
-
 import Box from '@mui/material/Box';
-import { useCart, useCartDrawer } from '@/ui/store';
 import { CartList } from './cart-list';
 import { CartEmptyMessage } from './cart-empty-message';
 import { SideDrawerLayout } from '../side-drawer-layout';
+import { Product } from '@/core/product';
 
-export function CartDrawer() {
-  const { items, removeItem } = useCart();
-  const { isOpen, close } = useCartDrawer();
+export interface CartDrawerProps {
+  cart: Product[];
+  isOpen: boolean;
+  onClose: () => void;
+  onRemoveItem: (productId: number) => void;
+}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function CartDrawer({ cart, onRemoveItem, isOpen, onClose }: CartDrawerProps) {
   return (
     <SideDrawerLayout
       title="סל הקניות"
       closeButtonName="סגרי את עגלת הקניות"
       drawerProps={{ anchor: 'right' }}
       isOpen={isOpen}
-      onClose={close}
+      onClose={onClose}
     >
       <Box>
-        {items.length ? (
+        {cart.length ? (
           <Box sx={{ mt: 1 }}>
-            <CartList cart={items} removeFromCart={removeItem} />
+            <CartList cart={cart} removeFromCart={onRemoveItem} />
           </Box>
         ) : (
           <Box sx={{ mt: 5 }}>
