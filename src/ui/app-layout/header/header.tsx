@@ -1,14 +1,14 @@
 import { HeaderLayout } from './header-layout';
 import { NavButton } from './nav-button';
 import { LogoImage } from './logo-image';
-import { CartButton } from './cart-button';
+import { CartButtonAdapter } from './cart-button-adapter';
 
 export function Header() {
   return (
     <HeaderLayout>
       <NavButton />
       <LogoImage />
-      <CartButton />
+      <CartButtonAdapter />
     </HeaderLayout>
   );
 }

@@ -1,11 +1,10 @@
-'use client';
-
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useCartDrawerActions } from '@/ui/store';
 import { HeaderButton } from './header-button';
 
-export function CartButton() {
-  const { open } = useCartDrawerActions();
+export interface CartButtonProps {
+  onClick: () => void;
+}
 
-  return <HeaderButton name="פתחי את סל הקניות" Icon={ShoppingCartIcon} onClick={open} />;
+export function CartButton({ onClick }: CartButtonProps) {
+  return <HeaderButton name="פתחי את סל הקניות" Icon={ShoppingCartIcon} onClick={onClick} />;
 }
