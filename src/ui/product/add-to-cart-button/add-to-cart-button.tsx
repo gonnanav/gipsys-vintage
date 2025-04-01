@@ -1,18 +1,14 @@
-'use client';
-
 import Button from '@mui/material/Button';
 import { Product } from '@/core/product';
-import { useCartActions } from '@/ui/store';
 
 interface AddToCartButtonProps {
   product: Product;
+  onAddToCart: (product: Product) => void;
 }
 
-export function AddToCartButton({ product }: AddToCartButtonProps) {
-  const { addItem } = useCartActions();
-
+export function AddToCartButton({ product, onAddToCart }: AddToCartButtonProps) {
   return (
-    <Button onClick={() => addItem(product)} variant="contained">
+    <Button onClick={() => onAddToCart(product)} variant="contained">
       הוסיפי לסל הקניות
     </Button>
   );
