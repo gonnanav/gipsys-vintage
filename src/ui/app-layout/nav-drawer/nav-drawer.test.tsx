@@ -1,6 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
 import { Category } from '@/core/category';
-import { StoreProvider } from '@/ui/store';
 import { NavDrawer } from './nav-drawer';
 import { createCategory } from '@/fixtures/categories';
 import userEvent from '@testing-library/user-event';
@@ -69,22 +68,22 @@ describe('when the navigation drawer is open', () => {
   });
 });
 
-it('closes the drawer when the close button is clicked', async () => {
+it('calls onClose when the close button is clicked', async () => {
   const user = userEvent.setup();
-  renderNavDrawer();
+  const { onClose } = renderNavDrawer();
 
   await user.click(getCloseButton());
 
-  expect(queryNavDrawer()).not.toBeInTheDocument();
+  expect(onClose).toHaveBeenCalled();
 });
 
-it('closes the drawer when clicking on a link', async () => {
+it('calls onClose when clicking on a link', async () => {
   const user = userEvent.setup();
-  renderNavDrawer();
+  const { onClose } = renderNavDrawer();
 
   await user.click(getShopLink());
 
-  expect(queryNavDrawer()).not.toBeInTheDocument();
+  expect(onClose).toHaveBeenCalled();
 });
 
 interface RenderNavDrawerProps {
@@ -93,11 +92,10 @@ interface RenderNavDrawerProps {
 }
 
 function renderNavDrawer({ isOpen = true, categories }: RenderNavDrawerProps = {}) {
-  return render(
-    <StoreProvider initialState={{ isNavDrawerOpen: isOpen }}>
-      <NavDrawer categories={categories} />
-    </StoreProvider>,
-  );
+  const onClose = jest.fn();
+  render(<NavDrawer categories={categories} isOpen={isOpen} onClose={onClose} />);
+
+  return { onClose };
 }
 
 function getNavDrawer() {

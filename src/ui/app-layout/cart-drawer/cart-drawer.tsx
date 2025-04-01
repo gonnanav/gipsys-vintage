@@ -11,7 +11,6 @@ export interface CartDrawerProps {
   onRemoveItem: (productId: number) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function CartDrawer({ cart, onRemoveItem, isOpen, onClose }: CartDrawerProps) {
   return (
     <SideDrawerLayout
