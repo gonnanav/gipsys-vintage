@@ -5,12 +5,7 @@ import Image from 'next/image';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { ProductImage } from '@/core/product';
-
-const placeholderImage: ProductImage = {
-  src: '/images/product-placeholder.webp',
-  alt: 'אין תמונת מוצר',
-};
+import { ProductImage, placeholderImage } from '@/core/product';
 
 interface ProductGalleryProps {
   productImages?: ProductImage[];
