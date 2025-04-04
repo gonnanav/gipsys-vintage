@@ -66,10 +66,9 @@ export interface Application {
   getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null>;
 
   /**
-   * Retrieves all available categories.
+   * Retrieves all available categories safely.
    *
-   * @returns Promise resolving to an array of categories
-   * @throws May throw if there's a network or system error
+   * @returns Promise resolving to an array of categories or an empty array if there's an error
    */
-  getCategories(): Promise<Category[]>;
+  getCategoriesSafe(): Promise<Category[]>;
 }

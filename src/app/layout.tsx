@@ -13,13 +13,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const app = createApplication();
-
-  let categories;
-  try {
-    categories = await app.getCategories();
-  } catch (error) {
-    console.error(error);
-  }
+  const categories = await app.getCategoriesSafe();
 
   return (
     <html lang="he" dir="rtl">

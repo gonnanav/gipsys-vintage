@@ -68,9 +68,18 @@ export class WooCommerceAdapter implements Application {
     };
   }
 
-  async getCategories(): Promise<Category[]> {
+  private async getCategories(): Promise<Category[]> {
     const categories = await this.api.getCategories();
 
     return categories.map(fromWooCommerceCategory);
+  }
+
+  async getCategoriesSafe(): Promise<Category[]> {
+    try {
+      return await this.getCategories();
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
 }
