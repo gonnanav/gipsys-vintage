@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { Application } from './core/application';
-import { WooCommerceAdapter } from './woocommerce/adapter';
 import { WooCommerceApi } from './woocommerce/api';
 
 const envSchema = z.object({
@@ -28,5 +27,5 @@ export function createApplication(): Application {
     envData.WOOCOMMERCE_CUSTOMER_SECRET,
   );
 
-  return new WooCommerceAdapter(wcClient);
+  return new Application(wcClient);
 }
