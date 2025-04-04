@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { createApplication } from '@/application-factory';
-import { AppLayout, AppProvider } from '@/ui/layout';
+import { AppProvider } from '@/ui/provider';
+import { AppLayout } from '@/ui/layout';
 import './globals.css';
 
 export const metadata: Metadata = {
