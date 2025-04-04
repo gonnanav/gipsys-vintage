@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { AppProviders, AppLayout } from '@/ui/layout';
+import { AppProvider, AppLayout } from '@/ui/layout';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -23,11 +23,11 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <div lang="he" dir="rtl">
-        <AppProviders>
+        <AppProvider>
           <AppLayout>
             <Story />
           </AppLayout>
-        </AppProviders>
+        </AppProvider>
       </div>
     ),
   ],

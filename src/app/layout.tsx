@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { createApplication } from '@/application-factory';
-import { AppLayout, AppProviders } from '@/ui/layout';
+import { AppLayout, AppProvider } from '@/ui/layout';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -18,9 +18,9 @@ export default async function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <body>
-        <AppProviders>
+        <AppProvider>
           <AppLayout categories={categories}>{children}</AppLayout>
-        </AppProviders>
+        </AppProvider>
       </body>
     </html>
   );
