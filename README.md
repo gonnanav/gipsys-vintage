@@ -14,24 +14,12 @@ This project implements a full-stack e-commerce application for Gipsy's Vintage,
 
 ## Technical Highlights
 
-- **Architecture**: Implements Hexagonal Architecture (Ports & Adapters pattern) for clean separation of core business logic from external dependencies
 - **Full-Stack Implementation**: Next.js with TypeScript, React Server Components, and server-side rendering
 - **Testing**: Jest for unit testing, React Testing Library for component testing, and Cypress for E2E tests
 - **State Management**: Zustand for global state management with custom hooks for encapsulating data access
 - **API Integration**: Type-safe WooCommerce REST API client with proper error handling
 - **Development Workflow**: ESLint, Prettier, TypeScript, and Jest for code quality
 - **UI Development**: Storybook for component development and documentation
-
-## Architecture
-
-The application follows a clean architecture approach:
-
-- **Core Domain**: Pure TypeScript models and business logic with no external dependencies
-- **Application Layer**: Defines ports (interfaces) that external systems adapt to
-- **Adapters**: Implementations of interfaces for specific technologies (WooCommerce)
-- **UI Layer**: React components for presenting the domain and handling user interaction
-
-This architecture ensures that the business logic remains independent of frameworks and external systems, making the code more maintainable and testable.
 
 ## Usage Terms
 
