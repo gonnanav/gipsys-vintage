@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
-import { AppProviders, AppLayout } from '@/ui/app-layout';
+import { AppProviders, AppLayout } from '@/ui/layout';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
