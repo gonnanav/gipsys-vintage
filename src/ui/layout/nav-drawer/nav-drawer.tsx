@@ -21,56 +21,81 @@ export function NavDrawer({ categories, isOpen, onClose }: NavDrawerProps) {
       isOpen={isOpen}
       onClose={onClose}
     >
-      <nav>
-        <List aria-label="תפריט הניווט">
-          <NavItem href="/" onClose={onClose}>
-            עמוד הבית
-          </NavItem>
-          <NavItem href="/shop" onClose={onClose}>
-            חנות
-          </NavItem>
-          <NavItem href="/policy" onClose={onClose}>
-            תקנון האתר
-          </NavItem>
-          <NavCategoryItems categories={categories} onClose={onClose} />
-        </List>
-      </nav>
+      <NavLinks categories={categories} onClose={onClose} />
     </SideDrawerLayout>
   );
 }
 
-interface NavItemProps {
-  href: string;
-  children: React.ReactNode;
-  onClose: () => void;
-}
-
-function NavItem({ href, children, onClose }: NavItemProps) {
-  return (
-    <ListItem>
-      <ListItemButton component={Link} href={href} onClick={onClose}>
-        <ListItemText>{children}</ListItemText>
-      </ListItemButton>
-    </ListItem>
-  );
-}
-
-interface NavCategoryItemsProps {
+interface NavLinksProps {
   categories?: Category[];
   onClose: () => void;
 }
 
-function NavCategoryItems({ categories = [], onClose }: NavCategoryItemsProps) {
+function NavLinks({ categories, onClose }: NavLinksProps) {
+  return (
+    <nav>
+      <List aria-label="תפריט הניווט">
+        <NavLink href="/" onClose={onClose}>
+          עמוד הבית
+        </NavLink>
+        <NavLink href="/shop" onClose={onClose}>
+          חנות
+        </NavLink>
+        <NavLink href="/policy" onClose={onClose}>
+          תקנון האתר
+        </NavLink>
+        <NavCategoryLinks categories={categories} onClose={onClose} />
+      </List>
+    </nav>
+  );
+}
+
+interface NavCategoryLinksProps {
+  categories?: Category[];
+  onClose: () => void;
+}
+
+function NavCategoryLinks({ categories = [], onClose }: NavCategoryLinksProps) {
   if (!categories.length) return null;
 
   return (
     <>
       <Divider component="li" />
       {categories.map((category) => (
-        <NavItem key={category.id} href={`/shop/${category.slug}`} onClose={onClose}>
-          {category.name}
-        </NavItem>
+        <NavCategoryLink key={category.id} category={category} onClose={onClose} />
       ))}
     </>
+  );
+}
+
+interface NavCategoryLinkProps {
+  category: Category;
+  onClose: () => void;
+}
+
+function NavCategoryLink({ category, onClose }: NavCategoryLinkProps) {
+  const { id, name, slug } = category;
+  const href = `/shop/${slug}`;
+
+  return (
+    <NavLink key={id} href={href} onClose={onClose}>
+      {name}
+    </NavLink>
+  );
+}
+
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+  onClose: () => void;
+}
+
+function NavLink({ href, children, onClose }: NavLinkProps) {
+  return (
+    <ListItem>
+      <ListItemButton component={Link} href={href} onClick={onClose}>
+        <ListItemText>{children}</ListItemText>
+      </ListItemButton>
+    </ListItem>
   );
 }
