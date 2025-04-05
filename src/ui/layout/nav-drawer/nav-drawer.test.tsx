@@ -1,6 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Category } from '@/core/category';
 import { NavDrawer } from './nav-drawer';
 
 describe('when the navigation drawer is closed', () => {
@@ -12,10 +11,10 @@ describe('when the navigation drawer is closed', () => {
 });
 
 describe('when the navigation drawer is open', () => {
-  it('renders the drawer', () => {
-    renderNavDrawer();
+  it('renders the drawer content', () => {
+    renderNavDrawer({ children: <div>Drawer Content</div> });
 
-    expect(getNavDrawer()).toBeInTheDocument();
+    expect(getNavDrawer()).toHaveTextContent('Drawer Content');
   });
 
   it('renders the title', () => {
@@ -36,12 +35,16 @@ describe('when the navigation drawer is open', () => {
 
 interface RenderNavDrawerProps {
   isOpen?: boolean;
-  categories?: Category[];
+  children?: React.ReactNode;
 }
 
-function renderNavDrawer({ isOpen = true, categories }: RenderNavDrawerProps = {}) {
+function renderNavDrawer({ isOpen = true, children }: RenderNavDrawerProps = {}) {
   const onClose = jest.fn();
-  render(<NavDrawer categories={categories} isOpen={isOpen} onClose={onClose} />);
+  render(
+    <NavDrawer isOpen={isOpen} onClose={onClose}>
+      {children}
+    </NavDrawer>,
+  );
 
   return { onClose };
 }

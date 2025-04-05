@@ -1,14 +1,12 @@
-import { Category } from '@/core/category';
 import { SideDrawerLayout } from '../side-drawer-layout';
-import { NavLinks } from './nav-links';
 
 export interface NavDrawerProps {
-  categories?: Category[];
   isOpen: boolean;
+  children?: React.ReactNode;
   onClose: () => void;
 }
 
-export function NavDrawer({ categories, isOpen, onClose }: NavDrawerProps) {
+export function NavDrawer({ isOpen, children, onClose }: NavDrawerProps) {
   return (
     <SideDrawerLayout
       title="תפריט הניווט"
@@ -16,7 +14,7 @@ export function NavDrawer({ categories, isOpen, onClose }: NavDrawerProps) {
       isOpen={isOpen}
       onClose={onClose}
     >
-      <NavLinks categories={categories} onClose={onClose} />
+      {children}
     </SideDrawerLayout>
   );
 }
