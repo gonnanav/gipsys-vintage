@@ -53,3 +53,23 @@ export const leatherJacket: Product = {
     },
   ],
 };
+
+const minimalProduct: Product = {
+  id: 4,
+  name: 'מוצר מינימלי',
+  slug: 'minimal-product',
+  price: '100',
+};
+
+/**
+ * Creates a minimal product whose properties can be overridden and extended.
+ *
+ * @param props - The product properties to override or extend.
+ * @returns A product with the given properties and default values for the rest.
+ */
+export function createProduct(props: Partial<Product> = {}): Product {
+  return {
+    ...minimalProduct,
+    ...props,
+  };
+}
