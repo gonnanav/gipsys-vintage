@@ -1,45 +1,50 @@
 import { render, screen, within } from '@testing-library/react';
 import { ProductImage } from '@/core/product';
-import { ProductGallery } from './product-gallery';
 import userEvent from '@testing-library/user-event';
-
-const productImages: ProductImage[] = [
-  { src: '/images/product-1.jpg', alt: 'Product 1' },
-  { src: '/images/product-2.jpg', alt: 'Product 2' },
-];
-const [firstImage, secondImage] = productImages;
+import { StoreProvider } from '@/ui/store';
+import { createProduct } from '@/fixtures/products';
+import { ProductPage } from './product-page';
 
 it('renders the main image', () => {
-  renderProductGallery(productImages);
+  const image = { src: '/white-dress.webp', alt: 'White dress' };
+  renderProductPage([image]);
 
-  expect(getMainImage({ name: firstImage.alt })).toBeInTheDocument();
+  expect(getMainImage({ name: 'White dress' })).toBeInTheDocument();
 });
 
 it('does not render the thumbnails when there are no thumbnails', () => {
-  renderProductGallery();
+  renderProductPage();
 
   expect(queryThumbnails()).not.toBeInTheDocument();
 });
 
 it('renders the thumbnails when there are thumbnails', () => {
-  renderProductGallery(productImages);
+  const images = [
+    { src: '/white-dress.webp', alt: 'White dress' },
+    { src: '/black-dress.webp', alt: 'Black dress' },
+  ];
+  renderProductPage(images);
 
   const thumbnails = getThumbnails();
 
-  productImages.forEach((productImage) => {
-    const thumbnail = within(thumbnails).getByRole('img', { name: productImage.alt });
+  images.forEach((image) => {
+    const thumbnail = within(thumbnails).getByRole('img', { name: image.alt });
     expect(thumbnail).toBeInTheDocument();
   });
 });
 
 it('changes the main image when a thumbnail is clicked', async () => {
   const user = userEvent.setup();
-  renderProductGallery(productImages);
+  const images = [
+    { src: '/white-dress.webp', alt: 'White dress' },
+    { src: '/black-dress.webp', alt: 'Black dress' },
+  ];
+  renderProductPage(images);
 
-  const secondThumbnail = getThumbnail({ name: secondImage.alt });
+  const secondThumbnail = getThumbnail({ name: 'Black dress' });
   await user.click(secondThumbnail);
 
-  expect(getMainImage({ name: secondImage.alt })).toBeInTheDocument();
+  expect(getMainImage({ name: 'Black dress' })).toBeInTheDocument();
 });
 
 function getMainImage({ name }: { name?: string }) {
@@ -62,6 +67,12 @@ function getThumbnail({ name }: { name?: string }) {
   return within(thumbnails).getByRole('img', { name });
 }
 
-function renderProductGallery(productImages?: ProductImage[]) {
-  render(<ProductGallery productImages={productImages} />);
+function renderProductPage(productImages?: ProductImage[]) {
+  const product = createProduct({
+    images: productImages,
+  });
+
+  render(<ProductPage product={product} />, {
+    wrapper: StoreProvider,
+  });
 }
