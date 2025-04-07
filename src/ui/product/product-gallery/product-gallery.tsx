@@ -1,29 +1,27 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { ProductImage, placeholderImage } from '@/core/product';
+import { ProductImage } from '@/core/product';
+import { useGallery } from './use-gallery';
 
 interface ProductGalleryProps {
   productImages?: ProductImage[];
 }
 
 export function ProductGallery({ productImages }: ProductGalleryProps) {
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-  const mainImage = productImages?.[mainImageIndex] || placeholderImage;
-  const hasMultipleImages = productImages && productImages.length > 1;
+  const { mainImage, thumbnails, selectedThumbnail, selectImage } = useGallery(productImages);
 
   return (
     <Box role="region" aria-label="תמונות המוצר">
       <MainImage productImage={mainImage} />
-      {hasMultipleImages && (
+      {thumbnails.length > 0 && (
         <Thumbnails
-          productImages={productImages}
-          onSelect={setMainImageIndex}
-          selectedIndex={mainImageIndex}
+          productImages={thumbnails}
+          onSelect={selectImage}
+          selectedThumbnail={selectedThumbnail}
         />
       )}
     </Box>
@@ -46,11 +44,11 @@ function MainImage({ productImage }: MainImageProps) {
 
 interface ThumbnailsProps {
   productImages: ProductImage[];
-  selectedIndex: number;
+  selectedThumbnail: ProductImage | null;
   onSelect: (index: number) => void;
 }
 
-function Thumbnails({ productImages, selectedIndex, onSelect }: ThumbnailsProps) {
+function Thumbnails({ productImages, selectedThumbnail, onSelect }: ThumbnailsProps) {
   return (
     <ImageList aria-label="תמונות נוספות" cols={3} gap={8}>
       {productImages.map((productImage, index) => (
@@ -58,7 +56,7 @@ function Thumbnails({ productImages, selectedIndex, onSelect }: ThumbnailsProps)
           <Thumbnail
             productImage={productImage}
             onClick={() => onSelect(index)}
-            isSelected={index === selectedIndex}
+            isSelected={productImage === selectedThumbnail}
           />
         </ImageListItem>
       ))}

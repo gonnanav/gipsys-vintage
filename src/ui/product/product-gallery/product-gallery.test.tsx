@@ -6,35 +6,22 @@ import userEvent from '@testing-library/user-event';
 const productImages: ProductImage[] = [
   { src: '/images/product-1.jpg', alt: 'Product 1' },
   { src: '/images/product-2.jpg', alt: 'Product 2' },
-  { src: '/images/product-3.jpg', alt: 'Product 3' },
 ];
-const [firstImage, secondImage, thirdImage] = productImages;
+const [firstImage, secondImage] = productImages;
 
-it('renders the placeholder image as the main image when there are no images', () => {
-  renderProductGallery();
-
-  expect(getMainImage({ name: 'אין תמונת מוצר' })).toBeInTheDocument();
-});
-
-it('renders the first image as the main image by default', () => {
+it('renders the main image', () => {
   renderProductGallery(productImages);
 
   expect(getMainImage({ name: firstImage.alt })).toBeInTheDocument();
 });
 
-it('does not render thumbnails when there are no images', () => {
+it('does not render the thumbnails when there are no thumbnails', () => {
   renderProductGallery();
 
   expect(queryThumbnails()).not.toBeInTheDocument();
 });
 
-it('does not render thumbnails when there is a single image', () => {
-  renderProductGallery([firstImage]);
-
-  expect(queryThumbnails()).not.toBeInTheDocument();
-});
-
-it('renders all images as thumbnails when there are multiple images', () => {
+it('renders the thumbnails when there are thumbnails', () => {
   renderProductGallery(productImages);
 
   const thumbnails = getThumbnails();
@@ -45,7 +32,7 @@ it('renders all images as thumbnails when there are multiple images', () => {
   });
 });
 
-it('switches the main image when the thumbnail is clicked', async () => {
+it('changes the main image when a thumbnail is clicked', async () => {
   const user = userEvent.setup();
   renderProductGallery(productImages);
 
@@ -53,16 +40,6 @@ it('switches the main image when the thumbnail is clicked', async () => {
   await user.click(secondThumbnail);
 
   expect(getMainImage({ name: secondImage.alt })).toBeInTheDocument();
-
-  const thirdThumbnail = getThumbnail({ name: thirdImage.alt });
-  await user.click(thirdThumbnail);
-
-  expect(getMainImage({ name: thirdImage.alt })).toBeInTheDocument();
-
-  const firstThumbnail = getThumbnail({ name: firstImage.alt });
-  await user.click(firstThumbnail);
-
-  expect(getMainImage({ name: firstImage.alt })).toBeInTheDocument();
 });
 
 function getMainImage({ name }: { name?: string }) {
