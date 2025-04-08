@@ -1,8 +1,8 @@
-import React from 'react';
 import { Product } from '@/core/product';
-import { ProductList } from './product-list';
-import { ProductCard } from './product-card';
 import { ShopLayout } from './shop-layout';
+import { ProductsLayout } from './products-layout';
+import { NoProductsMessage } from './no-products-message';
+import { ProductCard } from './product-card';
 
 export interface ShopPageProps {
   title: string;
@@ -10,9 +10,21 @@ export interface ShopPageProps {
 }
 
 export function ShopPage({ title, products }: ShopPageProps) {
+  const hasProducts = products.length > 0;
+
   return (
     <ShopLayout title={title}>
-      <ProductList products={products} ProductComponent={ProductCard} />
+      {hasProducts ? renderProducts(products) : <NoProductsMessage />}
     </ShopLayout>
+  );
+}
+
+function renderProducts(products: Product[]) {
+  return (
+    <ProductsLayout>
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </ProductsLayout>
   );
 }
