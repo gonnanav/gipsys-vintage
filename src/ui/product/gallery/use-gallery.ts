@@ -15,12 +15,13 @@ export interface UseGalleryReturn {
 
 export function useGallery(productImages?: ProductImage[]): UseGalleryReturn {
   const [gallery, setGallery] = useState(createGallery(productImages));
+  const { mainImage, thumbnailImages, selectedImageIndex } = gallery;
+
   const selectImage = (index: number) => setGallery(createGallery(productImages, index));
-  const { mainImage, thumbnailImages, selectedThumbnail } = gallery;
 
   const thumbnails = thumbnailImages.map((image, index) => ({
     image,
-    isSelected: image === selectedThumbnail,
+    isSelected: index === selectedImageIndex,
     onClick: () => selectImage(index),
   }));
 

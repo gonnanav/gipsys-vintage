@@ -3,13 +3,13 @@ import { ProductImage, placeholderImage } from '@/core/product';
 export interface ProductGallery {
   mainImage: ProductImage;
   thumbnailImages: ProductImage[];
-  selectedThumbnail: ProductImage | null;
+  selectedImageIndex: number | null;
 }
 
 const emptyGallery: ProductGallery = {
   mainImage: placeholderImage,
   thumbnailImages: [],
-  selectedThumbnail: null,
+  selectedImageIndex: null,
 };
 
 export function createGallery(images?: ProductImage[], selectedIndex: number = 0): ProductGallery {
@@ -20,8 +20,9 @@ export function createGallery(images?: ProductImage[], selectedIndex: number = 0
   }
 
   const mainImage = images[selectedIndex];
-  const thumbnailImages = images.length > 1 ? images : [];
-  const selectedThumbnail = thumbnailImages[selectedIndex] ?? null;
+  const hasThumbnails = images.length > 1;
+  const thumbnailImages = hasThumbnails ? images : [];
+  const selectedImageIndex = hasThumbnails ? selectedIndex : null;
 
-  return { mainImage, thumbnailImages, selectedThumbnail };
+  return { mainImage, thumbnailImages, selectedImageIndex };
 }

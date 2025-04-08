@@ -13,7 +13,7 @@ describe.each([undefined, []])('without any images', (images?: ProductImage[]) =
   });
 
   it('does not display any selected thumbnail', () => {
-    expect(gallery.selectedThumbnail).toBeNull();
+    expect(gallery.selectedImageIndex).toBeNull();
   });
 });
 
@@ -30,7 +30,7 @@ describe('with a single image', () => {
   });
 
   it('does not display any selected thumbnail', () => {
-    expect(gallery.selectedThumbnail).toBeNull();
+    expect(gallery.selectedImageIndex).toBeNull();
   });
 });
 
@@ -47,7 +47,7 @@ describe('with multiple images by default', () => {
   });
 
   it('displays the first thumbnail as the selected thumbnail', () => {
-    expect(gallery.selectedThumbnail).toBe(images[0]);
+    expect(gallery.selectedImageIndex).toBe(0);
   });
 });
 
@@ -61,7 +61,7 @@ describe('with multiple images and a selected image index', () => {
   });
 
   it('displays the selected image thumbnail as the selected thumbnail', () => {
-    expect(gallery.selectedThumbnail).toBe(images[selectedIndex]);
+    expect(gallery.selectedImageIndex).toBe(selectedIndex);
   });
 });
 
