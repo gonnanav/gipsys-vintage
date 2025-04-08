@@ -1,6 +1,6 @@
-import Typography from '@mui/material/Typography';
 import { Product } from '@/core/product';
 import { ProductsLayout } from './products-layout';
+import { NoProductsMessage } from './no-products-message';
 
 export type ProductListProps = {
   products: Product[];
@@ -8,9 +8,7 @@ export type ProductListProps = {
 };
 
 export function ProductList({ products, ProductComponent }: ProductListProps) {
-  if (!products.length) {
-    return <Typography sx={{ textAlign: 'center' }}>אין מוצרים זמינים</Typography>;
-  }
+  if (!products.length) return <NoProductsMessage />;
 
   return (
     <ProductsLayout>
