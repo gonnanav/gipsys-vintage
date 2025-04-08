@@ -4,21 +4,18 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
-import { Product } from '@/core/product';
 
 export interface ProductCardProps {
-  product: Product;
+  name: string;
+  src: string;
+  href: string;
+  price: string;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const { name, slug, price, images } = product;
-  const image = images && images[0];
-  const src = image?.src || '/images/product-placeholder.webp';
-  const priceShekels = `₪${price}`;
-
+export function ProductCard({ name, src, href, price }: ProductCardProps) {
   return (
     <Card component="article" variant="outlined">
-      <CardActionArea component={Link} href={`/product/${slug}`}>
+      <CardActionArea component={Link} href={href}>
         <CardMedia
           title={name}
           image={src}
@@ -28,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <Typography component="h2" variant="body1">
             {name}
           </Typography>
-          <Typography variant="body2">{priceShekels}</Typography>
+          <Typography variant="body2">{price}</Typography>
         </CardContent>
       </CardActionArea>
     </Card>

@@ -2,7 +2,7 @@ import { Product } from '@/core/product';
 import { ShopLayout } from './shop-layout';
 import { ProductsLayout } from './products-layout';
 import { NoProductsMessage } from './no-products-message';
-import { ProductCard } from './product-card';
+import { ProductCard, ProductCardProps } from './product-card';
 
 export interface ShopPageProps {
   title: string;
@@ -23,8 +23,18 @@ function renderProducts(products: Product[]) {
   return (
     <ProductsLayout>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} {...toProductCardProps(product)} />
       ))}
     </ProductsLayout>
   );
+}
+
+function toProductCardProps(product: Product): ProductCardProps {
+  const { name, slug, price, images } = product;
+  const href = `/product/${slug}`;
+  const image = images && images[0];
+  const src = image?.src || '/images/product-placeholder.webp';
+  const priceShekels = `₪${price}`;
+
+  return { name, src, href, price: priceShekels };
 }
