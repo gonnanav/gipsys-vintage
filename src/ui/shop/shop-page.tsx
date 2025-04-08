@@ -4,7 +4,7 @@ import { ProductList } from './product-list/product-list';
 import { ProductCard } from './product-card/product-card';
 import { ShopLayout } from './shop-layout/shop-layout';
 
-interface ShopPageProps {
+export interface ShopPageProps {
   title: string;
   products: Product[];
 }
