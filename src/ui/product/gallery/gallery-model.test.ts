@@ -9,7 +9,7 @@ describe.each([undefined, []])('without any images', (images?: ProductImage[]) =
   });
 
   it('does not display any thumbnails', () => {
-    expect(gallery.thumbnails).toEqual([]);
+    expect(gallery.thumbnailImages).toEqual([]);
   });
 
   it('does not display any selected thumbnail', () => {
@@ -26,7 +26,7 @@ describe('with a single image', () => {
   });
 
   it('does not display any thumbnails', () => {
-    expect(gallery.thumbnails).toEqual([]);
+    expect(gallery.thumbnailImages).toEqual([]);
   });
 
   it('does not display any selected thumbnail', () => {
@@ -43,7 +43,7 @@ describe('with multiple images by default', () => {
   });
 
   it('displays all images as thumbnails by their order', () => {
-    expect(gallery.thumbnails).toEqual(images);
+    expect(gallery.thumbnailImages).toEqual(images);
   });
 
   it('displays the first thumbnail as the selected thumbnail', () => {

@@ -2,13 +2,13 @@ import { ProductImage, placeholderImage } from '@/core/product';
 
 export interface ProductGallery {
   mainImage: ProductImage;
-  thumbnails: ProductImage[];
+  thumbnailImages: ProductImage[];
   selectedThumbnail: ProductImage | null;
 }
 
 const emptyGallery: ProductGallery = {
   mainImage: placeholderImage,
-  thumbnails: [],
+  thumbnailImages: [],
   selectedThumbnail: null,
 };
 
@@ -20,8 +20,8 @@ export function createGallery(images?: ProductImage[], selectedIndex: number = 0
   }
 
   const mainImage = images[selectedIndex];
-  const thumbnails = images.length > 1 ? images : [];
-  const selectedThumbnail = thumbnails[selectedIndex] ?? null;
+  const thumbnailImages = images.length > 1 ? images : [];
+  const selectedThumbnail = thumbnailImages[selectedIndex] ?? null;
 
-  return { mainImage, thumbnails, selectedThumbnail };
+  return { mainImage, thumbnailImages, selectedThumbnail };
 }

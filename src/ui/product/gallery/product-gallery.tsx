@@ -5,25 +5,19 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { ProductImage } from '@/core/product';
-import { useGallery } from './use-gallery';
+import { useGallery, Thumbnail } from './use-gallery';
 
 interface ProductGalleryProps {
   productImages?: ProductImage[];
 }
 
 export function ProductGallery({ productImages }: ProductGalleryProps) {
-  const { mainImage, thumbnails, selectedThumbnail, selectImage } = useGallery(productImages);
+  const { mainImage, thumbnails } = useGallery(productImages);
 
   return (
     <Box role="region" aria-label="תמונות המוצר">
       <MainImage productImage={mainImage} />
-      {thumbnails.length > 0 && (
-        <Thumbnails
-          productImages={thumbnails}
-          onSelect={selectImage}
-          selectedThumbnail={selectedThumbnail}
-        />
-      )}
+      {thumbnails.length > 0 && <ThumbnailImages thumbnails={thumbnails} />}
     </Box>
   );
 }
@@ -42,35 +36,29 @@ function MainImage({ productImage }: MainImageProps) {
   );
 }
 
-interface ThumbnailsProps {
-  productImages: ProductImage[];
-  selectedThumbnail: ProductImage | null;
-  onSelect: (index: number) => void;
+interface ThumbnailImagesProps {
+  thumbnails: Thumbnail[];
 }
 
-function Thumbnails({ productImages, selectedThumbnail, onSelect }: ThumbnailsProps) {
+function ThumbnailImages({ thumbnails }: ThumbnailImagesProps) {
   return (
     <ImageList aria-label="תמונות נוספות" cols={3} gap={8}>
-      {productImages.map((productImage, index) => (
-        <ImageListItem key={productImage.src}>
-          <Thumbnail
-            productImage={productImage}
-            onClick={() => onSelect(index)}
-            isSelected={productImage === selectedThumbnail}
-          />
+      {thumbnails.map(({ image, isSelected, onClick }, index) => (
+        <ImageListItem key={index}>
+          <ThumbnailImage productImage={image} onClick={onClick} isSelected={isSelected} />
         </ImageListItem>
       ))}
     </ImageList>
   );
 }
 
-interface ThumbnailProps {
+interface ThumbnailImageProps {
   productImage: ProductImage;
   isSelected: boolean;
   onClick: () => void;
 }
 
-function Thumbnail({ productImage, isSelected, onClick }: ThumbnailProps) {
+function ThumbnailImage({ productImage, isSelected, onClick }: ThumbnailImageProps) {
   const { src, alt = '' } = productImage;
 
   return (
