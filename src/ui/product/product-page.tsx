@@ -2,7 +2,7 @@ import { Product } from '@/core/product';
 import { ProductLayout } from './product-layout';
 import { ProductGallery } from './gallery';
 import { ProductDetails } from './product-details';
-import { AddToCartButtonAdapter } from './add-to-cart-adapter';
+import { AddToCartButton } from './add-to-cart-button';
 
 interface ProductPageProps {
   product: Product;
@@ -13,7 +13,7 @@ export function ProductPage({ product }: ProductPageProps) {
     <ProductLayout
       productGallery={<ProductGallery productImages={product.images} />}
       productDetails={<ProductDetails product={product} />}
-      addToCartButton={<AddToCartButtonAdapter product={product} />}
+      addToCartButton={<AddToCartButton product={product} />}
     />
   );
 }
