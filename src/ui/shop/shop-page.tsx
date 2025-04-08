@@ -1,8 +1,8 @@
 import React from 'react';
 import { Product } from '@/core/product';
-import { ProductList } from './product-list/product-list';
-import { ProductCard } from './product-card/product-card';
-import { ShopLayout } from './shop-layout/shop-layout';
+import { ProductList } from './product-list';
+import { ProductCard } from './product-card';
+import { ShopLayout } from './shop-layout';
 
 export interface ShopPageProps {
   title: string;

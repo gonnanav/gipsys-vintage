@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import { Product } from '@/core/product';
-import { ProductsLayout } from '../products-layout/products-layout';
+import { ProductsLayout } from './products-layout';
 
 export type ProductListProps = {
   products: Product[];

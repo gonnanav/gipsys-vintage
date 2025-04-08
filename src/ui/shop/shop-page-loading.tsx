@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-import { ShopLayout } from '@/ui/shop/shop-layout/shop-layout';
-import { ProductsLayout } from '@/ui/shop/products-layout/products-layout';
+import { ShopLayout } from './shop-layout';
+import { ProductsLayout } from './products-layout';
 
 export function ShopPageLoading() {
   return (
