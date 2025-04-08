@@ -1,6 +1,6 @@
 import { Product } from '@/core/product';
 import { ProductLayout } from './product-layout';
-import { ProductGallery } from './product-gallery/product-gallery';
+import { ProductGallery } from './gallery';
 import { ProductDetails } from './product-details';
 import { AddToCartButtonAdapter } from './add-to-cart-adapter';
 
