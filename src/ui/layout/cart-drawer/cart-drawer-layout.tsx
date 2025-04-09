@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { CartList } from './cart-list';
 import { CartEmptyMessage } from './cart-empty-message';
-import { SideDrawerLayout } from '../side-drawer-layout';
+import { DrawerLayout } from '../drawer-layout';
 import { Product } from '@/core/product';
 
 interface CartDrawerLayoutProps {
@@ -13,7 +13,7 @@ interface CartDrawerLayoutProps {
 
 export function CartDrawerLayout({ cart, onRemoveItem, isOpen, onClose }: CartDrawerLayoutProps) {
   return (
-    <SideDrawerLayout
+    <DrawerLayout
       title="סל הקניות"
       closeButtonName="סגרי את עגלת הקניות"
       drawerProps={{ anchor: 'right' }}
@@ -31,6 +31,6 @@ export function CartDrawerLayout({ cart, onRemoveItem, isOpen, onClose }: CartDr
           </Box>
         )}
       </Box>
-    </SideDrawerLayout>
+    </DrawerLayout>
   );
 }
