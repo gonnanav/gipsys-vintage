@@ -1,10 +1,10 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { placeholderImage } from '@/core/product';
-import { StoreProvider, AppState } from '@/ui/store';
 import { createProduct } from '@/fixtures/products';
 import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
-import { AppLayout } from './app-layout';
+import { AppState } from '@/ui/store';
+import { renderAppLayout } from './test-utils';
 
 it('opens the cart drawer when clicking the open cart button', async () => {
   const user = userEvent.setup();
@@ -17,7 +17,7 @@ it('opens the cart drawer when clicking the open cart button', async () => {
 
 it('closes the cart drawer when clicking the close cart button', async () => {
   const user = userEvent.setup();
-  renderAppLayout({ isCartDrawerOpen: true });
+  renderWithCartOpen();
 
   await user.click(getCloseCartButton());
 
@@ -25,20 +25,20 @@ it('closes the cart drawer when clicking the close cart button', async () => {
 });
 
 it('renders the cart title', () => {
-  renderAppLayout();
+  renderWithCartOpen();
 
   expect(getCartTitle()).toBeInTheDocument();
 });
 
 it('renders the empty cart message instead of the cart items when the cart is empty', () => {
-  renderAppLayout({ cartItems: [] });
+  renderWithCartOpen({ cartItems: [] });
 
   expect(getEmptyCartMessage()).toBeInTheDocument();
   expect(queryCartList()).not.toBeInTheDocument();
 });
 
 it('renders the cart items when the cart is not empty', () => {
-  renderAppLayout({ cartItems: [cottonScarf, puffSleeveTop] });
+  renderWithCartOpen({ cartItems: [cottonScarf, puffSleeveTop] });
 
   const items = getAllCartItems();
   expect(items[0]).toHaveTextContent(cottonScarf.name);
@@ -47,7 +47,7 @@ it('renders the cart items when the cart is not empty', () => {
 
 it('removes a cart item when clicking the remove button', async () => {
   const user = userEvent.setup();
-  renderAppLayout({ cartItems: [cottonScarf, puffSleeveTop] });
+  renderWithCartOpen({ cartItems: [cottonScarf, puffSleeveTop] });
 
   const [cottonScarfItem, puffSleeveTopItem] = getAllCartItems();
   await user.click(getCartItemRemoveButton(cottonScarfItem));
@@ -59,7 +59,7 @@ it('removes a cart item when clicking the remove button', async () => {
 it('renders a cart item with its name, price, and main image', () => {
   const image = { src: '/product.webp', alt: 'Summer Top Image' };
   const product = createProduct({ name: 'Summer Top', price: '100', images: [image] });
-  renderAppLayout({ cartItems: [product] });
+  renderWithCartOpen({ cartItems: [product] });
 
   const item = getAllCartItems()[0];
   expect(item).toHaveTextContent('Summer Top');
@@ -69,25 +69,14 @@ it('renders a cart item with its name, price, and main image', () => {
 
 it('renders a cart item with a placeholder image if the product has no images', () => {
   const product = createProduct({ images: [] });
-  renderAppLayout({ cartItems: [product] });
+  renderWithCartOpen({ cartItems: [product] });
 
   const item = getAllCartItems()[0];
   expect(within(item).getByRole('img', { name: placeholderImage.alt })).toBeInTheDocument();
 });
 
-function renderAppLayout(initialState?: Partial<AppState>) {
-  render(
-    <AppLayout>
-      <div />
-    </AppLayout>,
-    {
-      wrapper: ({ children }) => (
-        <StoreProvider initialState={{ isCartDrawerOpen: true, ...initialState }}>
-          {children}
-        </StoreProvider>
-      ),
-    },
-  );
+function renderWithCartOpen(initialState?: Partial<AppState>) {
+  renderAppLayout({ isCartDrawerOpen: true, ...initialState });
 }
 
 function getOpenCartButton() {
