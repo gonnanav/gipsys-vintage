@@ -1,4 +1,4 @@
-import { SideDrawerLayout } from '../side-drawer-layout';
+import { DrawerLayout } from '../drawer-layout';
 
 interface NavDrawerLayoutProps {
   isOpen: boolean;
@@ -8,13 +8,13 @@ interface NavDrawerLayoutProps {
 
 export function NavDrawerLayout({ isOpen, children, onClose }: NavDrawerLayoutProps) {
   return (
-    <SideDrawerLayout
+    <DrawerLayout
       title="תפריט הניווט"
       closeButtonName="סגרי את תפריט הניווט"
       isOpen={isOpen}
       onClose={onClose}
     >
       {children}
-    </SideDrawerLayout>
+    </DrawerLayout>
   );
 }

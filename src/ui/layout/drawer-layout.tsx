@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 
-export interface SideDrawerLayoutProps {
+export interface DrawerLayoutProps {
   isOpen: boolean;
   title: string;
   closeButtonName: string;
@@ -13,14 +13,14 @@ export interface SideDrawerLayoutProps {
   children: React.ReactNode;
 }
 
-export function SideDrawerLayout({
+export function DrawerLayout({
   isOpen,
   title,
   closeButtonName,
   drawerProps,
   onClose,
   children,
-}: SideDrawerLayoutProps) {
+}: DrawerLayoutProps) {
   return (
     <Drawer
       role="dialog"
