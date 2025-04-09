@@ -1,20 +1,20 @@
-import { SideDrawerLayout } from '../side-drawer-layout';
+'use client';
 
-export interface NavDrawerProps {
-  isOpen: boolean;
-  children?: React.ReactNode;
-  onClose: () => void;
+import { useNavDrawer } from '@/ui/store';
+import { NavDrawerLayout } from './nav-drawer-layout';
+import { Category } from '@/core/category';
+import { NavLinks } from './nav-links';
+
+interface NavDrawerProps {
+  categories?: Category[];
 }
 
-export function NavDrawer({ isOpen, children, onClose }: NavDrawerProps) {
+export function NavDrawer({ categories }: NavDrawerProps) {
+  const { isOpen, close } = useNavDrawer();
+
   return (
-    <SideDrawerLayout
-      title="תפריט הניווט"
-      closeButtonName="סגרי את תפריט הניווט"
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      {children}
-    </SideDrawerLayout>
+    <NavDrawerLayout isOpen={isOpen} onClose={close}>
+      <NavLinks categories={categories} onClose={close} />
+    </NavDrawerLayout>
   );
 }

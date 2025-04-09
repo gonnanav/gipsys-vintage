@@ -1,8 +1,8 @@
 import { Category } from '@/core/category';
 import { Header } from './header';
 import { Main } from './main';
-import { NavDrawerAdapter } from './nav-drawer';
-import { CartDrawerAdapter } from './cart-drawer';
+import { NavDrawer } from './nav-drawer';
+import { CartDrawer } from './cart-drawer';
 
 export interface AppLayoutProps {
   categories?: Category[];
@@ -14,8 +14,8 @@ export function AppLayout({ categories, children }: AppLayoutProps) {
     <>
       <Header />
       <Main>{children}</Main>
-      <NavDrawerAdapter categories={categories} />
-      <CartDrawerAdapter />
+      <NavDrawer categories={categories} />
+      <CartDrawer />
     </>
   );
 }
