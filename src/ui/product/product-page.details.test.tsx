@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { AppStoreProvider } from '@/ui/store/provider/store-provider';
+import { StoreProvider } from '@/ui/store';
 import { createProduct } from '@/fixtures/products';
 import { ProductPage } from './product-page';
 import { Product } from '@/core/product';
@@ -26,7 +26,7 @@ function renderProductPage(productProps: Partial<Product> = {}) {
   const product = createProduct(productProps);
 
   render(<ProductPage product={product} />, {
-    wrapper: AppStoreProvider,
+    wrapper: StoreProvider,
   });
 }
 
