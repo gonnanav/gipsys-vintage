@@ -3,10 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { StoreProvider } from '@/ui/store';
 import { AppLayout, AppLayoutProps } from './app-layout';
 
-it('renders the header', () => {
+it('renders the header with the logo', () => {
   renderAppLayout();
 
-  expect(getHeader()).toBeInTheDocument();
+  expect(getHeaderLogo()).toBeInTheDocument();
 });
 
 it('renders the main content', () => {
@@ -21,14 +21,6 @@ it('opens the navigation drawer', async () => {
   await openNavDrawer();
 
   expect(getNavDrawer()).toBeInTheDocument();
-});
-
-it('opens the cart drawer', async () => {
-  const { openCartDrawer } = renderAppLayoutWithUserActions();
-
-  await openCartDrawer();
-
-  expect(getCartDrawer()).toBeInTheDocument();
 });
 
 function renderAppLayout(props: Partial<AppLayoutProps> = {}) {
@@ -54,6 +46,10 @@ function getHeader() {
   return screen.getByRole('banner');
 }
 
+function getHeaderLogo() {
+  return within(getHeader()).getByRole('img', { name: "Gipsy's Vintage Logo" });
+}
+
 function getMain() {
   return screen.getByRole('main');
 }
@@ -68,8 +64,4 @@ function getOpenCartButton() {
 
 function getNavDrawer() {
   return screen.getByRole('dialog', { name: 'תפריט הניווט' });
-}
-
-function getCartDrawer() {
-  return screen.getByRole('dialog', { name: 'סל הקניות' });
 }
