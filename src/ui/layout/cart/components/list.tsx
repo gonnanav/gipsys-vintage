@@ -1,6 +1,6 @@
 import { List } from '@mui/material';
 import { Product } from '@/core/product';
-import { CartListItem } from './cart-list-item';
+import { CartListItem } from './list-item';
 
 export interface CartListProps {
   cart: Product[];

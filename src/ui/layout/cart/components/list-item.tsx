@@ -1,8 +1,8 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { Product } from '@/core/product';
-import { RemoveCartItemButton } from './remove-cart-item-button';
-import { CartItemImage } from './cart-item-image';
+import { RemoveCartItemButton } from './remove-item-button';
+import { CartItemImage } from './item-image';
 
 export interface CartListItemProps {
   item: Product;
