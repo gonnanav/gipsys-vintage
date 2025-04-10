@@ -1,2 +1,3 @@
-export { ShopPage } from './shop-page';
-export { ShopPageLoading } from './shop-page-loading';
+export { ShopPage } from './shop';
+export type { ShopPageProps } from './shop';
+export { ShopPageLoading } from './loading';

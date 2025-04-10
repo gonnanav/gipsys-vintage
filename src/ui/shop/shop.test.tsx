@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { cottonScarf, leatherJacket } from '@/fixtures/products';
-import { ShopPage, ShopPageProps } from './shop-page';
+import { ShopPage, ShopPageProps } from '@/ui/shop';
 
 it('renders the shop page title', () => {
   renderShopPage({ title: 'My Shop' });
