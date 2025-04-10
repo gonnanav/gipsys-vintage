@@ -1,8 +1,8 @@
 import { Product } from '@/core/product';
-import { ProductLayout } from './product-layout';
+import { ProductLayout } from './components/layout';
 import { ProductGallery } from './gallery';
-import { ProductDetails } from './product-details';
-import { AddToCartButton } from './add-to-cart-button';
+import { ProductDetails } from './components/details';
+import { AddToCartButton } from './components/add-to-cart-button';
 
 interface ProductPageProps {
   product: Product;
