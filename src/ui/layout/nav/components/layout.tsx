@@ -1,4 +1,4 @@
-import { DrawerLayout } from '@/ui/layout/drawer-layout';
+import { DrawerLayout } from '@/ui/layout/components/drawer-layout';
 
 interface NavDrawerLayoutProps {
   isOpen: boolean;
