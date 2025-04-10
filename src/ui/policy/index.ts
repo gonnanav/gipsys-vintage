@@ -1,1 +1,1 @@
-export { default as PolicyPage } from './policy-page.mdx';
+export { default as PolicyPage } from './policy.mdx';
