@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { StoreProvider } from '@/ui/store';
-import { AppLayout, AppLayoutProps } from '../app-layout';
+import { AppLayout, AppLayoutProps } from '../layout';
 
 it('renders the header with the logo', () => {
   renderAppLayout();

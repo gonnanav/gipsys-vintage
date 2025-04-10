@@ -4,7 +4,7 @@ import { Category } from '@/core/category';
 import { AppState } from '@/ui/store';
 import { renderAppLayout } from './test-utils';
 import { createCategory } from '@/fixtures/categories';
-import { AppLayoutProps } from '../app-layout';
+import { AppLayoutProps } from '../layout';
 
 it('opens the navigation drawer when clicking the open navigation button', async () => {
   const user = userEvent.setup();
