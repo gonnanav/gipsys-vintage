@@ -1,7 +1,7 @@
-import { HeaderLayout } from './header-layout';
-import { OpenNavButton } from './open-nav-button';
-import { LogoImage } from './logo-image';
-import { OpenCartButton } from './open-cart-button';
+import { HeaderLayout } from './components/layout';
+import { OpenNavButton } from './components/open-nav-button';
+import { LogoImage } from './components/logo';
+import { OpenCartButton } from './components/open-cart-button';
 
 export function Header() {
   return (
