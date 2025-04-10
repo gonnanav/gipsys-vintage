@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { StoreProvider } from '@/ui/store';
 import { createProduct } from '@/fixtures/products';
-import { ProductPage } from './product-page';
 import { Product } from '@/core/product';
+import { ProductPage } from '@/ui/product';
 
 it("renders the product's title", () => {
   renderProductPage({ name: 'Summer dress' });

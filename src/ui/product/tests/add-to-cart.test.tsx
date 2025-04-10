@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Product } from '@/core/product';
 import { StoreProvider, useCart } from '@/ui/store';
 import { createProduct } from '@/fixtures/products';
-import { ProductPage } from './product-page';
+import { ProductPage } from '@/ui/product';
 
 it('adds the product to the cart', async () => {
   const { addToCart } = renderProductPage({ name: 'Summer dress' });
