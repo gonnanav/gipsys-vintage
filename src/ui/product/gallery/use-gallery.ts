@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ProductImage } from '@/core/product';
-import { createGallery } from './gallery-model';
+import { createGallery } from './model/gallery';
 
 export interface Thumbnail {
   image: ProductImage;
