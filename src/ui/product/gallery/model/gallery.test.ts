@@ -1,5 +1,5 @@
 import { ProductImage, placeholderImage } from '@/core/product';
-import { createGallery } from './gallery-model';
+import { createGallery } from './gallery';
 
 describe.each([undefined, []])('without any images', (images?: ProductImage[]) => {
   const gallery = createGallery(images);
