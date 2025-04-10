@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { Product } from '@/core/product';
-import { DrawerLayout } from '@/ui/layout/drawer-layout';
+import { DrawerLayout } from '@/ui/layout/components/drawer-layout';
 import { CartList } from './list';
 import { CartEmptyMessage } from './empty-message';
 
