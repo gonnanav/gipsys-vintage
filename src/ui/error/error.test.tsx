@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { ErrorPage } from './error-page';
+import { ErrorPage } from './error';
 
 it('renders the error heading', () => {
   renderError();

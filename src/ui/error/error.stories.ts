@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { ErrorPage } from './error-page';
+import { ErrorPage } from './error';
 
 const meta = {
   title: 'Error Page',
