@@ -1,7 +1,7 @@
 'use client';
 
 import { useCart, useCartDrawer } from '@/ui/store';
-import { CartDrawerLayout } from './cart-drawer-layout';
+import { CartDrawerLayout } from './components/drawer-layout';
 
 export function CartDrawer() {
   const { items, removeItem } = useCart();

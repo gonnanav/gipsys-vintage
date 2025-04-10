@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
-import { CartList } from './cart-list';
-import { CartEmptyMessage } from './cart-empty-message';
-import { DrawerLayout } from '../drawer-layout';
 import { Product } from '@/core/product';
+import { DrawerLayout } from '@/ui/layout/drawer-layout';
+import { CartList } from './list';
+import { CartEmptyMessage } from './empty-message';
 
 interface CartDrawerLayoutProps {
   cart: Product[];
