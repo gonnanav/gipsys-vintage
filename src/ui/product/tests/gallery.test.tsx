@@ -3,7 +3,7 @@ import { ProductImage } from '@/core/product';
 import userEvent from '@testing-library/user-event';
 import { StoreProvider } from '@/ui/store';
 import { createProduct } from '@/fixtures/products';
-import { ProductPage } from './product-page';
+import { ProductPage } from '@/ui/product';
 
 it('renders the main image', () => {
   const image = { src: '/white-dress.webp', alt: 'White dress' };
