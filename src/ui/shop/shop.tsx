@@ -1,8 +1,8 @@
 import { Product } from '@/core/product';
-import { ShopLayout } from './shop-layout';
-import { ProductsLayout } from './products-layout';
-import { NoProductsMessage } from './no-products-message';
-import { ProductCard, ProductCardProps } from './product-card';
+import { ShopLayout } from './components/shop-layout';
+import { ProductsLayout } from './components/products-layout';
+import { NoProductsMessage } from './components/no-products-message';
+import { ProductCard, ProductCardProps } from './components/product-card';
 
 export interface ShopPageProps {
   title: string;
