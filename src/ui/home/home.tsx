@@ -1,5 +1,6 @@
-import { GoToShopButton, HeroImage } from '@/ui/home';
 import Box from '@mui/material/Box';
+import { HeroImage } from './components/hero-image';
+import { GoToShopButton } from './components/go-to-shop-button';
 
 export function HomePage() {
   return (
