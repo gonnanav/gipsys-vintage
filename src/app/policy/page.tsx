@@ -1,4 +1,4 @@
-import { PolicyPage } from '@/ui/policy';
+import { PolicyPage } from '@/features/policy';
 
 export default function Page() {
   return <PolicyPage />;
