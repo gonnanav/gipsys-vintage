@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ProductPage } from './product-page';
+import { ProductPage, ProductPageLoading } from '@/ui/product';
 import { cottonScarf, puffSleeveTop, leatherJacket } from '@/fixtures/products';
-import { ProductPageLoading } from './product-page-loading';
 
 const meta = {
   title: 'Product Page',
