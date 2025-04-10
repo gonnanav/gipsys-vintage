@@ -1,1 +1,1 @@
-export { NavDrawer } from './nav-drawer';
+export { NavDrawer } from './nav';

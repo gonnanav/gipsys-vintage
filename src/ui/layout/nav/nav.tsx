@@ -1,9 +1,9 @@
 'use client';
 
 import { useNavDrawer } from '@/ui/store';
-import { NavDrawerLayout } from './nav-drawer-layout';
 import { Category } from '@/core/category';
-import { NavLinks } from './nav-links';
+import { NavDrawerLayout } from './components/layout';
+import { NavLinks } from './components/links';
 
 interface NavDrawerProps {
   categories?: Category[];
