@@ -18,7 +18,7 @@ describe.each([undefined, []])('without any images', (images?: ProductImage[]) =
 });
 
 describe('with a single image', () => {
-  const singleImage = { src: 'single-image.webp' };
+  const singleImage = { src: 'single-image.webp', alt: 'Single image' };
   const gallery = createGallery([singleImage]);
 
   it('displays the image as the main image', () => {
@@ -35,7 +35,10 @@ describe('with a single image', () => {
 });
 
 describe('with multiple images by default', () => {
-  const images = [{ src: 'first-image.webp' }, { src: 'second-image.webp' }];
+  const images = [
+    { src: 'first-image.webp', alt: 'First image' },
+    { src: 'second-image.webp', alt: 'Second image' },
+  ];
   const gallery = createGallery(images);
 
   it('displays the first image as the main image', () => {
@@ -52,7 +55,10 @@ describe('with multiple images by default', () => {
 });
 
 describe('with multiple images and a selected image index', () => {
-  const images = [{ src: 'first-image.webp' }, { src: 'second-image.webp' }];
+  const images = [
+    { src: 'first-image.webp', alt: 'First image' },
+    { src: 'second-image.webp', alt: 'Second image' },
+  ];
   const selectedIndex = 1;
   const gallery = createGallery(images, selectedIndex);
 
@@ -66,8 +72,8 @@ describe('with multiple images and a selected image index', () => {
 });
 
 it.each([
-  [[{ src: 'first-image.webp' }], -1],
-  [[{ src: 'first-image.webp' }], 1],
+  [[{ src: 'first-image.webp', alt: 'First image' }], -1],
+  [[{ src: 'first-image.webp', alt: 'First image' }], 1],
 ])('throws an error if the selected index is out of bounds', (images, selectedIndex) => {
   expect(() => createGallery(images, selectedIndex)).toThrow();
 });
