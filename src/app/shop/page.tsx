@@ -1,5 +1,5 @@
 import { createApplication } from '@/application-factory';
-import { ShopPage } from '@/features/shop';
+import { ShopPage } from '@/components/shop';
 
 const app = createApplication();
 

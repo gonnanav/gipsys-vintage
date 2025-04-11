@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { createApplication } from '@/application-factory';
 import './globals.css';
-import { AppProvider } from '@/features/provider';
-import { AppLayout } from '@/features/layout';
+import { AppProvider } from '@/components/provider';
+import { AppLayout } from '@/components/layout';
 
 export const metadata: Metadata = {
   title: "Gipsy's Vintage",
