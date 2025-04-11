@@ -1,5 +1,4 @@
 import { Product, ProductCreate } from '@/core/product';
-import { WooCommerceCategory } from './category';
 
 export interface WooCommerceProduct {
   id: number;
@@ -8,7 +7,6 @@ export interface WooCommerceProduct {
   regular_price: string;
   description: string;
   images: WooCommerceProductImage[];
-  categories: WooCommerceCategory[];
 }
 
 export interface WooCommerceProductInput {
@@ -35,13 +33,11 @@ export interface WooCommerceProductImage {
 }
 
 export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
-  const { regular_price, categories, ...rest } = product;
-  const categoryId = categories[0].id;
+  const { regular_price, ...rest } = product;
 
   return {
     ...rest,
     price: regular_price,
-    categoryId,
   };
 }
 

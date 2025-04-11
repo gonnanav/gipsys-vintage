@@ -14,7 +14,6 @@ it('maps WooCommerceProduct to Product', () => {
     regular_price: '100',
     description: 'Test description',
     images: [],
-    categories: [{ id: 1, name: 'Test Category', slug: 'test-category' }],
   };
   const expectedProduct: Product = {
     id: 1,
@@ -23,7 +22,6 @@ it('maps WooCommerceProduct to Product', () => {
     slug: 'test-product',
     description: 'Test description',
     images: [],
-    categoryId: 1,
   };
   const product = fromWooCommerceProduct(wcProduct);
 
@@ -36,14 +34,12 @@ it('maps ProductCreate to WooCommerceProductInput', () => {
     price: '100',
     description: 'Test description',
     images: [],
-    categoryId: 1,
   };
   const expectedWcProductInput: WooCommerceProductInput = {
     regular_price: '100',
     name: 'Test Product',
     description: 'Test description',
     images: [],
-    categories: [{ id: 1 }],
   };
   const wcProductInput = toWooCommerceProductInput(productCreate);
 
