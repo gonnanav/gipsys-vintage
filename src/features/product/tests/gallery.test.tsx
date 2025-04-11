@@ -3,7 +3,7 @@ import { ProductImage } from '@/core/product';
 import userEvent from '@testing-library/user-event';
 import { StoreProvider } from '@/features/store';
 import { ProductPage } from '@/features/product';
-import { createProduct } from '@/fixtures/products';
+import { createTestProduct } from '@/fixtures/products';
 
 it('renders the main image', () => {
   const image = { src: '/white-dress.webp', alt: 'White dress' };
@@ -68,7 +68,7 @@ function getThumbnail({ name }: { name?: string }) {
 }
 
 function renderProductPage(productImages?: ProductImage[]) {
-  const product = createProduct({
+  const product = createTestProduct({
     images: productImages,
   });
 

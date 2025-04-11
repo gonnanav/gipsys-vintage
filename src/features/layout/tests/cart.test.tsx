@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { placeholderImage } from '@/core/product';
-import { createProduct } from '@/fixtures/products';
+import { createTestProduct } from '@/fixtures/products';
 import { cottonScarf, puffSleeveTop } from '@/fixtures/products';
 import { AppState } from '@/features/store';
 import { renderAppLayout } from './test-utils';
@@ -58,7 +58,7 @@ it('removes a cart item when clicking the remove button', async () => {
 
 it('renders a cart item with its name, price, and main image', () => {
   const image = { src: '/product.webp', alt: 'Summer Top Image' };
-  const product = createProduct({ name: 'Summer Top', price: '100', images: [image] });
+  const product = createTestProduct({ name: 'Summer Top', price: '100', images: [image] });
   renderWithCartOpen({ cartItems: [product] });
 
   const item = getAllCartItems()[0];
@@ -68,7 +68,7 @@ it('renders a cart item with its name, price, and main image', () => {
 });
 
 it('renders a cart item with a placeholder image if the product has no images', () => {
-  const product = createProduct({ images: [] });
+  const product = createTestProduct({ images: [] });
   renderWithCartOpen({ cartItems: [product] });
 
   const item = getAllCartItems()[0];

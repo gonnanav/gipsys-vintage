@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Product } from '@/core/product';
 import { StoreProvider, useCart } from '@/features/store';
-import { createProduct } from '@/fixtures/products';
+import { createTestProduct } from '@/fixtures/products';
 import { ProductPage } from '@/features/product';
 
 it('adds the product to the cart', async () => {
@@ -15,7 +15,7 @@ it('adds the product to the cart', async () => {
 
 function renderProductPage(productProps: Partial<Product> = {}) {
   const user = userEvent.setup();
-  const product = createProduct(productProps);
+  const product = createTestProduct(productProps);
 
   render(<ProductPage product={product} />, {
     wrapper: ({ children }) => (
