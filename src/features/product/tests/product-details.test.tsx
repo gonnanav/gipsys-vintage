@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Product } from '@/core/product';
 import { StoreProvider } from '@/features/store';
 import { ProductPage } from '@/features/product';
-import { createProduct } from '@/fixtures/products';
+import { createTestProduct } from '@/fixtures/products';
 
 it("renders the product's title", () => {
   renderProductPage({ name: 'Summer dress' });
@@ -23,7 +23,7 @@ it("renders the product's price in shekels", () => {
 });
 
 function renderProductPage(productProps: Partial<Product> = {}) {
-  const product = createProduct(productProps);
+  const product = createTestProduct(productProps);
 
   render(<ProductPage product={product} />, {
     wrapper: StoreProvider,

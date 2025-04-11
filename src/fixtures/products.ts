@@ -62,12 +62,12 @@ const minimalProduct: Product = {
 };
 
 /**
- * Creates a minimal product whose properties can be overridden and extended.
+ * Creates a test product whose properties can be overridden and extended.
  *
  * @param props - The product properties to override or extend.
  * @returns A product with the given properties and default values for the rest.
  */
-export function createProduct(props: Partial<Product> = {}): Product {
+export function createTestProduct(props: Partial<Product> = {}): Product {
   return {
     ...minimalProduct,
     ...props,
