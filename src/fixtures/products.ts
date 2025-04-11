@@ -6,6 +6,8 @@ export const cottonScarf: Product = {
   slug: 'classic-cotton-scarf',
   price: '120',
   description: 'צעיף כותנה רך בצבע אפור בהיר.',
+  images: [],
+  categoryId: 1,
 };
 
 export const puffSleeveTop: Product = {
@@ -21,6 +23,7 @@ export const puffSleeveTop: Product = {
       alt: "חולצת פרחים עם שרוולי מלמלה בסגנון וינטג'",
     },
   ],
+  categoryId: 2,
 };
 
 export const leatherJacket: Product = {
@@ -52,6 +55,7 @@ export const leatherJacket: Product = {
       alt: "ג'קט עור לבן - פרט של השרוולים והכיסים",
     },
   ],
+  categoryId: 2,
 };
 
 const minimalProduct: Product = {
@@ -59,6 +63,9 @@ const minimalProduct: Product = {
   name: 'מוצר מינימלי',
   slug: 'minimal-product',
   price: '100',
+  description: 'מוצר מינימלי',
+  images: [],
+  categoryId: 1,
 };
 
 /**
