@@ -31,7 +31,7 @@ export interface WooCommerceProductBatchUpdateResponse {
 
 export interface WooCommerceProductImage {
   src: string;
-  alt?: string;
+  alt: string;
 }
 
 export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
