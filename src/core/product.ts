@@ -3,9 +3,9 @@ export interface Product {
   name: string;
   slug: string;
   price: string;
-  description?: string;
-  images?: ProductImage[];
-  categoryId?: number;
+  description: string;
+  images: ProductImage[];
+  categoryId: number;
 }
 
 export interface ProductImage {

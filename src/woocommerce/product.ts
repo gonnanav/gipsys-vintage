@@ -36,12 +36,12 @@ export interface WooCommerceProductImage {
 
 export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
   const { regular_price, categories, ...rest } = product;
-  const categoryId = categories?.[0]?.id;
+  const categoryId = categories[0].id;
 
   return {
     ...rest,
     price: regular_price,
-    ...(categoryId && { categoryId }),
+    categoryId,
   };
 }
 
