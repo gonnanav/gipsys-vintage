@@ -1,4 +1,4 @@
-import { Product, ProductCreate } from '@/core/product';
+import { createProduct, Product, ProductCreate } from '@/core/product';
 
 export interface WooCommerceProduct {
   id: number;
@@ -35,10 +35,10 @@ export interface WooCommerceProductImage {
 export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
   const { regular_price, ...rest } = product;
 
-  return {
+  return createProduct({
     ...rest,
     price: regular_price,
-  };
+  });
 }
 
 export function toWooCommerceProductInput(product: ProductCreate): WooCommerceProductInput {

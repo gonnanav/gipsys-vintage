@@ -3,10 +3,10 @@ export interface Product {
   name: string;
   slug: string;
   price: string;
-  formattedPrice?: string;
+  formattedPrice: string;
   description: string;
   images: ProductImage[];
-  mainImage?: ProductImage;
+  mainImage: ProductImage;
 }
 
 export interface ProductInput {

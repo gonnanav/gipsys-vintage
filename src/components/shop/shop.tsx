@@ -30,11 +30,10 @@ function renderProducts(products: Product[]) {
 }
 
 function toProductCardProps(product: Product): ProductCardProps {
-  const { name, slug, price, images } = product;
+  const { name, slug, formattedPrice, mainImage } = product;
   const href = `/product/${slug}`;
-  const image = images && images[0];
-  const src = image?.src || '/images/product-placeholder.webp';
-  const priceShekels = `₪${price}`;
+  const price = formattedPrice;
+  const src = mainImage.src;
 
-  return { name, src, href, price: priceShekels };
+  return { name, src, href, price };
 }
