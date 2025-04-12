@@ -10,15 +10,13 @@ export interface CartListItemProps {
 }
 
 export function CartListItem({ item, removeFromCart }: CartListItemProps) {
-  const { id, name, price, images } = item;
+  const { id, name, formattedPrice, mainImage } = item;
   const handleRemove = () => removeFromCart(id);
-  const priceString = `₪${price}`;
-  const image = images?.[0];
 
   return (
     <ListItem secondaryAction={<RemoveCartItemButton onRemove={handleRemove} />}>
-      <CartItemImage image={image} />
-      <ListItemText primary={name} secondary={priceString} />
+      <CartItemImage image={mainImage} />
+      <ListItemText primary={name} secondary={formattedPrice} />
     </ListItem>
   );
 }

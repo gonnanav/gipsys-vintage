@@ -1,15 +1,15 @@
-import { Product } from '@/core/product';
+import { createProduct, Product } from '@/core/product';
 
-export const cottonScarf: Product = {
+export const cottonScarf: Product = createProduct({
   id: 1,
   name: 'צעיף כותנה קלאסי',
   slug: 'classic-cotton-scarf',
   price: '120',
   description: 'צעיף כותנה רך בצבע אפור בהיר.',
   images: [],
-};
+});
 
-export const puffSleeveTop: Product = {
+export const puffSleeveTop: Product = createProduct({
   id: 2,
   name: 'חולצת פרחים מלמלה',
   slug: 'floral-puff-sleeve-top',
@@ -22,9 +22,9 @@ export const puffSleeveTop: Product = {
       alt: "חולצת פרחים עם שרוולי מלמלה בסגנון וינטג'",
     },
   ],
-};
+});
 
-export const leatherJacket: Product = {
+export const leatherJacket: Product = createProduct({
   id: 3,
   name: "ג'קט עור לבן",
   slug: 'white-leather-jacket',
@@ -53,16 +53,16 @@ export const leatherJacket: Product = {
       alt: "ג'קט עור לבן - פרט של השרוולים והכיסים",
     },
   ],
-};
+});
 
-const minimalProduct: Product = {
+const minimalProduct: Product = createProduct({
   id: 4,
   name: 'מוצר מינימלי',
   slug: 'minimal-product',
   price: '100',
   description: 'מוצר מינימלי',
   images: [],
-};
+});
 
 /**
  * Creates a test product whose properties can be overridden and extended.
@@ -71,8 +71,8 @@ const minimalProduct: Product = {
  * @returns A product with the given properties and default values for the rest.
  */
 export function createTestProduct(props: Partial<Product> = {}): Product {
-  return {
+  return createProduct({
     ...minimalProduct,
     ...props,
-  };
+  });
 }
