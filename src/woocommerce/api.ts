@@ -15,42 +15,53 @@ export class WooCommerceApi {
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return this.fetchApi<WCProduct[]>('products', searchParams, {
-      headers: this.headers,
-    });
+    return this.fetchApi<WCProduct[]>(
+      { endpoint: 'products', searchParams },
+      {
+        headers: this.headers,
+      },
+    );
   }
 
   async batchUpdateProducts(
     batchUpdate: WCProductBatchUpdate,
   ): Promise<WCProductBatchUpdateResponse> {
-    return this.fetchApi<WCProductBatchUpdateResponse>('products/batch', undefined, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify(batchUpdate),
-    });
+    return this.fetchApi<WCProductBatchUpdateResponse>(
+      { endpoint: 'products/batch' },
+      {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(batchUpdate),
+      },
+    );
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return this.fetchApi<WCCategory[]>('products/categories', searchParams, {
-      headers: this.headers,
-    });
+    return this.fetchApi<WCCategory[]>(
+      { endpoint: 'products/categories', searchParams },
+      {
+        headers: this.headers,
+      },
+    );
   }
 
   async batchUpdateCategories(
     batchUpdate: WCCategoryBatchUpdate,
   ): Promise<WCCategoryBatchUpdateResponse> {
-    return this.fetchApi<WCCategoryBatchUpdateResponse>('products/categories/batch', undefined, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify(batchUpdate),
-    });
+    return this.fetchApi<WCCategoryBatchUpdateResponse>(
+      { endpoint: 'products/categories/batch' },
+      {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(batchUpdate),
+      },
+    );
   }
 }
 
 function createFetchApi(apiUrl: URL) {
   return async function fetchApi<T>(
-    endpoint: string,
-    searchParams?: Record<string, string>,
+    { endpoint, searchParams }: { endpoint: string; searchParams?: Record<string, string> },
     init?: RequestInit,
   ): Promise<T> {
     const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
