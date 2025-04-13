@@ -1,16 +1,9 @@
 import { WCProduct, WCProductBatchUpdate, WCProductBatchUpdateResponse } from './product';
 import { WCCategory, WCCategoryBatchUpdate, WCCategoryBatchUpdateResponse } from './category';
 
-interface WCRequestConfig {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: string;
-  cache?: RequestCache;
-}
-
 export class WooCommerceApi {
   private readonly headers: Record<string, string>;
-  private readonly apiUrl: URL;
+  private readonly fetchApi;
 
   constructor(apiUrl: URL, credentials: string) {
     this.headers = {
@@ -18,11 +11,11 @@ export class WooCommerceApi {
       'Content-Type': 'application/json',
     };
 
-    this.apiUrl = apiUrl;
+    this.fetchApi = createFetchApi(apiUrl);
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return fetchApi<WCProduct[]>(this.apiUrl, 'products', searchParams, {
+    return this.fetchApi<WCProduct[]>('products', searchParams, {
       headers: this.headers,
     });
   }
@@ -30,7 +23,7 @@ export class WooCommerceApi {
   async batchUpdateProducts(
     batchUpdate: WCProductBatchUpdate,
   ): Promise<WCProductBatchUpdateResponse> {
-    return fetchApi<WCProductBatchUpdateResponse>(this.apiUrl, 'products/batch', undefined, {
+    return this.fetchApi<WCProductBatchUpdateResponse>('products/batch', undefined, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(batchUpdate),
@@ -38,7 +31,7 @@ export class WooCommerceApi {
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return fetchApi<WCCategory[]>(this.apiUrl, 'products/categories', searchParams, {
+    return this.fetchApi<WCCategory[]>('products/categories', searchParams, {
       headers: this.headers,
     });
   }
@@ -46,33 +39,29 @@ export class WooCommerceApi {
   async batchUpdateCategories(
     batchUpdate: WCCategoryBatchUpdate,
   ): Promise<WCCategoryBatchUpdateResponse> {
-    return fetchApi<WCCategoryBatchUpdateResponse>(
-      this.apiUrl,
-      'products/categories/batch',
-      undefined,
-      {
-        method: 'POST',
-        headers: this.headers,
-        body: JSON.stringify(batchUpdate),
-      },
-    );
+    return this.fetchApi<WCCategoryBatchUpdateResponse>('products/categories/batch', undefined, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify(batchUpdate),
+    });
   }
 }
 
-async function fetchApi<T>(
-  apiUrl: URL,
-  endpoint: string,
-  searchParams?: Record<string, string>,
-  config?: WCRequestConfig,
-): Promise<T> {
-  const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
+function createFetchApi(apiUrl: URL) {
+  return async function fetchApi<T>(
+    endpoint: string,
+    searchParams?: Record<string, string>,
+    init?: RequestInit,
+  ): Promise<T> {
+    const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
 
-  const response = await fetch(url, {
-    cache: 'no-store',
-    ...config,
-  });
+    const response = await fetch(url, {
+      cache: 'no-store',
+      ...init,
+    });
 
-  return response.json();
+    return response.json();
+  };
 }
 
 function buildEndpointUrl(
