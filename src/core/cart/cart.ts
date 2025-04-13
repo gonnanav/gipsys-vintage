@@ -1,4 +1,4 @@
-import { Product } from './product';
+import { Product } from '@/core/product';
 
 export function addItemToCart(cart: Product[], item: Product): Product[] {
   if (cart.some((cartItem) => cartItem.id === item.id)) {
