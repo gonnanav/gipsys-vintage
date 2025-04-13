@@ -1,11 +1,24 @@
 import { WCProduct, WCProductBatchUpdate, WCProductBatchUpdateResponse } from './product';
 import { WCCategory, WCCategoryBatchUpdate, WCCategoryBatchUpdateResponse } from './category';
 
+interface FetchApi {
+  <T>(
+    {
+      endpoint,
+      searchParams,
+    }: {
+      endpoint: string;
+      searchParams?: Record<string, string>;
+    },
+    init?: RequestInit,
+  ): Promise<T>;
+}
+
 export class WooCommerceApi {
   private readonly fetchApi;
 
-  constructor(apiUrl: URL, credentials: string) {
-    this.fetchApi = createFetchApi(apiUrl, credentials);
+  constructor(fetchApi: FetchApi) {
+    this.fetchApi = fetchApi;
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
@@ -39,41 +52,4 @@ export class WooCommerceApi {
       },
     );
   }
-}
-
-interface ApiEndpoint {
-  endpoint: string;
-  searchParams?: Record<string, string>;
-}
-
-function createFetchApi(apiUrl: URL, credentials: string) {
-  return async function fetchApi<T>(
-    { endpoint, searchParams }: ApiEndpoint,
-    init?: RequestInit,
-  ): Promise<T> {
-    const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
-
-    const response = await fetch(url, {
-      cache: 'no-store',
-      ...init,
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-        ...init?.headers,
-      },
-    });
-
-    return response.json();
-  };
-}
-
-function buildEndpointUrl(
-  apiUrl: URL,
-  endpoint: string,
-  searchParams?: Record<string, string>,
-): URL {
-  if (!searchParams) return new URL(endpoint, apiUrl);
-
-  const endpointWithParams = `${endpoint}?${new URLSearchParams(searchParams).toString()}`;
-  return new URL(endpointWithParams, apiUrl);
 }
