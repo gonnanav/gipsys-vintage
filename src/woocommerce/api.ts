@@ -62,11 +62,7 @@ async function fetchApi<T>(
   config?: WCRequestConfig,
 ): Promise<T> {
   const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
-
-  let url = new URL(endpoint, apiUrl);
-  if (searchParams) {
-    url = new URL(`${endpoint}?${new URLSearchParams(searchParams).toString()}`, apiUrl);
-  }
+  const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
 
   const response = await fetch(url, {
     method,
@@ -76,4 +72,15 @@ async function fetchApi<T>(
   });
 
   return response.json();
+}
+
+function buildEndpointUrl(
+  apiUrl: URL,
+  endpoint: string,
+  searchParams?: Record<string, string>,
+): URL {
+  if (!searchParams) return new URL(endpoint, apiUrl);
+
+  const endpointWithParams = `${endpoint}?${new URLSearchParams(searchParams).toString()}`;
+  return new URL(endpointWithParams, apiUrl);
 }
