@@ -22,13 +22,13 @@ export class WooCommerceApi {
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return this.fetchApi<WCProduct[]>({ endpoint: 'products', searchParams });
+    return this.fetchApi({ endpoint: 'products', searchParams });
   }
 
   async batchUpdateProducts(
     batchUpdate: WCProductBatchUpdate,
   ): Promise<WCProductBatchUpdateResponse> {
-    return this.fetchApi<WCProductBatchUpdateResponse>(
+    return this.fetchApi(
       { endpoint: 'products/batch' },
       {
         method: 'POST',
@@ -38,13 +38,13 @@ export class WooCommerceApi {
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return this.fetchApi<WCCategory[]>({ endpoint: 'products/categories', searchParams });
+    return this.fetchApi({ endpoint: 'products/categories', searchParams });
   }
 
   async batchUpdateCategories(
     batchUpdate: WCCategoryBatchUpdate,
   ): Promise<WCCategoryBatchUpdateResponse> {
-    return this.fetchApi<WCCategoryBatchUpdateResponse>(
+    return this.fetchApi(
       { endpoint: 'products/categories/batch' },
       {
         method: 'POST',

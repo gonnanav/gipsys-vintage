@@ -37,9 +37,7 @@ function createFetchApi(apiUrl: URL, credentials: string) {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${endpointUrl}`, {
-        cause: response,
-      });
+      throw new Error(`Failed to fetch from ${endpointUrl}`);
     }
 
     return response.json();
