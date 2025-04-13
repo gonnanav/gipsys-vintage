@@ -12,9 +12,7 @@ export class WooCommerceApi {
   private readonly headers: Record<string, string>;
   private readonly apiUrl: URL;
 
-  constructor(url: string, customerKey: string, customerSecret: string) {
-    const credentials = Buffer.from(`${customerKey}:${customerSecret}`).toString('base64');
-
+  constructor(url: string, credentials: string) {
     this.headers = {
       Authorization: `Basic ${credentials}`,
       'Content-Type': 'application/json',
