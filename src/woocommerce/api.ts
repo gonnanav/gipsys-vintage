@@ -12,13 +12,13 @@ export class WooCommerceApi {
   private readonly headers: Record<string, string>;
   private readonly apiUrl: URL;
 
-  constructor(url: string, credentials: string) {
+  constructor(apiUrl: URL, credentials: string) {
     this.headers = {
       Authorization: `Basic ${credentials}`,
       'Content-Type': 'application/json',
     };
 
-    this.apiUrl = new URL('wp-json/wc/v3/', url);
+    this.apiUrl = apiUrl;
   }
 
   private async fetch<T>(endpoint: string, config?: WCRequestConfig): Promise<T> {
