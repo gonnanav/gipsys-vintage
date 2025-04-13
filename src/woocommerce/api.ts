@@ -2,25 +2,14 @@ import { WCProduct, WCProductBatchUpdate, WCProductBatchUpdateResponse } from '.
 import { WCCategory, WCCategoryBatchUpdate, WCCategoryBatchUpdateResponse } from './category';
 
 export class WooCommerceApi {
-  private readonly headers: Record<string, string>;
   private readonly fetchApi;
 
   constructor(apiUrl: URL, credentials: string) {
-    this.headers = {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/json',
-    };
-
-    this.fetchApi = createFetchApi(apiUrl);
+    this.fetchApi = createFetchApi(apiUrl, credentials);
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return this.fetchApi<WCProduct[]>(
-      { endpoint: 'products', searchParams },
-      {
-        headers: this.headers,
-      },
-    );
+    return this.fetchApi<WCProduct[]>({ endpoint: 'products', searchParams });
   }
 
   async batchUpdateProducts(
@@ -30,19 +19,13 @@ export class WooCommerceApi {
       { endpoint: 'products/batch' },
       {
         method: 'POST',
-        headers: this.headers,
         body: JSON.stringify(batchUpdate),
       },
     );
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return this.fetchApi<WCCategory[]>(
-      { endpoint: 'products/categories', searchParams },
-      {
-        headers: this.headers,
-      },
-    );
+    return this.fetchApi<WCCategory[]>({ endpoint: 'products/categories', searchParams });
   }
 
   async batchUpdateCategories(
@@ -52,16 +35,20 @@ export class WooCommerceApi {
       { endpoint: 'products/categories/batch' },
       {
         method: 'POST',
-        headers: this.headers,
         body: JSON.stringify(batchUpdate),
       },
     );
   }
 }
 
-function createFetchApi(apiUrl: URL) {
+interface ApiEndpoint {
+  endpoint: string;
+  searchParams?: Record<string, string>;
+}
+
+function createFetchApi(apiUrl: URL, credentials: string) {
   return async function fetchApi<T>(
-    { endpoint, searchParams }: { endpoint: string; searchParams?: Record<string, string> },
+    { endpoint, searchParams }: ApiEndpoint,
     init?: RequestInit,
   ): Promise<T> {
     const url = buildEndpointUrl(apiUrl, endpoint, searchParams);
@@ -69,6 +56,11 @@ function createFetchApi(apiUrl: URL) {
     const response = await fetch(url, {
       cache: 'no-store',
       ...init,
+      headers: {
+        Authorization: `Basic ${credentials}`,
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
     });
 
     return response.json();
