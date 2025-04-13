@@ -1,15 +1,7 @@
-import {
-  WooCommerceProduct,
-  WooCommerceProductBatchUpdate,
-  WooCommerceProductBatchUpdateResponse,
-} from './product';
-import {
-  WooCommerceCategory,
-  WooCommerceCategoryBatchUpdate,
-  WooCommerceCategoryBatchUpdateResponse,
-} from './category';
+import { WCProduct, WCProductBatchUpdate, WCProductBatchUpdateResponse } from './product';
+import { WCCategory, WCCategoryBatchUpdate, WCCategoryBatchUpdateResponse } from './category';
 
-interface WooCommerceRequestConfig {
+interface WCRequestConfig {
   method?: string;
   searchParams?: Record<string, string>;
   body?: unknown;
@@ -31,7 +23,7 @@ export class WooCommerceApi {
     this.apiUrl = new URL('wp-json/wc/v3/', url);
   }
 
-  private async fetch<T>(endpoint: string, config?: WooCommerceRequestConfig): Promise<T> {
+  private async fetch<T>(endpoint: string, config?: WCRequestConfig): Promise<T> {
     const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
 
     let url = new URL(endpoint, this.apiUrl);
@@ -49,27 +41,27 @@ export class WooCommerceApi {
     return response.json();
   }
 
-  async getProducts(searchParams?: Record<string, string>): Promise<WooCommerceProduct[]> {
-    return this.fetch<WooCommerceProduct[]>('products', { searchParams });
+  async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
+    return this.fetch<WCProduct[]>('products', { searchParams });
   }
 
   async batchUpdateProducts(
-    batchUpdate: WooCommerceProductBatchUpdate,
-  ): Promise<WooCommerceProductBatchUpdateResponse> {
-    return this.fetch<WooCommerceProductBatchUpdateResponse>('products/batch', {
+    batchUpdate: WCProductBatchUpdate,
+  ): Promise<WCProductBatchUpdateResponse> {
+    return this.fetch<WCProductBatchUpdateResponse>('products/batch', {
       method: 'POST',
       body: batchUpdate,
     });
   }
 
-  async getCategories(searchParams?: Record<string, string>): Promise<WooCommerceCategory[]> {
-    return this.fetch<WooCommerceCategory[]>('products/categories', { searchParams });
+  async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
+    return this.fetch<WCCategory[]>('products/categories', { searchParams });
   }
 
   async batchUpdateCategories(
-    batchUpdate: WooCommerceCategoryBatchUpdate,
-  ): Promise<WooCommerceCategoryBatchUpdateResponse> {
-    return this.fetch<WooCommerceCategoryBatchUpdateResponse>('products/categories/batch', {
+    batchUpdate: WCCategoryBatchUpdate,
+  ): Promise<WCCategoryBatchUpdateResponse> {
+    return this.fetch<WCCategoryBatchUpdateResponse>('products/categories/batch', {
       method: 'POST',
       body: batchUpdate,
     });

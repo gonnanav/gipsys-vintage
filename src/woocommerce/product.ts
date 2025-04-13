@@ -1,38 +1,38 @@
 import { createProduct, Product, ProductCreate } from '@/core/product';
 
-export interface WooCommerceProduct {
+export interface WCProduct {
   id: number;
   name: string;
   slug: string;
   regular_price: string;
   description: string;
-  images: WooCommerceProductImage[];
+  images: WCProductImage[];
 }
 
-export interface WooCommerceProductInput {
+export interface WCProductInput {
   name?: string;
   regular_price?: string;
   description?: string;
-  images?: WooCommerceProductImage[];
+  images?: WCProductImage[];
   categories?: { id: number }[];
 }
 
-export interface WooCommerceProductBatchUpdate {
+export interface WCProductBatchUpdate {
   delete?: number[];
-  create?: WooCommerceProductInput[];
+  create?: WCProductInput[];
 }
 
-export interface WooCommerceProductBatchUpdateResponse {
-  delete?: WooCommerceProduct[];
-  create?: WooCommerceProduct[];
+export interface WCProductBatchUpdateResponse {
+  delete?: WCProduct[];
+  create?: WCProduct[];
 }
 
-export interface WooCommerceProductImage {
+export interface WCProductImage {
   src: string;
   alt: string;
 }
 
-export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
+export function fromWooCommerceProduct(product: WCProduct): Product {
   const { regular_price, ...rest } = product;
 
   return createProduct({
@@ -41,7 +41,7 @@ export function fromWooCommerceProduct(product: WooCommerceProduct): Product {
   });
 }
 
-export function toWooCommerceProductInput(product: ProductCreate): WooCommerceProductInput {
+export function toWooCommerceProductInput(product: ProductCreate): WCProductInput {
   const { price, categoryId, ...rest } = product;
   const categories = categoryId && [{ id: categoryId }];
 

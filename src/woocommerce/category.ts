@@ -1,33 +1,33 @@
 import { Category, CategoryCreate } from '@/core/category';
 
-export interface WooCommerceCategory {
+export interface WCCategory {
   id: number;
   name: string;
   slug: string;
 }
 
-export interface WooCommerceCategoryInput {
+export interface WCCategoryInput {
   name: string;
   slug?: string;
 }
 
-export interface WooCommerceCategoryBatchUpdate {
+export interface WCCategoryBatchUpdate {
   delete?: number[];
-  create?: WooCommerceCategoryInput[];
+  create?: WCCategoryInput[];
 }
 
-export interface WooCommerceCategoryBatchUpdateResponse {
-  delete?: WooCommerceCategory[];
-  create?: WooCommerceCategory[];
+export interface WCCategoryBatchUpdateResponse {
+  delete?: WCCategory[];
+  create?: WCCategory[];
 }
 
-export function fromWooCommerceCategory(category: WooCommerceCategory): Category {
+export function fromWooCommerceCategory(category: WCCategory): Category {
   return {
     ...category,
   };
 }
 
-export function toWooCommerceCategoryInput(category: CategoryCreate): WooCommerceCategoryInput {
+export function toWooCommerceCategoryInput(category: CategoryCreate): WCCategoryInput {
   return {
     ...category,
   };
