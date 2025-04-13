@@ -21,47 +21,59 @@ export class WooCommerceApi {
     this.apiUrl = apiUrl;
   }
 
-  private async fetch<T>(endpoint: string, config?: WCRequestConfig): Promise<T> {
-    const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
-
-    let url = new URL(endpoint, this.apiUrl);
-    if (searchParams) {
-      url = new URL(`${endpoint}?${new URLSearchParams(searchParams).toString()}`, this.apiUrl);
-    }
-
-    const response = await fetch(url, {
-      method,
-      headers: this.headers,
-      body: body ? JSON.stringify(body) : undefined,
-      cache,
-    });
-
-    return response.json();
-  }
-
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return this.fetch<WCProduct[]>('products', { searchParams });
+    return fetchApi<WCProduct[]>('products', this.apiUrl, this.headers, { searchParams });
   }
 
   async batchUpdateProducts(
     batchUpdate: WCProductBatchUpdate,
   ): Promise<WCProductBatchUpdateResponse> {
-    return this.fetch<WCProductBatchUpdateResponse>('products/batch', {
+    return fetchApi<WCProductBatchUpdateResponse>('products/batch', this.apiUrl, this.headers, {
       method: 'POST',
       body: batchUpdate,
     });
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return this.fetch<WCCategory[]>('products/categories', { searchParams });
+    return fetchApi<WCCategory[]>('products/categories', this.apiUrl, this.headers, {
+      searchParams,
+    });
   }
 
   async batchUpdateCategories(
     batchUpdate: WCCategoryBatchUpdate,
   ): Promise<WCCategoryBatchUpdateResponse> {
-    return this.fetch<WCCategoryBatchUpdateResponse>('products/categories/batch', {
-      method: 'POST',
-      body: batchUpdate,
-    });
+    return fetchApi<WCCategoryBatchUpdateResponse>(
+      'products/categories/batch',
+      this.apiUrl,
+      this.headers,
+      {
+        method: 'POST',
+        body: batchUpdate,
+      },
+    );
   }
+}
+
+async function fetchApi<T>(
+  endpoint: string,
+  apiUrl: URL,
+  headers: Record<string, string>,
+  config?: WCRequestConfig,
+): Promise<T> {
+  const { method = 'GET', searchParams, body, cache = 'no-store' } = config ?? {};
+
+  let url = new URL(endpoint, apiUrl);
+  if (searchParams) {
+    url = new URL(`${endpoint}?${new URLSearchParams(searchParams).toString()}`, apiUrl);
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+    cache,
+  });
+
+  return response.json();
 }
