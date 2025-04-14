@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress';
 import { loadEnvConfig } from '@next/env';
 import * as path from 'path';
-import { createApplication } from '@/services';
+import { createApplication } from '@/services/factory';
 
 // Load environment variables from .env files located in the root project directory
 const rootProjectDir = path.dirname(process.cwd());

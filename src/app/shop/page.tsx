@@ -1,10 +1,8 @@
-import { createApplication } from '@/services';
+import { getProducts } from '@/services';
 import { ShopPage } from '@/components/shop';
 
-const app = createApplication();
-
 export default async function Page() {
-  const products = await app.getProducts();
+  const products = await getProducts();
 
   return <ShopPage title="חנות" products={products} />;
 }
