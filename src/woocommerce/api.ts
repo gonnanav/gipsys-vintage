@@ -2,54 +2,46 @@ import { WCProduct, WCProductBatchUpdate, WCProductBatchUpdateResponse } from '.
 import { WCCategory, WCCategoryBatchUpdate, WCCategoryBatchUpdateResponse } from './category';
 
 interface FetchApi {
-  <T>(
-    {
-      endpoint,
-      searchParams,
-    }: {
-      endpoint: string;
-      searchParams?: Record<string, string>;
-    },
-    init?: RequestInit,
-  ): Promise<T>;
+  <T>({
+    endpoint,
+    searchParams,
+    body,
+  }: {
+    endpoint: string;
+    searchParams?: Record<string, string>;
+    body?: Record<string, unknown>;
+  }): Promise<T>;
 }
 
 export class WooCommerceApi {
-  private readonly fetchApi;
+  private readonly get;
+  private readonly post;
 
-  constructor(fetchApi: FetchApi) {
-    this.fetchApi = fetchApi;
+  constructor(get: FetchApi, post: FetchApi) {
+    this.get = get;
+    this.post = post;
   }
 
   async getProducts(searchParams?: Record<string, string>): Promise<WCProduct[]> {
-    return this.fetchApi({ endpoint: 'products', searchParams });
+    return this.get({ endpoint: 'products', searchParams });
   }
 
   async batchUpdateProducts(
     batchUpdate: WCProductBatchUpdate,
   ): Promise<WCProductBatchUpdateResponse> {
-    return this.fetchApi(
-      { endpoint: 'products/batch' },
-      {
-        method: 'POST',
-        body: JSON.stringify(batchUpdate),
-      },
-    );
+    return this.post({ endpoint: 'products/batch', body: batchUpdate as Record<string, unknown> });
   }
 
   async getCategories(searchParams?: Record<string, string>): Promise<WCCategory[]> {
-    return this.fetchApi({ endpoint: 'products/categories', searchParams });
+    return this.get({ endpoint: 'products/categories', searchParams });
   }
 
   async batchUpdateCategories(
     batchUpdate: WCCategoryBatchUpdate,
   ): Promise<WCCategoryBatchUpdateResponse> {
-    return this.fetchApi(
-      { endpoint: 'products/categories/batch' },
-      {
-        method: 'POST',
-        body: JSON.stringify(batchUpdate),
-      },
-    );
+    return this.post({
+      endpoint: 'products/categories/batch',
+      body: batchUpdate as Record<string, unknown>,
+    });
   }
 }
