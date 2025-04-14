@@ -1,4 +1,4 @@
-import { Application } from '@/core/application';
+import { Application } from './application';
 import { createWooCommerceService, WooCommerceApi } from '@/woocommerce';
 
 export function createApplication(): Application {
