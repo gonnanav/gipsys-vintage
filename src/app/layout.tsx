@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { createApplication } from '@/services';
+import { getCategoriesSafe } from '@/services';
 import './globals.css';
 import { AppProvider } from '@/components/provider';
 import { AppLayout } from '@/components/layout';
@@ -13,8 +13,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const app = createApplication();
-  const categories = await app.getCategoriesSafe();
+  const categories = await getCategoriesSafe();
 
   return (
     <html lang="he" dir="rtl">

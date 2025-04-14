@@ -1,2 +1,1 @@
-export { createApplication } from './factory';
-export { getProducts } from './services';
+export { getProducts, getProduct, getCategoryWithProducts, getCategoriesSafe } from './services';

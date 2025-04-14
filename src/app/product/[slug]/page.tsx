@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
-import { createApplication } from '@/services';
+import { getProduct } from '@/services';
 import { ProductPage } from '@/components/product';
-
-const app = createApplication();
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -10,7 +8,7 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const product = await app.getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) notFound();
 
   return <ProductPage product={product} />;
