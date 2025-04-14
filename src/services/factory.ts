@@ -1,6 +1,6 @@
 import { Application } from './application';
 import { parseEnv } from './env';
-import { createWooCommerceService, WooCommerceApi } from '@/woocommerce';
+import { createWooCommerceService } from '@/woocommerce';
 
 export function createApplication(): Application {
   const env = parseEnv();
@@ -9,7 +9,6 @@ export function createApplication(): Application {
     customerKey: env.WOOCOMMERCE_CUSTOMER_KEY,
     customerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
   });
-  const wcApi = new WooCommerceApi(wcService);
 
-  return new Application(wcApi);
+  return new Application(wcService);
 }

@@ -1,2 +1,1 @@
-export { createWooCommerceService } from './factory';
-export { WooCommerceApi } from './api';
+export { createWooCommerceService, type WooCommerceService } from './factory';
