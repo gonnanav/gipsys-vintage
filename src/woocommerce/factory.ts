@@ -1,30 +1,27 @@
 import { parseEnv } from './env';
-import { WooCommerceApi } from './api';
 
-export function createWooCommerceApi() {
+export interface WooCommerceService {
+  get: <T>(endpoint: string, searchParams?: Record<string, string>) => Promise<T>;
+  post: <T>(endpoint: string, body?: Record<string, unknown>) => Promise<T>;
+}
+
+export function createWooCommerceService(): WooCommerceService {
   const { url, customerKey, customerSecret } = parseEnv();
   const credentials = encodeCredentials(customerKey, customerSecret);
   const apiUrl = buildApiUrl(url);
   const fetchApi = createFetchApi(apiUrl, credentials);
-  const { get, post } = createApi(fetchApi);
 
-  return new WooCommerceApi(get, post);
+  return createService(fetchApi);
 }
 
 type FetchApi = <T>(endpoint: string, init?: RequestInit) => Promise<T>;
 
-function createApi(fetchApi: FetchApi) {
-  async function get<T>({
-    endpoint,
-    searchParams,
-  }: {
-    endpoint: string;
-    searchParams?: Record<string, string>;
-  }) {
+function createService(fetchApi: FetchApi): WooCommerceService {
+  async function get<T>(endpoint: string, searchParams?: Record<string, string>) {
     return fetchApi<T>(buildEndpoint(endpoint, searchParams));
   }
 
-  async function post<T>({ endpoint, body }: { endpoint: string; body?: Record<string, unknown> }) {
+  async function post<T>(endpoint: string, body?: Record<string, unknown>) {
     return fetchApi<T>(endpoint, {
       method: 'POST',
       headers: {
