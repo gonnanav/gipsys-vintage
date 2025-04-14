@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-interface WCConfig {
-  url: string;
-  customerKey: string;
-  customerSecret: string;
+export interface EnvConfig {
+  WOOCOMMERCE_URL: string;
+  WOOCOMMERCE_CUSTOMER_KEY: string;
+  WOOCOMMERCE_CUSTOMER_SECRET: string;
 }
 
-export function parseEnv(): WCConfig {
+export function parseEnv(): EnvConfig {
   const schema = z.object({
     WOOCOMMERCE_URL: z
       .string({ message: 'WooCommerce URL is required' })
@@ -18,11 +18,6 @@ export function parseEnv(): WCConfig {
       .string({ message: 'WooCommerce customer secret is required' })
       .min(1, { message: 'Empty WooCommerce customer secret' }),
   });
-  const data = schema.parse(process.env);
 
-  return {
-    url: data.WOOCOMMERCE_URL,
-    customerKey: data.WOOCOMMERCE_CUSTOMER_KEY,
-    customerSecret: data.WOOCOMMERCE_CUSTOMER_SECRET,
-  };
+  return schema.parse(process.env);
 }

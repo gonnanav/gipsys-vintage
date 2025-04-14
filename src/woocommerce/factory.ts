@@ -1,12 +1,19 @@
-import { parseEnv } from './env';
+interface WooCommerceConfig {
+  url: string;
+  customerKey: string;
+  customerSecret: string;
+}
 
 export interface WooCommerceService {
   get: <T>(endpoint: string, searchParams?: Record<string, string>) => Promise<T>;
   post: <T>(endpoint: string, body?: Record<string, unknown>) => Promise<T>;
 }
 
-export function createWooCommerceService(): WooCommerceService {
-  const { url, customerKey, customerSecret } = parseEnv();
+export function createWooCommerceService({
+  url,
+  customerKey,
+  customerSecret,
+}: WooCommerceConfig): WooCommerceService {
   const credentials = encodeCredentials(customerKey, customerSecret);
   const apiUrl = buildApiUrl(url);
   const fetchApi = createFetchApi(apiUrl, credentials);
