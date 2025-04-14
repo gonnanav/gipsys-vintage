@@ -1,5 +1,5 @@
-import { Application } from './core/application';
-import { createWooCommerceService, WooCommerceApi } from './woocommerce';
+import { Application } from '@/core/application';
+import { createWooCommerceService, WooCommerceApi } from '@/woocommerce';
 
 export function createApplication(): Application {
   const wcService = createWooCommerceService();

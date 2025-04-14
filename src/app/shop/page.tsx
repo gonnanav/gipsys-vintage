@@ -1,4 +1,4 @@
-import { createApplication } from '@/application-factory';
+import { createApplication } from '@/services';
 import { ShopPage } from '@/components/shop';
 
 const app = createApplication();
