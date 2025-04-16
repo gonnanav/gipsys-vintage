@@ -1,9 +1,12 @@
 import { z } from 'zod';
 import { createProduct, Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate, CategoryWithProducts } from '@/core/category';
-import { fromWooCommerceProduct, toWooCommerceProductInput } from '@/woocommerce/product';
-import { fromWooCommerceCategory, toWooCommerceCategoryInput } from '@/woocommerce/category';
-import { WooCommerceService } from '@/woocommerce';
+import { fromWooCommerceProduct, toWooCommerceProductInput } from '@/services/woocommerce/product';
+import {
+  fromWooCommerceCategory,
+  toWooCommerceCategoryInput,
+} from '@/services/woocommerce/category';
+import { WooCommerceService } from '@/services/woocommerce';
 
 const productsSchema = z.array(
   z.object({

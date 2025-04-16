@@ -1,6 +1,6 @@
 import { Application } from './application';
 import { parseEnv } from './env';
-import { createWooCommerceService } from '@/woocommerce';
+import { createWooCommerceService } from '@/services/woocommerce';
 
 export function createApplication(): Application {
   const env = parseEnv();
