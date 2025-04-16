@@ -1,1 +1,1 @@
-export { getProducts, getProduct, getCategoryWithProducts, getCategoriesSafe } from './services';
+export { getProducts, getProduct, getCategoryWithProducts, getCategoriesSafe } from './composition';
