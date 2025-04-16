@@ -2,12 +2,18 @@ import { defineConfig } from 'cypress';
 import { loadEnvConfig } from '@next/env';
 import * as path from 'path';
 import { createApplication } from '@/services/factory';
+import { parseEnv } from '@/services/env';
 
 // Load environment variables from .env files located in the root project directory
 const rootProjectDir = path.dirname(process.cwd());
 loadEnvConfig(rootProjectDir);
 
-const app = createApplication();
+const env = parseEnv();
+const app = createApplication({
+  woocommerceUrl: env.WOOCOMMERCE_URL,
+  woocommerceCustomerKey: env.WOOCOMMERCE_CUSTOMER_KEY,
+  woocommerceCustomerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
+});
 
 export default defineConfig({
   e2e: {

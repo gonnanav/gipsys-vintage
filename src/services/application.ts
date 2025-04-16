@@ -1,67 +1,17 @@
-import { z } from 'zod';
-import { createProduct, Product, ProductCreate } from '@/core/product';
+import { Product, ProductCreate } from '@/core/product';
 import { Category, CategoryCreate, CategoryWithProducts } from '@/core/category';
-import { fromWooCommerceProduct, toWooCommerceProductInput } from '@/services/woocommerce/product';
 import {
+  parseProducts,
+  parseProductsBatchUpdate,
+  toWooCommerceProductInput,
+} from './woocommerce/product';
+import {
+  parseCategories,
+  parseCategoriesBatchUpdate,
   fromWooCommerceCategory,
   toWooCommerceCategoryInput,
-} from '@/services/woocommerce/category';
+} from './woocommerce/category';
 import { WooCommerceService } from '@/services/woocommerce';
-
-const productsSchema = z.array(
-  z.object({
-    id: z.number(),
-    name: z.string(),
-    slug: z.string(),
-    regular_price: z.string(),
-    description: z.string(),
-    images: z.array(
-      z.object({
-        src: z.string(),
-        alt: z.string(),
-      }),
-    ),
-  }),
-);
-
-const categoriesSchema = z.array(
-  z.object({
-    id: z.number(),
-    name: z.string(),
-    slug: z.string(),
-  }),
-);
-
-const productsBatchUpdateSchema = z.object({
-  create: productsSchema,
-});
-
-const categoriesBatchUpdateSchema = z.object({
-  create: categoriesSchema,
-});
-
-function parseCategoriesBatchUpdate(result: unknown): Category[] {
-  return categoriesBatchUpdateSchema.parse(result).create.map(fromWooCommerceCategory);
-}
-
-function parseProducts(result: unknown): Product[] {
-  return productsSchema.parse(result).map((product) => {
-    const { regular_price, ...rest } = product;
-
-    return createProduct({
-      ...rest,
-      price: regular_price,
-    });
-  });
-}
-
-function parseProductsBatchUpdate(result: unknown): Product[] {
-  return productsBatchUpdateSchema.parse(result).create.map(fromWooCommerceProduct);
-}
-
-function parseCategories(result: unknown): Category[] {
-  return categoriesSchema.parse(result).map(fromWooCommerceCategory);
-}
 
 export class Application {
   private readonly service: WooCommerceService;
