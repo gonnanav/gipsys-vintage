@@ -12,5 +12,14 @@ const getProducts = app.getProducts.bind(app);
 const getProduct = app.getProduct.bind(app);
 const getCategoryWithProducts = app.getCategoryWithProducts.bind(app);
 const getCategoriesSafe = app.getCategoriesSafe.bind(app);
+const replaceAllProducts = app.replaceAllProducts.bind(app);
+const replaceAllCategories = app.replaceAllCategories.bind(app);
 
-export { getProducts, getProduct, getCategoryWithProducts, getCategoriesSafe };
+export {
+  getProducts,
+  getProduct,
+  getCategoryWithProducts,
+  getCategoriesSafe,
+  replaceAllProducts,
+  replaceAllCategories,
+};
