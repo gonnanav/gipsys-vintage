@@ -11,15 +11,9 @@ import {
   fromWooCommerceCategory,
   toWooCommerceCategoryInput,
 } from './woocommerce/category';
-import { WooCommerceService } from '@/services/woocommerce';
+import { WooCommerceService } from './woocommerce';
 
-export class Application {
-  private readonly service: WooCommerceService;
-
-  constructor(service: WooCommerceService) {
-    this.service = service;
-  }
-
+export function createApplication(service: WooCommerceService) {
   /**
    * Retrieves a single product by its URL slug.
    *
@@ -27,8 +21,8 @@ export class Application {
    * @returns Promise resolving to the product if found, null otherwise
    * @throws May throw if there's a network or system error
    */
-  async getProduct(slug: string): Promise<Product | null> {
-    const result = await this.service.get('products', { slug });
+  async function getProduct(slug: string): Promise<Product | null> {
+    const result = await service.get('products', { slug });
     const [product] = parseProducts(result);
 
     return product ?? null;
@@ -40,8 +34,8 @@ export class Application {
    * @returns Promise resolving to an array of products
    * @throws May throw if there's a network or system error
    */
-  async getProducts(): Promise<Product[]> {
-    const result = await this.service.get('products');
+  async function getProducts(): Promise<Product[]> {
+    const result = await service.get('products');
 
     return parseProducts(result);
   }
@@ -54,12 +48,12 @@ export class Application {
    * @returns Promise resolving to the array of created products with their assigned IDs
    * @throws May throw if there's a validation, network, or system error
    */
-  async replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]> {
-    const oldProducts = await this.getProducts();
+  async function replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]> {
+    const oldProducts = await getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
     const wcProducts = newProducts.map(toWooCommerceProductInput);
 
-    const result = await this.service.post('products/batch', {
+    const result = await service.post('products/batch', {
       delete: oldProductIds,
       create: wcProducts,
     });
@@ -75,16 +69,16 @@ export class Application {
    * @returns Promise resolving to the array of created categories with their assigned IDs
    * @throws May throw if there's a validation, network, or system error
    */
-  async replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {
-    const oldCategories = await this.getCategories();
+  async function replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {
+    const oldCategories = await getCategories();
     const oldCategoryIds = oldCategories.map((category) => category.id);
     const wcCategories = newCategories.map(toWooCommerceCategoryInput);
 
-    await this.service.post('products/categories/batch', {
+    await service.post('products/categories/batch', {
       delete: oldCategoryIds,
     });
 
-    const result = await this.service.post('products/categories/batch', {
+    const result = await service.post('products/categories/batch', {
       create: wcCategories,
     });
 
@@ -98,13 +92,13 @@ export class Application {
    * @returns Promise resolving to the category and its products if found, null otherwise
    * @throws May throw if there's a network or system error
    */
-  async getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
-    const result = await this.service.get('products/categories', { slug });
+  async function getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
+    const result = await service.get('products/categories', { slug });
     const [category] = parseCategories(result);
 
     if (!category) return null;
 
-    const products = await this.service.get('products', { category: category.id.toString() });
+    const products = await service.get('products', { category: category.id.toString() });
 
     return {
       ...fromWooCommerceCategory(category),
@@ -117,9 +111,9 @@ export class Application {
    *
    * @returns Promise resolving to an array of categories or an empty array if there's an error
    */
-  async getCategoriesSafe(): Promise<Category[]> {
+  async function getCategoriesSafe(): Promise<Category[]> {
     try {
-      const result = await this.service.get('products/categories');
+      const result = await service.get('products/categories');
       return parseCategories(result);
     } catch (error) {
       console.error(error);
@@ -127,9 +121,18 @@ export class Application {
     }
   }
 
-  private async getCategories(): Promise<Category[]> {
-    const result = await this.service.get('products/categories');
+  async function getCategories(): Promise<Category[]> {
+    const result = await service.get('products/categories');
 
     return parseCategories(result);
   }
+
+  return {
+    getProducts,
+    getProduct,
+    getCategoryWithProducts,
+    getCategoriesSafe,
+    replaceAllProducts,
+    replaceAllCategories,
+  };
 }
