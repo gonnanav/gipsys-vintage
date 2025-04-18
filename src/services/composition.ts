@@ -1,12 +1,14 @@
-import { createApplication } from './factory';
 import { parseEnv } from './env';
+import { createWooCommerceService } from './woocommerce';
+import { Application } from './application';
 
 const env = parseEnv();
-const app = createApplication({
-  woocommerceUrl: env.WOOCOMMERCE_URL,
-  woocommerceCustomerKey: env.WOOCOMMERCE_CUSTOMER_KEY,
-  woocommerceCustomerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
+const wcService = createWooCommerceService({
+  url: env.WOOCOMMERCE_URL,
+  customerKey: env.WOOCOMMERCE_CUSTOMER_KEY,
+  customerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
 });
+const app = new Application(wcService);
 
 const getProducts = app.getProducts.bind(app);
 const getProduct = app.getProduct.bind(app);
