@@ -4,6 +4,7 @@ import {
   parseProducts,
   parseProductsBatchUpdate,
   toWooCommerceProductInput,
+  fromWooCommerceProduct,
 } from './woocommerce/product';
 import {
   parseCategories,
@@ -16,15 +17,18 @@ import { WooCommerceService } from './woocommerce';
 export function createApplication(service: WooCommerceService) {
   async function getProduct(slug: string): Promise<Product | null> {
     const result = await service.get('products', { slug });
-    const [product] = parseProducts(result);
+    const wcProducts = parseProducts(result);
+    const products = wcProducts.map(fromWooCommerceProduct);
 
-    return product ?? null;
+    return products[0] ?? null;
   }
 
   async function getProducts(): Promise<Product[]> {
     const result = await service.get('products');
+    const wcProducts = parseProducts(result);
+    const products = wcProducts.map(fromWooCommerceProduct);
 
-    return parseProducts(result);
+    return products;
   }
 
   async function replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]> {
@@ -62,11 +66,13 @@ export function createApplication(service: WooCommerceService) {
 
     if (!category) return null;
 
-    const products = await service.get('products', { category: category.id.toString() });
+    const rawProducts = await service.get('products', { category: category.id.toString() });
+    const wcProducts = parseProducts(rawProducts);
+    const products = wcProducts.map(fromWooCommerceProduct);
 
     return {
       ...fromWooCommerceCategory(category),
-      products: parseProducts(products),
+      products,
     };
   }
 

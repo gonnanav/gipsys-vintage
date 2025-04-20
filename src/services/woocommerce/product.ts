@@ -17,15 +17,8 @@ const productsSchema = z.array(
   }),
 );
 
-export function parseProducts(result: unknown): Product[] {
-  return productsSchema.parse(result).map((product) => {
-    const { regular_price, ...rest } = product;
-
-    return createProduct({
-      ...rest,
-      price: regular_price,
-    });
-  });
+export function parseProducts(result: unknown): WCProduct[] {
+  return productsSchema.parse(result);
 }
 
 const productsBatchUpdateSchema = z.object({
@@ -68,7 +61,7 @@ export interface WCProductImage {
   alt: string;
 }
 
-function fromWooCommerceProduct(product: WCProduct): Product {
+export function fromWooCommerceProduct(product: WCProduct): Product {
   const { regular_price, ...rest } = product;
 
   return createProduct({
