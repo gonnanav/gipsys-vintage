@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import { getCategoriesSafe } from '@/services';
+import { wcService } from '@/services';
 import './globals.css';
 import { AppProvider } from '@/components/provider';
 import { AppLayout } from '@/components/layout';
+import { parseCategories } from '@/services/woocommerce/category';
+import { Category } from '@/core/category';
 
 export const metadata: Metadata = {
   title: "Gipsy's Vintage",
@@ -13,7 +15,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categories = await getCategoriesSafe();
+  let categories: Category[] = [];
+
+  try {
+    const rawCategories = await wcService.get('products/categories');
+    categories = parseCategories(rawCategories);
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <html lang="he" dir="rtl">
