@@ -41,7 +41,9 @@ export function createApplication(service: WooCommerceService) {
       create: wcProducts,
     });
 
-    return parseProductsBatchUpdate(result);
+    const wcProductsBatchUpdate = parseProductsBatchUpdate(result);
+
+    return wcProductsBatchUpdate.create.map(fromWooCommerceProduct);
   }
 
   async function replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {

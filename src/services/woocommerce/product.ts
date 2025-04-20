@@ -25,8 +25,8 @@ const productsBatchUpdateSchema = z.object({
   create: productsSchema,
 });
 
-export function parseProductsBatchUpdate(result: unknown): Product[] {
-  return productsBatchUpdateSchema.parse(result).create.map(fromWooCommerceProduct);
+export function parseProductsBatchUpdate(result: unknown): WCProductBatchUpdateResponse {
+  return productsBatchUpdateSchema.parse(result);
 }
 
 export interface WCProduct {
@@ -51,10 +51,7 @@ export interface WCProductBatchUpdate {
   create?: WCProductInput[];
 }
 
-export interface WCProductBatchUpdateResponse {
-  delete?: WCProduct[];
-  create?: WCProduct[];
-}
+export type WCProductBatchUpdateResponse = z.infer<typeof productsBatchUpdateSchema>;
 
 export interface WCProductImage {
   src: string;
