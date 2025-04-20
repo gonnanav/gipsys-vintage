@@ -11,16 +11,16 @@ import { WooCommerceService } from './woocommerce';
 
 export function createApplication(service: WooCommerceService) {
   async function getProduct(slug: string): Promise<Product | null> {
-    const result = await service.get('products', { slug });
-    const wcProducts = parseProducts(result);
+    const rawProducts = await service.get('products', { slug });
+    const wcProducts = parseProducts(rawProducts);
     const products = wcProducts.map(fromWooCommerceProduct);
 
     return products[0] ?? null;
   }
 
   async function getProducts(): Promise<Product[]> {
-    const result = await service.get('products');
-    const wcProducts = parseProducts(result);
+    const rawProducts = await service.get('products');
+    const wcProducts = parseProducts(rawProducts);
     const products = wcProducts.map(fromWooCommerceProduct);
 
     return products;
@@ -29,16 +29,16 @@ export function createApplication(service: WooCommerceService) {
   async function replaceAllProducts(newProducts: ProductCreate[]): Promise<Product[]> {
     const oldProducts = await getProducts();
     const oldProductIds = oldProducts.map((product) => product.id);
-    const wcProducts = newProducts.map(toWooCommerceProductInput);
+    const wcProductInputs = newProducts.map(toWooCommerceProductInput);
 
-    const result = await service.post('products/batch', {
+    const rawBatchResponse = await service.post('products/batch', {
       delete: oldProductIds,
-      create: wcProducts,
+      create: wcProductInputs,
     });
 
-    const wcProductsBatchUpdate = parseProductsBatchUpdate(result);
+    const wcBatchResponse = parseProductsBatchUpdate(rawBatchResponse);
 
-    return wcProductsBatchUpdate.create.map(fromWooCommerceProduct);
+    return wcBatchResponse.create.map(fromWooCommerceProduct);
   }
 
   async function replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {
@@ -49,16 +49,17 @@ export function createApplication(service: WooCommerceService) {
       delete: oldCategoryIds,
     });
 
-    const result = await service.post('products/categories/batch', {
+    const rawBatchResponse = await service.post('products/categories/batch', {
       create: newCategories,
     });
+    const wcBatchResponse = parseCategoriesBatchUpdate(rawBatchResponse);
 
-    return parseCategoriesBatchUpdate(result).create;
+    return wcBatchResponse.create;
   }
 
   async function getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
-    const result = await service.get('products/categories', { slug });
-    const wcCategories = parseCategories(result);
+    const rawCategories = await service.get('products/categories', { slug });
+    const wcCategories = parseCategories(rawCategories);
     const category = wcCategories[0];
 
     if (!category) return null;
@@ -80,9 +81,9 @@ export function createApplication(service: WooCommerceService) {
   }
 
   async function getCategories(): Promise<Category[]> {
-    const result = await service.get('products/categories');
+    const rawCategories = await service.get('products/categories');
 
-    return parseCategories(result);
+    return parseCategories(rawCategories);
   }
 
   return {
