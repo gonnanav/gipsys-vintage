@@ -9,10 +9,10 @@ import { defineConfig } from 'cypress';
 import {
   wcService,
   fromWooCommerceProduct,
-  parseProducts,
-  parseProductsBatchUpdate,
-  parseCategories,
-  parseCategoriesBatchUpdate,
+  parseWooCommerceProducts,
+  parseWooCommerceProductsBatchUpdate,
+  parseWooCommerceCategories,
+  parseWooCommerceCategoriesBatchUpdate,
   toWooCommerceProductInput,
 } from '@/services';
 
@@ -22,7 +22,7 @@ export default defineConfig({
       on('task', {
         'seed:categories': async (newCategories) => {
           const rawCategories = await wcService.get('products/categories');
-          const wcOldCategories = parseCategories(rawCategories);
+          const wcOldCategories = parseWooCommerceCategories(rawCategories);
           const oldCategoryIds = wcOldCategories.map((category) => category.id);
 
           await wcService.post('products/categories/batch', {
@@ -32,13 +32,13 @@ export default defineConfig({
           const rawBatchResponse = await wcService.post('products/categories/batch', {
             create: newCategories,
           });
-          const wcBatchResponse = parseCategoriesBatchUpdate(rawBatchResponse);
+          const wcBatchResponse = parseWooCommerceCategoriesBatchUpdate(rawBatchResponse);
 
           return wcBatchResponse.create;
         },
         'seed:products': async (newProducts) => {
           const rawProducts = await wcService.get('products');
-          const wcProducts = parseProducts(rawProducts);
+          const wcProducts = parseWooCommerceProducts(rawProducts);
           const oldProductIds = wcProducts.map((product) => product.id);
           const wcProductInputs = newProducts.map(toWooCommerceProductInput);
 
@@ -47,7 +47,7 @@ export default defineConfig({
             create: wcProductInputs,
           });
 
-          const wcBatchResponse = parseProductsBatchUpdate(rawBatchResponse);
+          const wcBatchResponse = parseWooCommerceProductsBatchUpdate(rawBatchResponse);
 
           return wcBatchResponse.create.map(fromWooCommerceProduct);
         },

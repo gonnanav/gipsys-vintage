@@ -1,8 +1,9 @@
 export { wcService } from './composition';
 export {
-  parseProducts,
-  parseProductsBatchUpdate,
+  parseWooCommerceProducts,
+  parseWooCommerceProductsBatchUpdate,
+  parseWooCommerceCategories,
+  parseWooCommerceCategoriesBatchUpdate,
   fromWooCommerceProduct,
   toWooCommerceProductInput,
-} from './woocommerce/product';
-export { parseCategories, parseCategoriesBatchUpdate } from './woocommerce/category';
+} from './woocommerce';

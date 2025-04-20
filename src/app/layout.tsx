@@ -3,7 +3,7 @@ import { wcService } from '@/services';
 import './globals.css';
 import { AppProvider } from '@/components/provider';
 import { AppLayout } from '@/components/layout';
-import { parseCategories } from '@/services/woocommerce/category';
+import { parseWooCommerceCategories } from '@/services';
 import { Category } from '@/core/category';
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default async function RootLayout({
 
   try {
     const rawCategories = await wcService.get('products/categories');
-    categories = parseCategories(rawCategories);
+    categories = parseWooCommerceCategories(rawCategories);
   } catch (error) {
     console.error(error);
   }
