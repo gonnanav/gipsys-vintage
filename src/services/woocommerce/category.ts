@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { Category, CategoryCreate } from '@/core/category';
 
 const categoriesSchema = z.array(
   z.object({
@@ -9,16 +8,16 @@ const categoriesSchema = z.array(
   }),
 );
 
-export function parseCategories(result: unknown): Category[] {
-  return categoriesSchema.parse(result).map(fromWooCommerceCategory);
+export function parseCategories(result: unknown): WCCategory[] {
+  return categoriesSchema.parse(result);
 }
 
 const categoriesBatchUpdateSchema = z.object({
   create: categoriesSchema,
 });
 
-export function parseCategoriesBatchUpdate(result: unknown): Category[] {
-  return categoriesBatchUpdateSchema.parse(result).create.map(fromWooCommerceCategory);
+export function parseCategoriesBatchUpdate(result: unknown): WCCategoryBatchUpdateResponse {
+  return categoriesBatchUpdateSchema.parse(result);
 }
 
 export interface WCCategory {
@@ -37,19 +36,4 @@ export interface WCCategoryBatchUpdate {
   create?: WCCategoryInput[];
 }
 
-export interface WCCategoryBatchUpdateResponse {
-  delete?: WCCategory[];
-  create?: WCCategory[];
-}
-
-export function fromWooCommerceCategory(category: WCCategory): Category {
-  return {
-    ...category,
-  };
-}
-
-export function toWooCommerceCategoryInput(category: CategoryCreate): WCCategoryInput {
-  return {
-    ...category,
-  };
-}
+export type WCCategoryBatchUpdateResponse = z.infer<typeof categoriesBatchUpdateSchema>;

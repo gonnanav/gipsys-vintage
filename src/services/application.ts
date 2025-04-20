@@ -6,12 +6,7 @@ import {
   toWooCommerceProductInput,
   fromWooCommerceProduct,
 } from './woocommerce/product';
-import {
-  parseCategories,
-  parseCategoriesBatchUpdate,
-  fromWooCommerceCategory,
-  toWooCommerceCategoryInput,
-} from './woocommerce/category';
+import { parseCategories, parseCategoriesBatchUpdate } from './woocommerce/category';
 import { WooCommerceService } from './woocommerce';
 
 export function createApplication(service: WooCommerceService) {
@@ -49,22 +44,22 @@ export function createApplication(service: WooCommerceService) {
   async function replaceAllCategories(newCategories: CategoryCreate[]): Promise<Category[]> {
     const oldCategories = await getCategories();
     const oldCategoryIds = oldCategories.map((category) => category.id);
-    const wcCategories = newCategories.map(toWooCommerceCategoryInput);
 
     await service.post('products/categories/batch', {
       delete: oldCategoryIds,
     });
 
     const result = await service.post('products/categories/batch', {
-      create: wcCategories,
+      create: newCategories,
     });
 
-    return parseCategoriesBatchUpdate(result);
+    return parseCategoriesBatchUpdate(result).create;
   }
 
   async function getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
     const result = await service.get('products/categories', { slug });
-    const [category] = parseCategories(result);
+    const wcCategories = parseCategories(result);
+    const category = wcCategories[0];
 
     if (!category) return null;
 
@@ -72,16 +67,12 @@ export function createApplication(service: WooCommerceService) {
     const wcProducts = parseProducts(rawProducts);
     const products = wcProducts.map(fromWooCommerceProduct);
 
-    return {
-      ...fromWooCommerceCategory(category),
-      products,
-    };
+    return { ...category, products };
   }
 
   async function getCategoriesSafe(): Promise<Category[]> {
     try {
-      const result = await service.get('products/categories');
-      return parseCategories(result);
+      return getCategories();
     } catch (error) {
       console.error(error);
       return [];
