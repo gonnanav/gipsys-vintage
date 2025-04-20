@@ -9,10 +9,12 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ product }: ProductPageProps) {
+  const { name, price, description, images } = product;
+
   return (
     <ProductLayout
-      productGallery={<ProductGallery productImages={product.images} />}
-      productDetails={<ProductDetails product={product} />}
+      productGallery={<ProductGallery productImages={images} />}
+      productDetails={<ProductDetails name={name} price={price} description={description} />}
       addToCartButton={<AddToCartButton product={product} />}
     />
   );

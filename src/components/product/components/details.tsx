@@ -1,14 +1,13 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Product } from '@/core/product';
 
 export interface ProductDetailsProps {
-  product: Product;
+  name: string;
+  price: string;
+  description: string;
 }
 
-export function ProductDetails({ product }: ProductDetailsProps) {
-  const { name, price, description } = product;
-
+export function ProductDetails({ name, price, description }: ProductDetailsProps) {
   return (
     <Stack spacing={2}>
       <Stack spacing={1}>
