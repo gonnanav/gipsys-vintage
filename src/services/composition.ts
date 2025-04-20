@@ -10,11 +10,4 @@ export const wcService = createWooCommerceService({
   customerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
 });
 
-export const {
-  getProducts,
-  getProduct,
-  getCategoryWithProducts,
-  getCategoriesSafe,
-  replaceAllProducts,
-  replaceAllCategories,
-} = createApplication(wcService);
+export const { replaceAllProducts, replaceAllCategories } = createApplication(wcService);

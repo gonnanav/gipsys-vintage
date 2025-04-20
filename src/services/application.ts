@@ -1,5 +1,5 @@
 import { Product, ProductCreate } from '@/core/product';
-import { Category, CategoryCreate, CategoryWithProducts } from '@/core/category';
+import { Category, CategoryCreate } from '@/core/category';
 import {
   parseProducts,
   parseProductsBatchUpdate,
@@ -10,14 +10,6 @@ import { parseCategories, parseCategoriesBatchUpdate } from './woocommerce/categ
 import { WooCommerceService } from './woocommerce';
 
 export function createApplication(service: WooCommerceService) {
-  async function getProduct(slug: string): Promise<Product | null> {
-    const rawProducts = await service.get('products', { slug });
-    const wcProducts = parseProducts(rawProducts);
-    const products = wcProducts.map(fromWooCommerceProduct);
-
-    return products[0] ?? null;
-  }
-
   async function getProducts(): Promise<Product[]> {
     const rawProducts = await service.get('products');
     const wcProducts = parseProducts(rawProducts);
@@ -57,29 +49,6 @@ export function createApplication(service: WooCommerceService) {
     return wcBatchResponse.create;
   }
 
-  async function getCategoryWithProducts(slug: string): Promise<CategoryWithProducts | null> {
-    const rawCategories = await service.get('products/categories', { slug });
-    const wcCategories = parseCategories(rawCategories);
-    const category = wcCategories[0];
-
-    if (!category) return null;
-
-    const rawProducts = await service.get('products', { category: category.id.toString() });
-    const wcProducts = parseProducts(rawProducts);
-    const products = wcProducts.map(fromWooCommerceProduct);
-
-    return { ...category, products };
-  }
-
-  async function getCategoriesSafe(): Promise<Category[]> {
-    try {
-      return getCategories();
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
-
   async function getCategories(): Promise<Category[]> {
     const rawCategories = await service.get('products/categories');
 
@@ -88,9 +57,6 @@ export function createApplication(service: WooCommerceService) {
 
   return {
     getProducts,
-    getProduct,
-    getCategoryWithProducts,
-    getCategoriesSafe,
     replaceAllProducts,
     replaceAllCategories,
   };
