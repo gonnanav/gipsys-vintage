@@ -1,2 +1,8 @@
-export { replaceAllProducts, replaceAllCategories, wcService } from './composition';
-export { parseProducts, fromWooCommerceProduct } from './woocommerce/product';
+export { wcService } from './composition';
+export {
+  parseProducts,
+  parseProductsBatchUpdate,
+  fromWooCommerceProduct,
+  toWooCommerceProductInput,
+} from './woocommerce/product';
+export { parseCategories, parseCategoriesBatchUpdate } from './woocommerce/category';
