@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { wcService } from '@/services';
 import { Category } from '@/core/category';
-import { parseCategories } from '@/parsers/category';
+import { parseCategories } from '@/transformers/category';
 import { AppProvider } from '@/components/provider';
 import { AppLayout } from '@/components/layout';
 import './globals.css';

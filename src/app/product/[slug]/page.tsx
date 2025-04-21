@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { wcService } from '@/services';
-import { parseFirstProduct } from '@/parsers/product';
+import { parseFirstProduct } from '@/transformers/product';
 import { ProductPage } from '@/components/product';
 
 type PageProps = {

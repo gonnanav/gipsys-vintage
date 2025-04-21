@@ -7,9 +7,9 @@ loadEnvConfig(rootProjectDir);
 
 import { defineConfig } from 'cypress';
 import { wcService } from '@/services';
-import { parseCategoriesIds, parseCategoriesBatchUpdate } from '@/parsers/category';
-import { parseProductsIds, parseProductsBatchUpdate } from '@/parsers/product';
-import { toWooCommerceProductInput } from '@/parsers/woocommerce/product';
+import { parseCategoriesIds, parseCategoriesBatchUpdate } from '@/transformers/category';
+import { parseProductsIds, parseProductsBatchUpdate } from '@/transformers/product';
+import { toWooCommerceProductInput } from '@/transformers/woocommerce/product';
 
 export default defineConfig({
   e2e: {

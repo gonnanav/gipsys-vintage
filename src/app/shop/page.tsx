@@ -1,5 +1,5 @@
 import { wcService } from '@/services';
-import { parseProducts } from '@/parsers/product';
+import { parseProducts } from '@/transformers/product';
 import { ShopPage } from '@/components/shop';
 
 export default async function Page() {

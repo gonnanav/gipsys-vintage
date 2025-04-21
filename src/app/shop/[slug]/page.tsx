@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { wcService } from '@/services';
-import { parseFirstCategory } from '@/parsers/category';
-import { parseProducts } from '@/parsers/product';
+import { parseFirstCategory } from '@/transformers/category';
+import { parseProducts } from '@/transformers/product';
 import { ShopPage } from '@/components/shop';
 
 interface PageProps {
