@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { Product } from '@/core/product';
 import { ShopPage, ShopPageLoading } from '@/components/shop';
 import { leatherJacket, puffSleeveTop, cottonScarf } from '@/fixtures/products';
 
@@ -18,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Full: Story = {
   args: {
-    products: [leatherJacket, puffSleeveTop, cottonScarf],
+    products: [toProps(leatherJacket), toProps(puffSleeveTop), toProps(cottonScarf)],
   },
 };
 
@@ -34,3 +35,12 @@ export const LoadingPage: Story = {
     products: [],
   },
 };
+
+function toProps(product: Product) {
+  const { id, name, slug, formattedPrice, mainImage } = product;
+  const href = `/product/${slug}`;
+  const price = formattedPrice;
+  const imageSrc = mainImage.src;
+
+  return { id, name, imageSrc, href, price };
+}

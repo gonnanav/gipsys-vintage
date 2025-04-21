@@ -1,6 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { cottonScarf, leatherJacket } from '@/fixtures/products';
-import { ShopPage, ShopPageProps } from '@/components/shop';
+import { ShopPage, ShopPageProps, Product } from '@/components/shop';
 
 it('renders the shop page title', () => {
   renderShopPage({ title: 'My Shop' });
@@ -15,6 +14,8 @@ it('renders the no-products message when there are no products', () => {
 });
 
 it('renders a product card for each product', () => {
+  const cottonScarf = createTestProduct({ name: 'Cotton Scarf' });
+  const leatherJacket = createTestProduct({ name: 'Leather Jacket' });
   renderShopPage({ products: [cottonScarf, leatherJacket] });
 
   const productCards = getAllProductCards();
@@ -25,6 +26,11 @@ it('renders a product card for each product', () => {
 });
 
 it("renders a product card with the product's name, price, and image", () => {
+  const leatherJacket = createTestProduct({
+    name: 'Leather Jacket',
+    price: '100',
+    imageSrc: '/leather-jacket.webp',
+  });
   renderShopPage({ products: [leatherJacket] });
 
   const productCard = getAllProductCards()[0];
@@ -40,6 +46,21 @@ function renderShopPage(props: Partial<ShopPageProps>) {
   };
 
   render(<ShopPage {...defaultProps} {...props} />);
+}
+
+const defaultProduct = {
+  id: 1,
+  name: 'Test Product',
+  price: '100',
+  imageSrc: '/test-product.webp',
+  href: '/product/test-product',
+};
+
+function createTestProduct(props: Partial<Product>): Product {
+  return {
+    ...defaultProduct,
+    ...props,
+  };
 }
 
 function getTitle(name: string) {

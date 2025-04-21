@@ -1,4 +1,3 @@
-import { Product } from '@/core/product';
 import { ShopLayout } from './components/shop-layout';
 import { ProductCards } from './components/product-cards';
 import { NoProductsMessage } from './components/no-products-message';
@@ -8,9 +7,15 @@ export interface ShopPageProps {
   products: Product[];
 }
 
-export function ShopPage(props: ShopPageProps) {
-  const { title } = props;
-  const products = props.products.map(toProps);
+export interface Product {
+  id: number;
+  name: string;
+  imageSrc: string;
+  href: string;
+  price: string;
+}
+
+export function ShopPage({ title, products }: ShopPageProps) {
   const hasProducts = products.length > 0;
 
   return (
@@ -18,13 +23,4 @@ export function ShopPage(props: ShopPageProps) {
       {hasProducts ? <ProductCards products={products} /> : <NoProductsMessage />}
     </ShopLayout>
   );
-}
-
-function toProps(product: Product) {
-  const { id, name, slug, formattedPrice, mainImage } = product;
-  const href = `/product/${slug}`;
-  const price = formattedPrice;
-  const imageSrc = mainImage.src;
-
-  return { id, name, imageSrc, href, price };
 }

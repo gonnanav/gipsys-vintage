@@ -1,3 +1,3 @@
 export { ShopPage } from './shop';
-export type { ShopPageProps } from './shop';
+export type { ShopPageProps, Product } from './shop';
 export { ShopPageLoading } from './loading';
