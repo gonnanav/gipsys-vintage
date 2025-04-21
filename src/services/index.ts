@@ -1,10 +1,15 @@
 import { parseEnv } from './env';
-import { createWooCommerceService } from './woocommerce';
+import { encodeCredentials, buildApiUrl } from './utils';
+import { createFetchApi } from './fetch-api';
+import { createService } from './woocommerce';
 
 const env = parseEnv();
 
-export const wcService = createWooCommerceService({
-  url: env.WOOCOMMERCE_URL,
-  customerKey: env.WOOCOMMERCE_CUSTOMER_KEY,
-  customerSecret: env.WOOCOMMERCE_CUSTOMER_SECRET,
-});
+const credentials = encodeCredentials(
+  env.WOOCOMMERCE_CUSTOMER_KEY,
+  env.WOOCOMMERCE_CUSTOMER_SECRET,
+);
+const apiUrl = buildApiUrl(env.WOOCOMMERCE_URL);
+const fetchApi = createFetchApi(apiUrl, credentials);
+
+export const wcService = createService(fetchApi);
