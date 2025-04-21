@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { ShopPage, ShopPageProps, Product } from '@/components/shop';
+import { ShopPage, ShopPageProps, ShopPageProduct } from '@/components/shop';
 
 it('renders the shop page title', () => {
   renderShopPage({ title: 'My Shop' });
@@ -56,7 +56,7 @@ const defaultProduct = {
   href: '/product/test-product',
 };
 
-function createTestProduct(props: Partial<Product>): Product {
+function createTestProduct(props: Partial<ShopPageProduct>): ShopPageProduct {
   return {
     ...defaultProduct,
     ...props,

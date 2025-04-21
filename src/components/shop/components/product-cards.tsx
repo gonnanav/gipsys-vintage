@@ -1,16 +1,9 @@
 import { ProductsLayout } from './products-layout';
 import { ProductCard } from './product-card';
-
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  imageSrc: string;
-  href: string;
-}
+import { ShopPageProduct } from '@/components/shop';
 
 interface ProductCardsProps {
-  products: Product[];
+  products: ShopPageProduct[];
 }
 
 export function ProductCards({ products }: ProductCardsProps) {
