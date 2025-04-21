@@ -8,7 +8,9 @@ export interface ShopPageProps {
   products: Product[];
 }
 
-export function ShopPage({ title, products }: ShopPageProps) {
+export function ShopPage(props: ShopPageProps) {
+  const { title } = props;
+  const products = props.products.map(toProps);
   const hasProducts = products.length > 0;
 
   return (
@@ -16,4 +18,13 @@ export function ShopPage({ title, products }: ShopPageProps) {
       {hasProducts ? <ProductCards products={products} /> : <NoProductsMessage />}
     </ShopLayout>
   );
+}
+
+function toProps(product: Product) {
+  const { id, name, slug, formattedPrice, mainImage } = product;
+  const href = `/product/${slug}`;
+  const price = formattedPrice;
+  const imageSrc = mainImage.src;
+
+  return { id, name, imageSrc, href, price };
 }

@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
-export interface ProductCardProps {
+interface ProductCardProps {
   name: string;
   price: string;
   imageSrc: string;
