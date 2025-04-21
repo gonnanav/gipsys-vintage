@@ -1,7 +1,8 @@
-import { wcService, fromWooCommerceProduct, parseWooCommerceProducts } from '@/services';
-import { ShopPage } from '@/components/shop';
 import { notFound } from 'next/navigation';
-import { parseWooCommerceCategories } from '@/services';
+import { wcService } from '@/services';
+import { parseFirstCategory } from '@/parsers/category';
+import { parseProducts } from '@/parsers/product';
+import { ShopPage } from '@/components/shop';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -11,14 +12,13 @@ export default async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
   const rawCategories = await wcService.get('products/categories', { slug });
-  const wcCategories = parseWooCommerceCategories(rawCategories);
-  const wcCategory = wcCategories[0];
+  const category = parseFirstCategory(rawCategories);
 
-  if (!wcCategory) notFound();
+  if (!category) notFound();
 
-  const rawProducts = await wcService.get('products', { category: wcCategory.id.toString() });
-  const wcProducts = parseWooCommerceProducts(rawProducts);
-  const products = wcProducts.map(fromWooCommerceProduct);
+  const { id, name } = category;
+  const rawProducts = await wcService.get('products', { category: id.toString() });
+  const products = parseProducts(rawProducts);
 
-  return <ShopPage title={wcCategory.name} products={products} />;
+  return <ShopPage title={name} products={products} />;
 }

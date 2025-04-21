@@ -1,10 +1,10 @@
-import { wcService, fromWooCommerceProduct, parseWooCommerceProducts } from '@/services';
+import { wcService } from '@/services';
+import { parseProducts } from '@/parsers/product';
 import { ShopPage } from '@/components/shop';
 
 export default async function Page() {
   const rawProducts = await wcService.get('products');
-  const wcProducts = parseWooCommerceProducts(rawProducts);
-  const products = wcProducts.map(fromWooCommerceProduct);
+  const products = parseProducts(rawProducts);
 
   return <ShopPage title="חנות" products={products} />;
 }

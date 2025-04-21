@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { wcService } from '@/services';
-import './globals.css';
+import { Category } from '@/core/category';
+import { parseCategories } from '@/parsers/category';
 import { AppProvider } from '@/components/provider';
 import { AppLayout } from '@/components/layout';
-import { parseWooCommerceCategories } from '@/services';
-import { Category } from '@/core/category';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "Gipsy's Vintage",
@@ -19,7 +19,7 @@ export default async function RootLayout({
 
   try {
     const rawCategories = await wcService.get('products/categories');
-    categories = parseWooCommerceCategories(rawCategories);
+    categories = parseCategories(rawCategories);
   } catch (error) {
     console.error(error);
   }
