@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { wcService } from '@/services';
-import { Category } from '@/core/category';
-import { parseCategories } from '@/transformers/category';
+import { parseNavCategories } from '@/transformers/layout';
 import { AppProvider } from '@/components/provider';
-import { AppLayout } from '@/components/layout';
+import { AppLayout, NavCategory } from '@/components/layout';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,11 +14,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let categories: Category[] = [];
+  let categories: NavCategory[] = [];
 
   try {
     const rawCategories = await wcService.get('products/categories');
-    categories = parseCategories(rawCategories);
+    categories = parseNavCategories(rawCategories);
   } catch (error) {
     console.error(error);
   }

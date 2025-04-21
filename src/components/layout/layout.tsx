@@ -1,11 +1,11 @@
-import { Category } from '@/core/category';
+import { NavCategory } from './types';
 import { Header } from './header';
 import { Main } from './components/main';
 import { NavDrawer } from './nav';
 import { CartDrawer } from './cart';
 
 export interface AppLayoutProps {
-  categories?: Category[];
+  categories?: NavCategory[];
   children: React.ReactNode;
 }
 

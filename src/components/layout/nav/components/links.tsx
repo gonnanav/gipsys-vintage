@@ -3,11 +3,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Category } from '@/core/category';
 import Divider from '@mui/material/Divider';
+import { NavCategory } from '@/components/layout';
 
 interface NavLinksProps {
-  categories?: Category[];
+  categories?: NavCategory[];
   onClose: () => void;
 }
 
@@ -31,7 +31,7 @@ export function NavLinks({ categories, onClose }: NavLinksProps) {
 }
 
 interface NavCategoryLinksProps {
-  categories?: Category[];
+  categories?: NavCategory[];
   onClose: () => void;
 }
 
@@ -41,24 +41,22 @@ function NavCategoryLinks({ categories = [], onClose }: NavCategoryLinksProps) {
   return (
     <>
       <Divider component="li" />
-      {categories.map((category) => (
-        <NavCategoryLink key={category.id} category={category} onClose={onClose} />
+      {categories.map(({ id, name, href }) => (
+        <NavCategoryLink key={id} name={name} href={href} onClose={onClose} />
       ))}
     </>
   );
 }
 
 interface NavCategoryLinkProps {
-  category: Category;
+  name: string;
+  href: string;
   onClose: () => void;
 }
 
-function NavCategoryLink({ category, onClose }: NavCategoryLinkProps) {
-  const { id, name, slug } = category;
-  const href = `/shop/${slug}`;
-
+function NavCategoryLink({ name, href, onClose }: NavCategoryLinkProps) {
   return (
-    <NavLink key={id} href={href} onClose={onClose}>
+    <NavLink href={href} onClose={onClose}>
       {name}
     </NavLink>
   );

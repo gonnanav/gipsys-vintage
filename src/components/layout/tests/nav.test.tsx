@@ -1,10 +1,9 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Category } from '@/core/category';
 import { AppState } from '@/components/store';
 import { renderAppLayout } from './test-utils';
-import { createCategory } from '@/fixtures/categories';
 import { AppLayoutProps } from '../layout';
+import { NavCategory } from '../types';
 
 it('opens the navigation drawer when clicking the open navigation button', async () => {
   const user = userEvent.setup();
@@ -49,8 +48,8 @@ it('renders the policy page link', async () => {
 });
 
 it('renders the categories pages links', () => {
-  const pantsCategory = createCategory('מכנסיים', 'pants');
-  const shirtsCategory = createCategory('חולצות', 'shirts');
+  const pantsCategory = createTestCategory({ name: 'מכנסיים', href: '/shop/pants' });
+  const shirtsCategory = createTestCategory({ name: 'חולצות', href: '/shop/shirts' });
 
   renderWithNavOpen({}, { categories: [pantsCategory, shirtsCategory] });
 
@@ -96,6 +95,16 @@ function getWebsitePolicyLink() {
   return screen.getByRole('link', { name: 'תקנון האתר' });
 }
 
-function getCategoryLink(category: Category) {
+function getCategoryLink(category: NavCategory) {
   return screen.getByRole('link', { name: category.name });
+}
+
+const defaultCategory: NavCategory = {
+  id: 1,
+  name: 'test',
+  href: '/test',
+};
+
+function createTestCategory(category: Partial<NavCategory>): NavCategory {
+  return { ...defaultCategory, ...category };
 }
