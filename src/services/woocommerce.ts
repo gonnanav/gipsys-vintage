@@ -5,8 +5,8 @@ interface WooCommerceConfig {
 }
 
 export interface WooCommerceService {
-  get: <T>(endpoint: string, searchParams?: Record<string, string>) => Promise<T>;
-  post: <T>(endpoint: string, body?: Record<string, unknown>) => Promise<T>;
+  get: (endpoint: string, searchParams?: Record<string, string>) => Promise<unknown>;
+  post: (endpoint: string, body?: Record<string, unknown>) => Promise<unknown>;
 }
 
 export function createWooCommerceService({
@@ -21,15 +21,15 @@ export function createWooCommerceService({
   return createService(fetchApi);
 }
 
-type FetchApi = <T>(endpoint: string, init?: RequestInit) => Promise<T>;
+type FetchApi = (endpoint: string, init?: RequestInit) => Promise<unknown>;
 
 function createService(fetchApi: FetchApi): WooCommerceService {
-  async function get<T>(endpoint: string, searchParams?: Record<string, string>) {
-    return fetchApi<T>(buildEndpoint(endpoint, searchParams));
+  async function get(endpoint: string, searchParams?: Record<string, string>) {
+    return fetchApi(buildEndpoint(endpoint, searchParams));
   }
 
-  async function post<T>(endpoint: string, body?: Record<string, unknown>) {
-    return fetchApi<T>(endpoint, {
+  async function post(endpoint: string, body?: Record<string, unknown>) {
+    return fetchApi(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function createService(fetchApi: FetchApi): WooCommerceService {
 }
 
 function createFetchApi(apiUrl: URL, credentials: string): FetchApi {
-  return async <T>(endpoint: string, init?: RequestInit): Promise<T> => {
+  return async (endpoint: string, init?: RequestInit): Promise<unknown> => {
     const endpointUrl = new URL(endpoint, apiUrl);
 
     const response = await fetch(endpointUrl, {
