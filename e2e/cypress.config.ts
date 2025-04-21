@@ -6,9 +6,10 @@ const rootProjectDir = path.dirname(process.cwd());
 loadEnvConfig(rootProjectDir);
 
 import { defineConfig } from 'cypress';
-import { wcService, toWooCommerceProductInput } from '@/services';
+import { wcService } from '@/services';
 import { parseCategoriesIds, parseCategoriesBatchUpdate } from '@/parsers/category';
 import { parseProductsIds, parseProductsBatchUpdate } from '@/parsers/product';
+import { toWooCommerceProductInput } from '@/parsers/woocommerce/product';
 
 export default defineConfig({
   e2e: {
