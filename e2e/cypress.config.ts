@@ -6,15 +6,9 @@ const rootProjectDir = path.dirname(process.cwd());
 loadEnvConfig(rootProjectDir);
 
 import { defineConfig } from 'cypress';
-import {
-  wcService,
-  fromWooCommerceProduct,
-  parseWooCommerceProducts,
-  parseWooCommerceProductsBatchUpdate,
-  parseWooCommerceCategories,
-  parseWooCommerceCategoriesBatchUpdate,
-  toWooCommerceProductInput,
-} from '@/services';
+import { wcService, toWooCommerceProductInput } from '@/services';
+import { parseCategoriesIds, parseCategoriesBatchUpdate } from '@/parsers/category';
+import { parseProductsIds, parseProductsBatchUpdate } from '@/parsers/product';
 
 export default defineConfig({
   e2e: {
@@ -22,34 +16,28 @@ export default defineConfig({
       on('task', {
         'seed:categories': async (newCategories) => {
           const rawCategories = await wcService.get('products/categories');
-          const wcOldCategories = parseWooCommerceCategories(rawCategories);
-          const oldCategoryIds = wcOldCategories.map((category) => category.id);
+          const oldCategoryIds = parseCategoriesIds(rawCategories);
 
           await wcService.post('products/categories/batch', {
             delete: oldCategoryIds,
           });
-
-          const rawBatchResponse = await wcService.post('products/categories/batch', {
+          const rawBatchUpdate = await wcService.post('products/categories/batch', {
             create: newCategories,
           });
-          const wcBatchResponse = parseWooCommerceCategoriesBatchUpdate(rawBatchResponse);
 
-          return wcBatchResponse.create;
+          return parseCategoriesBatchUpdate(rawBatchUpdate);
         },
         'seed:products': async (newProducts) => {
           const rawProducts = await wcService.get('products');
-          const wcProducts = parseWooCommerceProducts(rawProducts);
-          const oldProductIds = wcProducts.map((product) => product.id);
+          const oldProductIds = parseProductsIds(rawProducts);
           const wcProductInputs = newProducts.map(toWooCommerceProductInput);
 
-          const rawBatchResponse = await wcService.post('products/batch', {
+          const rawBatchUpdate = await wcService.post('products/batch', {
             delete: oldProductIds,
             create: wcProductInputs,
           });
 
-          const wcBatchResponse = parseWooCommerceProductsBatchUpdate(rawBatchResponse);
-
-          return wcBatchResponse.create.map(fromWooCommerceProduct);
+          return parseProductsBatchUpdate(rawBatchUpdate);
         },
       });
     },

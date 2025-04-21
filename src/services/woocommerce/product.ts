@@ -1,33 +1,4 @@
-import { z } from 'zod';
 import { createProduct, Product, ProductCreate } from '@/core/product';
-
-const productsSchema = z.array(
-  z.object({
-    id: z.number(),
-    name: z.string(),
-    slug: z.string(),
-    regular_price: z.string(),
-    description: z.string(),
-    images: z.array(
-      z.object({
-        src: z.string(),
-        alt: z.string(),
-      }),
-    ),
-  }),
-);
-
-export function parseProducts(result: unknown): WCProduct[] {
-  return productsSchema.parse(result);
-}
-
-const productsBatchUpdateSchema = z.object({
-  create: productsSchema,
-});
-
-export function parseProductsBatchUpdate(result: unknown): WCProductBatchUpdateResponse {
-  return productsBatchUpdateSchema.parse(result);
-}
 
 export interface WCProduct {
   id: number;
@@ -50,8 +21,6 @@ export interface WCProductBatchUpdate {
   delete?: number[];
   create?: WCProductInput[];
 }
-
-export type WCProductBatchUpdateResponse = z.infer<typeof productsBatchUpdateSchema>;
 
 export interface WCProductImage {
   src: string;
