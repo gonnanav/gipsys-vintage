@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
 import { wcService } from '@/services';
 import { parseFirstCategory } from '@/transformers/category';
-import { parseProducts } from '@/transformers/product';
 import { ShopPage } from '@/components/shop';
-import { Product } from '@/core/product';
+import { parseShopPageProducts } from '@/transformers/shop';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,17 +18,7 @@ export default async function Page({ params }: PageProps) {
 
   const { id, name } = category;
   const rawProducts = await wcService.get('products', { category: id.toString() });
-  const products = parseProducts(rawProducts);
-  const shopPageProducts = products.map(toProps);
+  const products = parseShopPageProducts(rawProducts);
 
-  return <ShopPage title={name} products={shopPageProducts} />;
-}
-
-function toProps(product: Product) {
-  const { id, name, slug, formattedPrice, mainImage } = product;
-  const href = `/product/${slug}`;
-  const price = formattedPrice;
-  const imageSrc = mainImage.src;
-
-  return { id, name, imageSrc, href, price };
+  return <ShopPage title={name} products={products} />;
 }
