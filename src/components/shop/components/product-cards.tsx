@@ -20,7 +20,7 @@ function toProductCardProps(product: Product): ProductCardProps {
   const { name, slug, formattedPrice, mainImage } = product;
   const href = `/product/${slug}`;
   const price = formattedPrice;
-  const src = mainImage.src;
+  const imageSrc = mainImage.src;
 
-  return { name, src, href, price };
+  return { name, imageSrc, href, price };
 }
