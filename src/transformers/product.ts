@@ -19,8 +19,9 @@ export function parseProductsIds(rawProducts: unknown): number[] {
 
 export function parseProducts(rawProducts: unknown): Product[] {
   const wcProducts = parseWooCommerceProducts(rawProducts);
+  const products = wcProducts.map(fromWooCommerceProduct);
 
-  return wcProducts.map(fromWooCommerceProduct);
+  return products.sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 export function parseProductsBatchUpdate(rawProducts: unknown): Product[] {

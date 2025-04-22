@@ -3,7 +3,7 @@ import createMDX from '@next/mdx';
 
 const nextConfig: NextConfig = {
   eslint: {
-    dirs: ['src', 'e2e', '.storybook'],
+    dirs: ['src', 'tests', '.storybook'],
   },
   images: {
     remotePatterns: [

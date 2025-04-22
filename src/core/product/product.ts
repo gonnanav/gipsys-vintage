@@ -7,6 +7,7 @@ export interface Product {
   description: string;
   images: ProductImage[];
   mainImage: ProductImage;
+  sortOrder: number;
 }
 
 export interface ProductInput {
@@ -16,6 +17,7 @@ export interface ProductInput {
   price: string;
   description?: string;
   images?: ProductImageInput[];
+  sortOrder?: number;
 }
 
 export interface ProductImage {
@@ -34,6 +36,7 @@ export interface ProductCreate {
   description?: string;
   images?: ProductImage[];
   categoryId?: number;
+  sortOrder?: number;
 }
 
 export const placeholderImage: ProductImage = {
@@ -45,7 +48,7 @@ export function createProduct(input: ProductInput): Product {
   const mainImage = getMainImage(input.images);
   const formattedPrice = formatPrice(input.price);
 
-  return { description: '', images: [], ...input, mainImage, formattedPrice };
+  return { description: '', images: [], sortOrder: 0, ...input, mainImage, formattedPrice };
 }
 
 function getMainImage(images?: ProductImageInput[]): ProductImage {
