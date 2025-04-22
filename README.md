@@ -15,7 +15,7 @@ This project implements a full-stack e-commerce application for Gipsy's Vintage,
 ## Technical Highlights
 
 - **Full-Stack Implementation**: Next.js with TypeScript, React Server Components, and server-side rendering
-- **Testing**: Jest for unit testing, React Testing Library for component testing, and Cypress for E2E tests
+- **Testing**: Jest for unit testing, React Testing Library for component testing, and Playwright for E2E tests
 - **State Management**: Zustand for global state management with custom hooks for encapsulating data access
 - **API Integration**: Type-safe WooCommerce REST API client with proper error handling
 - **Development Workflow**: ESLint, Prettier, TypeScript, and Jest for code quality
@@ -67,7 +67,6 @@ npm run ts:check
 # Run tests
 npm run test        # Unit tests
 npm run e2e         # End-to-end tests
-npm run cy:open     # Open Cypress test runner
 
 # Run all checks (format, lint, type check, test)
 npm run check
