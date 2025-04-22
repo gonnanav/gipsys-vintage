@@ -3,9 +3,9 @@ import { wcService } from '@/services';
 import { parseFirstProduct } from '@/transformers/product';
 import { ProductPage } from '@/components/product';
 
-type PageProps = {
+interface PageProps {
   params: Promise<{ slug: string }>;
-};
+}
 
 export default async function Page({ params }: PageProps) {
   const slug = (await params).slug;

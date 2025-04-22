@@ -2,7 +2,7 @@
 
 import { ErrorPage } from '@/components/error';
 
-export interface ErrorProps {
+interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
