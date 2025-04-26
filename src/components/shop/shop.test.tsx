@@ -14,8 +14,8 @@ it('renders the no-products message when there are no products', () => {
 });
 
 it('renders a product card for each product', () => {
-  const cottonScarf = createTestProduct({ name: 'Cotton Scarf' });
-  const leatherJacket = createTestProduct({ name: 'Leather Jacket' });
+  const cottonScarf = createTestProduct({ id: 1, name: 'Cotton Scarf' });
+  const leatherJacket = createTestProduct({ id: 2, name: 'Leather Jacket' });
   renderShopPage({ products: [cottonScarf, leatherJacket] });
 
   const productCards = getAllProductCards();

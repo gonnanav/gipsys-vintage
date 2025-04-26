@@ -48,8 +48,8 @@ it('renders the policy page link', async () => {
 });
 
 it('renders the categories pages links', () => {
-  const pantsCategory = createTestCategory({ name: 'מכנסיים', href: '/shop/pants' });
-  const shirtsCategory = createTestCategory({ name: 'חולצות', href: '/shop/shirts' });
+  const pantsCategory = createTestCategory({ id: 1, name: 'מכנסיים', href: '/shop/pants' });
+  const shirtsCategory = createTestCategory({ id: 2, name: 'חולצות', href: '/shop/shirts' });
 
   renderWithNavOpen({}, { categories: [pantsCategory, shirtsCategory] });
 
