@@ -13,6 +13,7 @@ const productSchema = z.object({
   regular_price: z.string(),
   description: z.string(),
   images: z.array(productImageSchema),
+  menu_order: z.number(),
 });
 
 const productsSchema = z.array(productSchema);
@@ -42,21 +43,23 @@ export interface WCProductInput {
 }
 
 export function fromWooCommerceProduct(product: WCProduct): Product {
-  const { regular_price, ...rest } = product;
+  const { regular_price, menu_order, ...rest } = product;
 
   return createProduct({
     ...rest,
     price: regular_price,
+    sortOrder: menu_order,
   });
 }
 
 export function toWooCommerceProductInput(product: ProductCreate): WCProductInput {
-  const { price, categoryId, ...rest } = product;
+  const { price, categoryId, sortOrder, ...rest } = product;
   const categories = categoryId && [{ id: categoryId }];
 
   return {
     ...rest,
     regular_price: price,
     ...(categories && { categories }),
+    ...(sortOrder && { menu_order: sortOrder }),
   };
 }
