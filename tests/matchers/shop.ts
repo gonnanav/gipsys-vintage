@@ -1,67 +1,35 @@
+import { expect, ExpectMatcherState } from '@playwright/test';
 import { ShopPagePom } from 'tests/poms/shop-page';
 
 export async function toHaveProductCards(
+  this: ExpectMatcherState,
   shopPage: ShopPagePom,
   products: { name: string; price: string }[],
 ) {
-  const count = await shopPage.productCards.count();
-  const enhancedProducts = await areVisible(shopPage, products);
+  const productNames = products.map((p) => p.name);
+  const productNamesStr = this.utils.stringify(productNames);
 
-  if (count !== products.length) {
+  try {
+    await expect(shopPage.productCardHeadings).toHaveText(productNames);
+  } catch (e: any) {
+    const { expected, actual } = e.matcherResult;
+    const diff = this.utils.printDiffOrStringify(
+      expected,
+      actual,
+      'Expected product cards:',
+      'Received product cards:',
+      false,
+    );
+
     return {
       pass: false,
-      message: () => `Expected ${products.length} product cards, but got ${count}`,
-    };
-  }
-
-  const messages = enhancedProducts.map(({ name, price, isVisible }) => ({
-    message: `${name} ${price}`,
-    isVisible,
-  }));
-  const { missing, present } = partitionProducts(messages);
-
-  if (missing.length) {
-    return {
-      pass: false,
-      message: () => getMessage('Expected shop page to have the following product cards:', missing),
+      message: () => `product cards found in shop page are not as expected.\n\n${diff}`,
     };
   }
 
   return {
     pass: true,
     message: () =>
-      getMessage('Expected shop page to not have the following product cards:', present),
+      `expected shop page not to have the following product cards: ${productNamesStr}, but it does.`,
   };
-}
-
-async function areVisible(shopPage: ShopPagePom, products: { name: string; price: string }[]) {
-  return Promise.all(
-    products.map(async (product) => {
-      const isVisible = await shopPage.getProductCard(product).isVisible();
-
-      return {
-        ...product,
-        isVisible,
-      };
-    }),
-  );
-}
-
-function partitionProducts(messages: { message: string; isVisible: boolean }[]) {
-  const missing: string[] = [];
-  const present: string[] = [];
-
-  for (const { message, isVisible } of messages) {
-    if (isVisible) {
-      present.push(message);
-    } else {
-      missing.push(message);
-    }
-  }
-
-  return { missing, present };
-}
-
-function getMessage(mainMessage: string, messages: string[]) {
-  return [mainMessage, ...messages].join('\n');
 }

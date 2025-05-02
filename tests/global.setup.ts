@@ -52,7 +52,12 @@ async function seedCategories(newCategories: CategoryCreate[]): Promise<Category
 async function seedProducts(newProducts: ProductCreate[]): Promise<Product[]> {
   const rawProducts = await wcService.get('products');
   const oldProductIds = parseProductsIds(rawProducts);
-  const wcProductInputs = newProducts.map(toWooCommerceProductInput);
+  const wcProductInputs = newProducts.map((p, index) =>
+    toWooCommerceProductInput({
+      ...p,
+      sortOrder: index,
+    }),
+  );
 
   await wcService.post('products/batch', {
     delete: oldProductIds,

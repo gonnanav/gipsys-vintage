@@ -4,6 +4,7 @@ export interface ShopPagePom {
   url: string;
   mainHeading: Locator;
   productCards: Locator;
+  productCardHeadings: Locator;
   goto: (category?: string) => Promise<Response | null>;
   getHeading: (name: string) => Locator;
   getProductCard: (product: { name: string; price: string }) => Locator;
@@ -16,6 +17,7 @@ export function createShopPage(page: Page): ShopPagePom {
   const getHeading = (name: string) => page.getByRole('heading', { level: 1, name });
   const mainHeading = getHeading('חנות');
   const productCards = page.getByRole('article');
+  const productCardHeadings = productCards.getByRole('heading', { level: 2 });
   const getProductCard = ({ name, price }: { name: string; price: string }) =>
     productCards
       .filter({ hasText: name })
@@ -28,6 +30,7 @@ export function createShopPage(page: Page): ShopPagePom {
     url,
     mainHeading,
     productCards,
+    productCardHeadings,
     goto,
     getHeading,
     getProductCard,
