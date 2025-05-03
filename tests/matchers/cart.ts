@@ -1,42 +1,34 @@
+import { expect, ExpectMatcherState } from '@playwright/test';
 import { CartPom } from 'tests/poms/cart';
 
 export async function toHaveCartItems(
+  this: ExpectMatcherState,
   cart: CartPom,
   expectedItems: { name: string; price: string }[],
 ) {
-  const itemsCount = await cart.items.count();
+  const itemNames = expectedItems.map(({ name }) => name);
+  const itemNamesStr = this.utils.stringify(itemNames);
 
-  if (itemsCount > expectedItems.length) {
+  try {
+    await expect(cart.items).toContainText(itemNames);
+  } catch (e: any) {
+    const { expected, actual } = e.matcherResult;
+    const diff = this.utils.printDiffOrStringify(
+      expected,
+      actual,
+      'Expected cart items:',
+      'Actual cart items:',
+      false,
+    );
+
     return {
       pass: false,
-      message: () =>
-        `Expected cart to have ${expectedItems.length} items, but it has ${itemsCount}`,
-    };
-  }
-
-  const items = await Promise.all(
-    expectedItems.map((expectedItem) =>
-      cart
-        .getItem(expectedItem)
-        .isVisible()
-        .then((isVisible) => [isVisible, expectedItem] as const),
-    ),
-  );
-
-  const missingItemsNames = items
-    .filter(([isVisible]) => !isVisible)
-    .map(([, expectedItem]) => expectedItem.name)
-    .join(', ');
-
-  if (missingItemsNames.length > 0) {
-    return {
-      pass: false,
-      message: () => `Expected cart to have the following items: ${missingItemsNames}`,
+      message: () => `items found in cart are not as expected:\n\n${diff}`,
     };
   }
 
   return {
     pass: true,
-    message: () => `Expected cart not to have the given items`,
+    message: () => `expected cart not to have the following items: ${itemNamesStr}, but it does.`,
   };
 }
