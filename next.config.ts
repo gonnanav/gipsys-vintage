@@ -1,6 +1,9 @@
 import type { NextConfig } from 'next';
 import createMDX from '@next/mdx';
 
+const woocommerce_url = process.env.WOOCOMMERCE_URL || 'http://localhost:8080';
+const woocommerce_host = new URL(woocommerce_url).hostname;
+
 const nextConfig: NextConfig = {
   eslint: {
     dirs: ['src', 'tests', '.storybook'],
@@ -9,7 +12,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'gipsys-vintage.local',
+        hostname: woocommerce_host,
       },
     ],
   },
